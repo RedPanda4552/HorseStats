@@ -1,0 +1,42 @@
+#Hard to read YAML files in Notepad? I use Notepad++. Google it.
+
+#  - Config Info -
+#All Configuration Options should be "true" or "false".
+#Do not capitalize "true" or "false".
+
+#Broken config? Save this file to your desktop, delete the config.yml
+#found in your server, and reload or restart your server. A new one
+#will generate, and you can retype your old settings back into the
+#freshly generated file. Don't just copy and paste everything, because
+#that just re-adds your broken stuff.
+#==============================================================
+#  - Plugin Information -
+#Do not modify anything in this section. These are used by HorseStats
+#internally, and if altered, may cause false warning messages.
+information:
+    configVersion: 3.03
+    HorseStatsIsRunning: craftbukkit-1.7.9-R0.2
+#==============================================================
+#  - Configuration Options -
+options:
+    #Allow the plugin to check for updates at startup?
+    #If an update is available, HorseStats will notify you in the
+    #console when the plugin is enabled.
+    allowUpdateChecks: true
+    
+    #Allow horses to be killable by players who don't own them?
+    #When false, this will block melee and arrows of non-owners.
+    horseGrief: false
+    
+    #Should saddled horses be only accessible by their owners,
+    #and unsaddled horses accessible to anyone?
+    saddleLock: true
+
+    #Should someone be able to interact with a horse that is not theirs?
+    nonOwnerHorseInteraction: true
+
+    #Should horses be able to teleport between worlds?
+    #IMPORTANT: Initial testing showed that horse data for the entire
+    #server could be lost if this is allowed.
+    allowMultiWorldTeleport: false
+
