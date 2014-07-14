@@ -1,17 +1,15 @@
 package me.bdubz4552.horsestats;
 
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 
-public class HorseStatsCommand {
+//TODO Full refactor
+public abstract class HorseStatsCommand implements CommandExecutor {
 	
-	public HorseStatsMain main; //Used by sub classes. Within this class, this is null.
-	
-	public boolean permCheck(Player player, String permission) {
-		if (player.hasPermission("HorseStats." + permission)) {
-			return true;
-		} else {
-			Message.PERMS.send(player);
-			return false;
-		}
+	public Message message;
+	public HorseStatsMain main;
+	public HorseStatsCommand(HorseStatsMain main, Message message) {
+		this.message = message;
+		this.main = main;
 	}
 }
