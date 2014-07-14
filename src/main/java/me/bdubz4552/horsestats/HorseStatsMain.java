@@ -15,7 +15,7 @@ import net.gravitydevelopment.updater.Updater.*;
 
 public class HorseStatsMain extends JavaPlugin {
 	
-	protected Logger log;
+	public Logger log;
 	public Translate translate;
 	
 	/**

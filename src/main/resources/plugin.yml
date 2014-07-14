@@ -9,24 +9,31 @@ commands:
     horsestats:
         description: Displays plugin usage.
         usage: /horsestats
+        #No permission node
     setowner:
         description: Changes the owner of a horse.
         usage: /setowner <new owner>
+        permission: HorseStats.setowner
     untame:
         description: Untames a horse.
         usage: /untame
+        permission: HorseStats.untame
     delname:
         description: Delete a horse's custom name.
         usage: /delname
+        permission: HorseStats.delname
     delchest:
         description: Delete a horse's chest.
         usage: /delchest
+        permission: HorseStats.delchest
     slayhorse:
         description: Slays the ridden horse.
         usage: /slayhorse <launch>
+        permission: HorseStats.slayhorse
     hspawn:
         description: Spawns a horse/donkey/mule.
         usage: /hspawn <donkey|mule>
+        permission: HorseStats.hspawn
     htp:
         description: Teleports the selected horse
         usage: /htp

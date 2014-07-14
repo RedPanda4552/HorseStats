@@ -1,7 +1,6 @@
 package me.bdubz4552.horsestats.commands;
 
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
@@ -10,12 +9,14 @@ import me.bdubz4552.horsestats.HorseStatsCommand;
 import me.bdubz4552.horsestats.HorseStatsMain;
 import me.bdubz4552.horsestats.Message;
 
-public class Delchest extends HorseStatsCommand implements CommandExecutor {
+//TODO Use this as model for other refactors.
+public class Delchest extends HorseStatsCommand {
 	
-	public Delchest(HorseStatsMain horseStatsMain) {
-		this.main = horseStatsMain;
+	public Delchest(HorseStatsMain horseStatsMain, Message message) {
+		super(horseStatsMain, message);
 	}
 	
+	@Override
 	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
@@ -25,11 +26,7 @@ public class Delchest extends HorseStatsCommand implements CommandExecutor {
 					h = (Horse) p.getVehicle();
 				}
 			}
-			if (label.equalsIgnoreCase("delchest")) {
-				if (this.permCheck(p, "delchest")) {
-					this.run(p, h);
-				}
-			}
+			this.run(p, h);
 		} else {
 			sender.sendMessage(Message.CONSOLE.getString());
 		}

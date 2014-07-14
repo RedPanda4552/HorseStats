@@ -7,7 +7,7 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import me.bdubz4552.horsestats.*;
 import me.bdubz4552.horsestats.event.HorseStatsListenerBase;
-
+//TODO Modify htp to despawn and respawn horses.
 public class Htp extends HorseStatsCommand implements CommandExecutor {
 	
 	private HorseStatsListenerBase base;

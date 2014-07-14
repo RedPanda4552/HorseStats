@@ -14,7 +14,7 @@ import me.bdubz4552.horsestats.Message;
 public class Untame extends HorseStatsCommand  implements CommandExecutor {
 	
 	public Untame(HorseStatsMain horseStatsMain) {
-		this.main = horseStatsMain;
+		this.main = horseStatsMain;	
 	}
 	
 	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {

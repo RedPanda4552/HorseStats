@@ -7,6 +7,10 @@
 #and delete this file. A new one with the original English will
 #generate the next time you start or reload your server.
 
+#Each line starts with a quotation mark, and ends with a quotation mark.
+#Removing either of these will cause read/write errors and break the file.
+#There are not quotes in the middle of any of these strings.
+
 #If you wish to submit your translation file and have it be
 #officially supported by HorseStats, send me a PM on BukkitDev
 #and I'll check it out.
@@ -18,72 +22,74 @@
 #HorseStats uses the raw "true" and "false" objects returned
 #by horse statistics, and thus these cannot be translated.
 AdminNotificationListener:
-    newBuild: A new build of HorseStats is available! You can find
-    at: at:
+    newBuild: "A new build of HorseStats is available! You can find"
+    at: "at:"
 HorseStatsEventListener:
-    stats: Stats
-    maxHealth: Max Health:
-    horse: Horse
-    health: Health:
-    hearts: hearts
-    jump: Jump Height (Blocks):
+    stats: "Stats"
+    maxHealth: "Max Health:"
+    horse: "Horse"
+    health: "Health:"
+    hearts: "hearts"
+    jump: "Jump Height (Blocks):"
     #This is what appears after a horse's name in the stat display.
-    #If your language has a posessive suffix (English is "'s"),
+    #If your language has a posessive suffix (English is 's),
     #change it here. If not, delete it, and replace it with a few
     #spaces. If you completely empty this, it will cause errors
     #while trying to display.
-    posessive: 's
+    posessive: "'s"
     #If speed cannot be loaded, this is displayed.
-    noSpeed: Speed could not be loaded.
+    noSpeed: "Speed could not be loaded."
     #Normally what shows up.
-    speed: Speed (Blocks per Second):
-    breed: Can Breed:
-    teleportStatus: Is Selected For Teleport:
+    speed: "Speed (Blocks per Second):"
+    breed: "Can Breed:"
+    teleportStatus: "Is Selected For Teleport:"
     #This is displayed when the horse has an owner. The owner's name comes after.
-    owner: Owner:
+    owner: "Owner:"
     #If a horse doesn't have an owner, this follows "Owner:"
-    none: None
-    isAdult: Is Adult:
-    adultMinutes: Minutes Until Adult:
+    none: "None"
+    isAdult: "Is Adult:"
+    adultMinutes: "Minutes Until Adult:"
+HorseStats:
+    
 Message:
-    worldTP: Teleporting between worlds is disabled.
-    teleporting: Teleporting...
-    teleportFail: Teleport failed.
-    ownerChange: Owner changed successfully.
-    jumpLimit: Horses cannot jump higher than 22 blocks.
-    onlyHorse: Only horses can be modified.
-    launch: ♫ He's a magical pony, flying through the sky--shoot it down. *boom*
-    slain: Horse slain.
-    nowOwn: You now own this horse.
-    alreadyOwn: You already own this horse.
-    untame: This horse is no longer tamed.
-    configWarning: The HorseStats config is out of date. Details can be found in the console when the plugin started.
-    noSpeedWarning: HorseStats is running in 'no speed mode'. Details can be found in the console when the plugin started.
-    ownerFix: This horse was found to be tamed, but the owner returned 'none'. It is now fully untamed.
-    teleportSelected: Horse selected for teleport.
-    teleportDeselected: Horse deselected for teleport.
-    teleportUntame: You cannot select an untamed horse for teleporting.
-    riding: You must be riding the horse you want to use this on.
-    permissions: You do not have permissions for this command.
-    attack: You cannot hurt another player's horse.
-    chestDelete: Chest Deleted.
-    owner: You must be the owner of the horse to do this.
-    setstyleArgs: Bad arguments; use '/setstyle ?' to see arguments and usage.
-    playerNotFound: The specified player was not found.
-    console: Commands cannot be used in console.
-    nameErase: Custom name erased.
-    horseSpawn: Horse spawned successfully.
-    donkeySpawn: Donkey spawned successfully.
-    muleSpawn: Mule spawned successfully.
-    cannotRide: You cannot be riding a horse while you use this command.
-    noneSelected: No horse has been selected.
+    worldTP: "Teleporting between worlds is disabled."
+    teleporting: "Teleporting..."
+    teleportFail: "Teleport failed."
+    ownerChange: "Owner changed successfully."
+    jumpLimit: "Horses cannot jump higher than 22 blocks."
+    onlyHorse: "Only horses can be modified."
+    launch: "♫ He's a magical pony, flying through the sky--shoot it down. *boom*"
+    slain: "Horse slain."
+    nowOwn: "You now own this horse."
+    alreadyOwn: "You already own this horse."
+    untame: "This horse is no longer tamed."
+    configWarning: "The HorseStats config is out of date. Details can be found in the console when the plugin started."
+    noSpeedWarning: "HorseStats is running in 'no speed mode'. Details can be found in the console when the plugin started."
+    ownerFix: "This horse was found to be tamed, but the owner returned 'none'. It is now fully untamed."
+    teleportSelected: "Horse selected for teleport."
+    teleportDeselected: "Horse deselected for teleport."
+    teleportUntame: "You cannot select an untamed horse for teleporting."
+    riding: "You must be riding the horse you want to use this on."
+    permissions: "You do not have permissions for this command."
+    attack: "You cannot hurt another player's horse."
+    chestDelete: "Chest Deleted."
+    owner: "You must be the owner of the horse to do this."
+    setstyleArgs: "Bad arguments; use '/setstyle ?' to see arguments and usage."
+    playerNotFound: "The specified player was not found."
+    console: "Commands cannot be used in console."
+    nameErase: "Custom name erased."
+    horseSpawn: "Horse spawned successfully."
+    donkeySpawn: "Donkey spawned successfully."
+    muleSpawn: "Mule spawned successfully."
+    cannotRide: "You cannot be riding a horse while you use this command."
+    noneSelected: "No horse has been selected."
 SetStat:
-    usage: /setstat <jump|health> <value>. Health is measured in hearts. Jump is measured in blocks.
-    blocks: blocks.
-    healthSetTo: Horse's health has been set to
-    hearts: hearts.
-    jumpSetTo: Horse's jump height has been set to
+    usage: "/setstat <jump|health> <value>. Health is measured in hearts. Jump is measured in blocks."
+    blocks: "blocks."
+    healthSetTo: "Horse's health has been set to"
+    hearts: "hearts."
+    jumpSetTo: "Horse's jump height has been set to"
 Hspawn:
-    usage: /hspawn <donkey|mule>. To spawn a horse, just use '/hspawn'.
+    usage: "/hspawn <donkey|mule>. To spawn a horse, just use '/hspawn'."
 SetOwner:
-    usage: /setowner <player>
+    usage: "/setowner <player>"
