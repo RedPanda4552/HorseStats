@@ -1,16 +1,22 @@
 package me.bdubz4552.horsestats.commands;
 
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
 import me.bdubz4552.horsestats.HorseStatsCommand;
-import me.bdubz4552.horsestats.Message;
-import me.bdubz4552.horsestats.translate.Translate;
+import me.bdubz4552.horsestats.HorseStatsMain;
 
-public class SetStat extends HorseStatsCommand implements CommandExecutor {
+import me.bdubz4552.horsestats.utilities.Translate;
+
+public class SetStat extends HorseStatsCommand {
+	
+	public SetStat(HorseStatsMain main) {
+		super(main);
+	}
+
+	@Override
 	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
@@ -20,44 +26,40 @@ public class SetStat extends HorseStatsCommand implements CommandExecutor {
 					h = (Horse) p.getVehicle();
 				}
 			}
-			if (label.equalsIgnoreCase("setstat")) {
-				if (this.permCheck(p, "setstat")) {
-					this.run(p, h, args);
-				}
-			}
+			this.run(p, h, args);
 		} else {
-			sender.sendMessage(Message.CONSOLE.getString());
+			sender.sendMessage(Translate.generic("console"));
 		}
 		return true;
 	}
 	
 	public void run(Player p, Horse h, String args[]) {
 		if (h != null) {
-			if (h.getOwner() == p || main.hasGlobalOverride(p)) {
+			if (h.getOwner() == p || main.override(p)) {
 				if (args.length == 2) {			
 					if (args[0].equalsIgnoreCase("health")) {
 						double health = Double.parseDouble(args[1]);
 						h.setMaxHealth(2 * health);
-						Message.NORMAL.send(p, Translate.setstat("healthSetTo") + " " + health + " " + Translate.setstat("hearts"));
+						this.sendNormal(p, Translate.setstat("healthSetTo") + " " + health + " " + Translate.setstat("hearts"));
 					} else if (args[0].equalsIgnoreCase("jump")) {
 						double jump = Double.parseDouble(args[1]);
 						if (jump > 22) {
 							jump = 22;
-							Message.JUMP_HEIGHT.send(p);
+							this.sendError(p, Translate.setStat, "jumpLimit");
 						}
 						h.setJumpStrength(Math.sqrt(jump / 5.5));
-						Message.NORMAL.send(p, Translate.setstat("jumpSetTo") + " " + jump + " " + Translate.setstat("blocks"));
+						this.sendNormal(p, Translate.setstat("jumpSetTo") + " " + jump + " " + Translate.setstat("blocks"));
 					} else {
-						Message.ERROR.send(p, Translate.setstat("usage"));
+						this.sendError(p, Translate.setStat, "usage");
 					}
 				} else {
-					Message.ERROR.send(p, Translate.setstat("usage"));
+					this.sendError(p, Translate.setStat, "usage");
 				}
 			} else {
-				Message.OWNER.send(p);
+				this.sendError(p, Translate.generic, "owner");
 			}
 		} else {
-			Message.RIDING.send(p);
+			this.sendError(p, Translate.generic, "riding");
 		}
 	}
 }

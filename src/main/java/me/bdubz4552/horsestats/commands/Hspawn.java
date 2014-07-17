@@ -3,7 +3,6 @@ package me.bdubz4552.horsestats.commands;
 import java.util.Random;
 
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
@@ -14,15 +13,15 @@ import org.bukkit.entity.Horse.Variant;
 
 import me.bdubz4552.horsestats.HorseStatsCommand;
 import me.bdubz4552.horsestats.HorseStatsMain;
-import me.bdubz4552.horsestats.Message;
-import me.bdubz4552.horsestats.translate.Translate;
-
-public class Hspawn extends HorseStatsCommand implements CommandExecutor {
+import me.bdubz4552.horsestats.utilities.Translate;
+//TODO Make sure this works now.
+public class Hspawn extends HorseStatsCommand {
 	
 	public Hspawn(HorseStatsMain horseStatsMain) {
-		this.main = horseStatsMain;
+		super(horseStatsMain);
 	}
 	
+	@Override
 	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
@@ -32,13 +31,9 @@ public class Hspawn extends HorseStatsCommand implements CommandExecutor {
 					h = (Horse) p.getVehicle();
 				}
 			}
-			if (label.equalsIgnoreCase("hspawn")) {
-				if (this.permCheck(p, "hspawn")) {
-					this.run(p, h, args);
-				}
-			}
+			this.run(p, h, args);
 		} else {
-			sender.sendMessage(Message.CONSOLE.getString());
+			sender.sendMessage(Translate.generic("console"));
 		}
 		return true;
 	}
@@ -46,15 +41,16 @@ public class Hspawn extends HorseStatsCommand implements CommandExecutor {
 	public void run(Player p, Horse h, String[] args) {
 		if (h == null) {						
 			Variant v = null;
-			if (args.length == 1) {
+			if (args.length >= 1) {
 				if (args[0].equalsIgnoreCase("donkey")) {
 					v = Variant.DONKEY;
-					Message.DONKEY.send(p);
+					//TODO Send donkey message
+					this.sendNormal(p, Translate.hspawn, "donkeySpawn");
 				} else if (args[0].equalsIgnoreCase("mule")) {
 					v = Variant.MULE;
-					Message.MULE.send(p);
+					this.sendNormal(p, Translate.hspawn, "muleSpawn");
 				} else {
-					Message.NORMAL.send(p, Translate.hspawn("usage"));
+					this.sendError(p, Translate.hspawn, "usage");
 				}
 			} else {
 				v = Variant.HORSE;
@@ -70,10 +66,10 @@ public class Hspawn extends HorseStatsCommand implements CommandExecutor {
 				int y = rand.nextInt(5);
 				h.setColor(c[x]);
 				h.setStyle(s[y]);
-				Message.HORSE.send(p);
+				this.sendNormal(p, Translate.hspawn, "horseSpawn");
 			}
 		} else {
-			Message.NOT_RIDING.send(p);
+			this.sendError(p, Translate.generic, "cannotRide");
 		}
 	}
 }

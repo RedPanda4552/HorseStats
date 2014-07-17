@@ -7,13 +7,13 @@ import org.bukkit.entity.Player;
 
 import me.bdubz4552.horsestats.HorseStatsCommand;
 import me.bdubz4552.horsestats.HorseStatsMain;
-import me.bdubz4552.horsestats.Message;
+import me.bdubz4552.horsestats.utilities.Translate;
 
 //TODO Use this as model for other refactors.
 public class Delchest extends HorseStatsCommand {
 	
-	public Delchest(HorseStatsMain horseStatsMain, Message message) {
-		super(horseStatsMain, message);
+	public Delchest(HorseStatsMain horseStatsMain) {
+		super(horseStatsMain);
 	}
 	
 	@Override
@@ -28,21 +28,21 @@ public class Delchest extends HorseStatsCommand {
 			}
 			this.run(p, h);
 		} else {
-			sender.sendMessage(Message.CONSOLE.getString());
+			sender.sendMessage(Translate.generic("console"));
 		}
 		return true;
 	}
 	
 	public void run(Player p, Horse h) {
 		if (h != null) {
-			if (h.getOwner() == p || main.hasGlobalOverride(p)) {
+			if (h.getOwner() == p || main.override(p)) {
 				h.setCarryingChest(false);
-				Message.CHEST_DELETED.send(p);
+				this.sendNormal(p, Translate.delchest, "chestDelete");
 			} else {
-				Message.OWNER.send(p);
+				this.sendError(p, Translate.generic, "owner");
 			}
 		} else {
-			Message.RIDING.send(p);
+			this.sendError(p, Translate.generic, "riding");
 		}
 	}
 }

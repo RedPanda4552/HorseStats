@@ -8,9 +8,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+
 import me.bdubz4552.horsestats.HorseStatsMain;
-import me.bdubz4552.horsestats.Message;
-import me.bdubz4552.horsestats.translate.Translate;
+
+import me.bdubz4552.horsestats.utilities.Translate;
 
 /**
  * Dupe of main listener. For when CraftBukkit versions are not compatibile.
@@ -46,13 +47,13 @@ public class HorseStatsNoSpeedEventListener extends HorseStatsListenerBase imple
 				} else {
 					if (main.configBoolean("horseGrief") == false) {
 						//Kill this method before it is cancelled.
-						if (main.hasGlobalOverride(p)) {
+						if (main.override(p)) {
 							return;
 						}	
 						
 						if (p != h.getOwner() && h.getOwner() != null) {
 							event.setCancelled(true);
-							Message.ATTACK.send(p);
+							this.sendError(p, Translate.generic, "attack");
 						}
 					}
 				}				
@@ -65,13 +66,13 @@ public class HorseStatsNoSpeedEventListener extends HorseStatsListenerBase imple
 						Player p = (Player) a.getShooter();
 						
 						//Kill this method before it is cancelled.
-						if (main.hasGlobalOverride(p)) {
+						if (main.override(p)) {
 							return;
 						}
 						
 						if (h.getOwner() != null) {
-								event.setCancelled(true);
-								Message.ATTACK.send(p);
+							event.setCancelled(true);
+							this.sendError(p, Translate.generic, "attack");
 						}
 					}
 				}
@@ -88,7 +89,7 @@ public class HorseStatsNoSpeedEventListener extends HorseStatsListenerBase imple
 		//Because its still an issue, ownership correction is back.
 		if (horse.getOwner() == null && horse.isTamed() == true) {
 			horse.setTamed(false);
-			Message.OWNER_FIX.send(p);
+			this.sendNormal(p, Translate.horseStatsEventListener, "ownerFix");
 		}
 		
 		//RAW data (heh)
@@ -110,7 +111,7 @@ public class HorseStatsNoSpeedEventListener extends HorseStatsListenerBase imple
 		
 		//Teleport status
 		boolean tpStatus = false;
-		if (teleportQueue.containsValue(horse)) {
+		if (main.teleportQueue.containsValue(horse)) {
 			tpStatus = true;
 		}
 		
@@ -127,18 +128,18 @@ public class HorseStatsNoSpeedEventListener extends HorseStatsListenerBase imple
 		}
 		
 		//Message output
-		Message.STAT.send(p, "========================");
-		Message.STAT.send(p, name + " " + Translate.event("stats"));
-		Message.STAT.send(p, "========================");
+		this.sendStat(p, "========================");
+		this.sendStat(p, name + " " + Translate.event("stats"));
+		this.sendStat(p, "========================");
 		//Using floats to reduce the number of extraneous decimals
-		Message.STAT.send(p, Translate.event("maxHealth") + " " + (float) healthMax + " (" + (int) heartMax + " " + Translate.event("hearts") + ")");
-		Message.STAT.send(p, Translate.event("health") + " " + (float) health + " (" + (int) heart + " " + Translate.event("hearts") + ")");
-		Message.STAT.send(p, Translate.event("jump") + " " + (float) jump);
-		Message.STAT.send(p, Translate.event("noSpeed"));
-		Message.STAT.send(p, Translate.event("breed") + " " + breed);
-		Message.STAT.send(p, Translate.event("teleportStatus") + " " + tpStatus);
-		Message.STAT.send(p, Translate.event("isAdult") + " " + adult + ageTime);
-		Message.STAT.send(p, Translate.event("owner") + " " + owner);
+		this.sendStat(p, Translate.event("maxHealth") + " " + (float) healthMax + " (" + (int) heartMax + " " + Translate.event("hearts") + ")");
+		this.sendStat(p, Translate.event("health") + " " + (float) health + " (" + (int) heart + " " + Translate.event("hearts") + ")");
+		this.sendStat(p, Translate.event("jump") + " " + (float) jump);
+		this.sendStat(p, Translate.event("noSpeed"));
+		this.sendStat(p, Translate.event("breed") + " " + breed);
+		this.sendStat(p, Translate.event("teleportStatus") + " " + tpStatus);
+		this.sendStat(p, Translate.event("isAdult") + " " + adult + ageTime);
+		this.sendStat(p, Translate.event("owner") + " " + owner);
 	}
 	
 	/**
@@ -147,18 +148,18 @@ public class HorseStatsNoSpeedEventListener extends HorseStatsListenerBase imple
 	 * @param horse - The horse who teleport is being toggled for.
 	 */
 	public void teleportToggle(Player p, Horse horse) {
-		if (horse.getOwner() == p || main.hasGlobalOverride(p)) {
-			if (teleportQueue.containsKey(p.getName())) {
-				teleportQueue.remove(p.getName());
-				Message.TELEPORT_DESELECTED.send(p);
+		if (horse.getOwner() == p || main.override(p)) {
+			if (main.teleportQueue.containsKey(p.getName())) {
+				main.teleportQueue.remove(p.getName());
+				this.sendNormal(p, Translate.horseStatsEventListener, "teleportDeselected");
 			} else {
-				teleportQueue.put(p.getName(), horse);
-				Message.TELEPORT_SELECTED.send(p);
+				main.teleportQueue.put(p.getName(), horse);
+				this.sendNormal(p, Translate.horseStatsEventListener, "teleportSelected");
 			}
 		} else if (horse.getOwner() == null) { 
-			Message.TELEPORT_TAME.send(p);
+			this.sendError(p, Translate.horseStatsEventListener, "teleportUntame");
 		} else {
-			Message.OWNER.send(p);
+			this.sendError(p, Translate.generic, "owner");
 		}
 	}		
 }

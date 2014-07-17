@@ -1,7 +1,6 @@
 package me.bdubz4552.horsestats.commands;
 
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
@@ -9,14 +8,16 @@ import org.bukkit.inventory.ItemStack;
 
 import me.bdubz4552.horsestats.HorseStatsCommand;
 import me.bdubz4552.horsestats.HorseStatsMain;
-import me.bdubz4552.horsestats.Message;
 
-public class Untame extends HorseStatsCommand  implements CommandExecutor {
+import me.bdubz4552.horsestats.utilities.Translate;
+
+public class Untame extends HorseStatsCommand {
 	
 	public Untame(HorseStatsMain horseStatsMain) {
-		this.main = horseStatsMain;	
+		super(horseStatsMain);	
 	}
 	
+	@Override
 	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
@@ -26,20 +27,16 @@ public class Untame extends HorseStatsCommand  implements CommandExecutor {
 					h = (Horse) p.getVehicle();
 				}
 			}
-			if (label.equalsIgnoreCase("untame")) {
-				if (this.permCheck(p, "untame")) {
-					this.run(p, h);
-				}
-			}
+			this.run(p, h);
 		} else {
-			sender.sendMessage(Message.CONSOLE.getString());
+			sender.sendMessage(Translate.generic("console"));
 		}
 		return true;
 	}
 	
 	public void run(Player p, Horse h) {
 		if (h != null) {
-			if (h.getOwner() == p || main.hasGlobalOverride(p)) {
+			if (h.getOwner() == p || main.override(p)) {
 				h.eject();
 				h.setOwner(null);
 				h.setTamed(false);
@@ -48,12 +45,12 @@ public class Untame extends HorseStatsCommand  implements CommandExecutor {
 					h.getInventory().setSaddle(null);
 					h.getWorld().dropItemNaturally(h.getLocation(), stack);
 				}
-				Message.NORMAL.send(p, "This horse is no longer tamed.");
+				this.sendNormal(p, Translate.untame, "untame");
 			} else {
-				Message.OWNER.send(p);
+				this.sendNormal(p, Translate.generic, "owner");
 			}
 		} else {
-			Message.RIDING.send(p);
+			this.sendNormal(p, Translate.generic, "riding");
 		}
 	}
 }

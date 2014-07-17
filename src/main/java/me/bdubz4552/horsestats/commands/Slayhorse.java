@@ -2,7 +2,6 @@ package me.bdubz4552.horsestats.commands;
 
 import org.bukkit.Location;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
@@ -10,14 +9,16 @@ import org.bukkit.util.Vector;
 
 import me.bdubz4552.horsestats.HorseStatsCommand;
 import me.bdubz4552.horsestats.HorseStatsMain;
-import me.bdubz4552.horsestats.Message;
+import me.bdubz4552.horsestats.utilities.Translate;
 
-public class Slayhorse extends HorseStatsCommand implements CommandExecutor {
+
+public class Slayhorse extends HorseStatsCommand {
 	
 	public Slayhorse(HorseStatsMain horseStatsMain) {
-		this.main = horseStatsMain;
+		super(horseStatsMain);
 	}
 	
+	@Override
 	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
@@ -27,13 +28,9 @@ public class Slayhorse extends HorseStatsCommand implements CommandExecutor {
 					h = (Horse) p.getVehicle();
 				}
 			}
-			if (label.equalsIgnoreCase("slayhorse")) {
-				if (this.permCheck(p, "slayhorse")) {
-					this.run(p, h, args);
-				}
-			}
+			this.run(p, h, args);
 		} else {
-			sender.sendMessage(Message.CONSOLE.getString());
+			sender.sendMessage(Translate.generic("console"));
 		}
 		return true;
 	}
@@ -45,15 +42,15 @@ public class Slayhorse extends HorseStatsCommand implements CommandExecutor {
 				if (args[0].equalsIgnoreCase("launch") && p.hasPermission("HorseStats.slayhorse.launch")) {
 					Vector vec = new Vector(0, 6, 0);
 					h.setVelocity(vec);
-					p.chat(Message.LAUNCH.getString());
+					p.chat(Translate.slayhorse("launch"));
 					Location loc = new Location(h.getWorld(), h.getLocation().getX(), 256, h.getLocation().getZ());
 					h.getWorld().strikeLightning(loc);
 				}		
 			}
 			h.setHealth(0);
-			Message.SLAIN.send(p);
+			this.sendNormal(p, Translate.slayhorse, "slain");
 		} else {
-			Message.RIDING.send(p);
+			this.sendError(p, Translate.generic, "riding");
 		}
 	}
 }

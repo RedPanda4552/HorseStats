@@ -1,4 +1,4 @@
-package me.bdubz4552.horsestats.translate;
+package me.bdubz4552.horsestats.utilities;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,51 +6,65 @@ import java.io.IOException;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-
 import me.bdubz4552.horsestats.HorseStatsMain;
 
 public class Translate {
 	
 	private File file;
-	private MemoryConfiguration translateFile;
+	private static MemoryConfiguration translateFile;
 	
-	private static ConfigurationSection adminNotificationListener;
-	private static ConfigurationSection horseStatsCommand;
-	private static ConfigurationSection horseStatsEventListener;
-	private static ConfigurationSection message;
-	private static ConfigurationSection horsestats;
-	private static ConfigurationSection setStat;
-	private static ConfigurationSection hspawn;
-	private static ConfigurationSection setOwner;
+	public static ConfigurationSection adminNotificationListener;
+	public static ConfigurationSection horseStatsEventListener;
+	public static ConfigurationSection horsestats;//Currently nothing.
+	public static ConfigurationSection generic;
+	public static ConfigurationSection delchest;
+	public static ConfigurationSection delname;
+	public static ConfigurationSection hspawn;
+	public static ConfigurationSection htp;	
+	public static ConfigurationSection setOwner;
+	public static ConfigurationSection setStat;
+	public static ConfigurationSection setStyle;
+	public static ConfigurationSection slayhorse;
+	public static ConfigurationSection tame;
+	public static ConfigurationSection untame;
 	
 	/**
-	 * Constructor for translation. Instntiates everything.
+	 * Constructor for translation.
 	 * @param main - HorseStatsMain
 	 * @throws IOException - Thrown if translate.yml is not found.
 	 */
-	public Translate(HorseStatsMain main) throws IOException{
+	public Translate(HorseStatsMain main) throws IOException {
 		this.file = new File("plugins/HorseStats/translate.yml");
 		
-		if (file.exists()) {
-			YamlConfiguration yc = YamlConfiguration.loadConfiguration(this.file);
-			this.translateFile = yc;
-			adminNotificationListener = translateFile.getConfigurationSection("AdminNotificationListener");
-			horseStatsCommand = translateFile.getConfigurationSection("HorseStatsCommand");
-			horseStatsEventListener = translateFile.getConfigurationSection("HorseStatsEventListener");
-			message = translateFile.getConfigurationSection("Message");
-			horsestats = translateFile.getConfigurationSection("HorseStats");
-			setStat = translateFile.getConfigurationSection("SetStat");
-			setOwner = translateFile.getConfigurationSection("SetOwner");
-			hspawn = translateFile.getConfigurationSection("Hspawn");
-		} else {			
+		if (!file.exists()) {
 			main.saveResource("translate.yml", false);
-			throw new IOException("translate file not found");
+			throw new IOException("Translate file not found.");	
 		}
+		instantiateSections();
+	}
+	
+	public void instantiateSections() {
+		YamlConfiguration yc = YamlConfiguration.loadConfiguration(this.file);
+		translateFile = yc;
+		adminNotificationListener = translateFile.getConfigurationSection("AdminNotificationListener");
+		horseStatsEventListener = translateFile.getConfigurationSection("HorseStatsEventListener");
+		horsestats = translateFile.getConfigurationSection("HorseStats");
+		generic = translateFile.getConfigurationSection("Generic");
+		delchest = translateFile.getConfigurationSection("Delchest");
+		delname = translateFile.getConfigurationSection("Delname");
+		hspawn = translateFile.getConfigurationSection("Hspawn");
+		htp = translateFile.getConfigurationSection("Htp");
+		setOwner = translateFile.getConfigurationSection("SetOwner");
+		setStat = translateFile.getConfigurationSection("SetStat");
+		setStyle = translateFile.getConfigurationSection("SetStyle");
+		slayhorse = translateFile.getConfigurationSection("Slayhorse");
+		tame = translateFile.getConfigurationSection("Tame");
+		untame = translateFile.getConfigurationSection("Untame");
 	}
 	
 	/**
-	 * Returns the translated String for AdminNotificationListener
-	 * @param path - The YAML header to check
+	 * Gets the String specified by <b>Path</b>, within the translate section AdminNotificationListener
+	 * @param path - The YAML header to check in this section
 	 * @return The translated String at the specified YAML header
 	 */
 	public static final String admin(String path) {
@@ -58,17 +72,8 @@ public class Translate {
 	}
 	
 	/**
-	 * Returns the translated String for HorseStatsCommand
-	 * @param path - The YAML header to check
-	 * @return The translated String at the specified YAML header
-	 */
-	public static final String command(String path) {
-		return horseStatsCommand.getString(path);
-	}
-	
-	/**
-	 * Returns the translated String for HorseStatsEventListener
-	 * @param path - The YAML header to check
+	 * Gets the String specified by <b>Path</b>, within the translate section HorseStatsEventListener
+	 * @param path - The YAML header to check in this section
 	 * @return The translated String at the specified YAML header
 	 */
 	public static final String event(String path) {
@@ -76,17 +81,17 @@ public class Translate {
 	}
 	
 	/**
-	 * Returns the translated String for Message
-	 * @param path - The YAML header to check
+	 * Gets the String specified by <b>Path</b>, within the translate section Generic
+	 * @param path - The YAML header to check in this section
 	 * @return The translated String at the specified YAML header
 	 */
-	public static final String message(String path) {
-		return message.getString(path);
+	public static final String generic(String path) {
+		return generic.getString(path);
 	}
 	
 	/**
-	 * Returns the translated String for HorseStats
-	 * @param path - The YAML header to check
+	 * Gets the String specified by <b>Path</b>, within the translate section HorseStats
+	 * @param path - The YAML header to check in this section
 	 * @return The translated String at the specified YAML header
 	 */
 	public static final String horsestats(String path) {
@@ -94,8 +99,8 @@ public class Translate {
 	}
 	
 	/**
-	 * Returns the translated String for SetStat
-	 * @param path - The YAML header to check
+	 * Gets the String specified by <b>Path</b>, within the translate section SetStat
+	 * @param path - The YAML header to check in this section
 	 * @return The translated String at the specified YAML header
 	 */
 	public static final String setstat(String path) {
@@ -103,8 +108,8 @@ public class Translate {
 	}
 	
 	/**
-	 * Returns the translated String for SetOwner
-	 * @param path - The YAML header to check
+	 * Gets the String specified by <b>Path</b>, within the translate section SetOwner
+	 * @param path - The YAML header to check in this section
 	 * @return The translated String at the specified YAML header
 	 */
 	public static final String setowner(String path) {
@@ -112,11 +117,74 @@ public class Translate {
 	}
 	
 	/**
-	 * Returns the translated String for Hspawn
-	 * @param path - The YAML header to check
+	 * Gets the String specified by <b>Path</b>, within the translate section SetStyle
+	 * @param path - The YAML header to check in this section
+	 * @return The translated String at the specified YAML header
+	 */
+	public static final String setStyle(String path) {
+		return setStyle.getString(path);
+	}
+	
+	/**
+	 * Gets the String specified by <b>Path</b>, within the translate section Tame
+	 * @param path - The YAML header to check in this section
+	 * @return The translated String at the specified YAML header
+	 */
+	public static final String tame(String path) {
+		return tame.getString(path);
+	}
+	
+	/**
+	 * Gets the String specified by <b>Path</b>, within the translate section Htp
+	 * @param path - The YAML header to check in this section
+	 * @return The translated String at the specified YAML header
+	 */
+	public static final String htp(String path) {
+		return htp.getString(path);
+	}
+	
+	/**
+	 * Gets the String specified by <b>Path</b>, within the translate section Delname
+	 * @param path - The YAML header to check in this section
+	 * @return The translated String at the specified YAML header
+	 */
+	public static final String delname(String path) {
+		return delname.getString(path);
+	}
+	
+	/**
+	 * Gets the String specified by <b>Path</b>, within the translate section Delchest
+	 * @param path - The YAML header to check in this section
+	 * @return The translated String at the specified YAML header
+	 */
+	public static final String delchest(String path) {
+		return delchest.getString(path);
+	}
+	
+	/**
+	 * Gets the String specified by <b>Path</b>, within the translate section Slayhorse
+	 * @param path - The YAML header to check in this section
+	 * @return The translated String at the specified YAML header
+	 */
+	public static final String slayhorse(String path) {
+		return slayhorse.getString(path);
+	}
+	
+	/**
+	 * Gets the String specified by <b>Path</b>, within the translate section Hspawn
+	 * @param path - The YAML header to check in this section
 	 * @return The translated String at the specified YAML header
 	 */
 	public static final String hspawn(String path) {
 		return hspawn.getString(path);
+	}
+	
+	/**
+	 * Gets the String specified by <b>Path</b>, within the translate section Untame
+	 * @param path - The YAML header to check in this section
+	 * @return The translated String at the specified YAML header
+	 */
+	public static final String untame(String path) {
+		return untame.getString(path);
 	}
 }
