@@ -1,22 +1,26 @@
 package me.bdubz4552.horsestats;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.bdubz4552.horsestats.commands.*;
 import me.bdubz4552.horsestats.event.*;
-import me.bdubz4552.horsestats.translate.*;
+import me.bdubz4552.horsestats.utilities.Translate;
 import net.gravitydevelopment.updater.*;
 import net.gravitydevelopment.updater.Updater.*;
-
+//TODO Multi threading!
 public class HorseStatsMain extends JavaPlugin {
 	
-	public Logger log;
+	protected Logger log;
 	public Translate translate;
+	
+	public HashMap<String, Horse> teleportQueue = new HashMap<String, Horse>();
 	
 	/**
 	 * True if an update is available.
@@ -33,31 +37,18 @@ public class HorseStatsMain extends JavaPlugin {
 	 * Set to true if the config is out of date.
 	 */
 	public boolean outofdateConfig = false;
-	
-	/**
-	 * Checks if a player has the global override permission.
-	 * @param p - The player to check permissions for.
-	 * @return True if has permission, false if not.
-	 */
-	public boolean hasGlobalOverride(Player p) {
-		if (p.hasPermission("HorseStats.globaloverride")) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 		
 	/**
 	 * Called on plugin start.
 	 */
 	public void onEnable() {
 		this.log = this.getLogger();
-		this.saveDefaultConfig();
+		
 		try {
 			this.translate = new Translate(this);
 		} catch (IOException e) {
 			//If the IOException is from the missing file
-			if (e.getMessage().equalsIgnoreCase("Translate file not found")) {
+			if (e.getMessage().equalsIgnoreCase("Translate file not found (1)")) {
 				log.info("Creating new 'translate.yml' in '<server root>/plugins/horsestats'");
 			//Any other IOException
 			} else {
@@ -65,10 +56,11 @@ public class HorseStatsMain extends JavaPlugin {
 			}
 		}
 		
+		this.saveDefaultConfig();
+		
 		registerCommands();
 		
-		getServer().getPluginManager().registerEvents(new AdminNotificationListener(this), this);
-		
+		getServer().getPluginManager().registerEvents(new AdminNotificationListener(this), this);		
 		getServer().getPluginManager().registerEvents(new HorseStatsHorseInteractListener(this), this);
 			
 		/**
@@ -77,8 +69,6 @@ public class HorseStatsMain extends JavaPlugin {
 		if (checkVersion() == false) {
 			noSpeedMode = true;			
 			log.warning("The version of CraftBukkit on this server does not match that of HorseStats.");
-			log.warning("The HorseStats config file is reporting that this version of HorseStats, " +
-			this.getDescription().getVersion() + " is using " + this.getConfig().getConfigurationSection("information").getString("HorseStats Is Running"));
 			log.warning("To avoid full plugin failure, the speed value in the stat display will be disabled.");
 			log.warning("To fix this issue, get a HorseStats build that is made for your version of CraftBukkit.");
 			getServer().getPluginManager().registerEvents(new HorseStatsNoSpeedEventListener(this), this);
@@ -119,16 +109,16 @@ public class HorseStatsMain extends JavaPlugin {
 	 * If classes are found, no problem.
 	 * If not, no speed mode is activated.
 	 * 
-	 * When CraftBukkit updates:
-	 * 1) Replace imports in Event Handlers <del>and SetStat command</del>
-	 * 2) Replace class strings below
+	 * When CraftBukkit updates:<ol>
+	 * <li>Replace imports in Event Handlers <del>and SetStat command</del></li>
+	 * <li>Replace class strings below</li></ol>
 	 *
 	 * @return Boolean value indicating whether or not CB builds match.
 	 */
 	private boolean checkVersion() {
 		try {
-			Class.forName("net.minecraft.server.v1_7_R3.NBTBase");
-			Class.forName("org.bukkit.craftbukkit.v1_7_R3.entity.CraftHorse");
+			Class.forName("net.minecraft.server.v1_7_R3.NBTBase"); //Checking vanilla MC
+			Class.forName("org.bukkit.craftbukkit.v1_7_R3.entity.CraftHorse"); //Checking CB
 			return true;
 		} catch (ClassNotFoundException e) {
 			return false;
@@ -140,7 +130,7 @@ public class HorseStatsMain extends JavaPlugin {
 	 */
 	private void registerCommands() {
 		getCommand("horsestats").setExecutor(new Horsestats(this));
-		getCommand("htp").setExecutor(new Htp(this, new HorseStatsListenerBase(this)));
+		getCommand("htp").setExecutor(new Htp(this));
 		getCommand("setowner").setExecutor(new SetOwner(this));
 		getCommand("untame").setExecutor(new Untame(this));
 		getCommand("delchest").setExecutor(new Delchest(this));
@@ -148,7 +138,7 @@ public class HorseStatsMain extends JavaPlugin {
 		getCommand("slayhorse").setExecutor(new Slayhorse(this));
 		getCommand("hspawn").setExecutor(new Hspawn(this));
 		getCommand("setstyle").setExecutor(new SetStyle(this));
-		getCommand("setstat").setExecutor(new SetStat());
+		getCommand("setstat").setExecutor(new SetStat(this));
 		getCommand("tame").setExecutor(new Tame(this));
 	}
 	
@@ -173,5 +163,18 @@ public class HorseStatsMain extends JavaPlugin {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Checks if a player has the global override permission.
+	 * @param p - The player to check permissions for.
+	 * @return True if has permission, false if not.
+	 */
+	public boolean override(Player p) {
+		if (p.hasPermission("HorseStats.globaloverride")) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

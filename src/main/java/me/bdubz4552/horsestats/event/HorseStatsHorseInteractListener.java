@@ -6,15 +6,15 @@ import org.bukkit.Material;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import me.bdubz4552.horsestats.HorseStatsMain;
-import me.bdubz4552.horsestats.Message;
+import me.bdubz4552.horsestats.utilities.Translate;
 
-public class HorseStatsHorseInteractListener extends HorseStatsListenerBase implements Listener {
+
+public class HorseStatsHorseInteractListener extends HorseStatsListenerBase {
 
 	private HashMap<Player, Horse> caravanList = new HashMap<Player, Horse>();
 	
@@ -29,12 +29,11 @@ public class HorseStatsHorseInteractListener extends HorseStatsListenerBase impl
 	 * @param event - The PlayerInteractEntityEvent that triggered this.
 	 */
 	public void onPlayerInteractHorse(PlayerInteractEntityEvent event) {
-		
+		Player p = event.getPlayer();
 		//nonOwnerHorseInteraction
 		if (main.configBoolean("nonOwnerHorseInteraction") == false) {
-			Player p = event.getPlayer();
 			//Kill this method before it cancels.
-			if (main.hasGlobalOverride(p)) {
+			if (main.override(p)) {
 				return;
 			}
 			
@@ -42,16 +41,15 @@ public class HorseStatsHorseInteractListener extends HorseStatsListenerBase impl
 				Horse h = (Horse) event.getRightClicked();
 				if (h.getOwner() != p && h.getOwner() != null) {
 					event.setCancelled(true);
-					Message.OWNER.send(p);
+					this.sendError(p, Translate.generic, "owner");
 				}
 			}
 		}	
 
 		//saddleLock
 		if (main.configBoolean("saddleLock") == true) {
-			Player p = event.getPlayer();	
 			//Kill this method before it cancels.
-			if (main.hasGlobalOverride(p)) {
+			if (main.override(p)) {
 				return;
 			}
 			
@@ -60,18 +58,17 @@ public class HorseStatsHorseInteractListener extends HorseStatsListenerBase impl
 				if (h.getOwner() != p && h.getOwner() != null) {
 					if (h.getInventory().getSaddle() != null) {
 						event.setCancelled(true);
-						Message.OWNER.send(p);
+						this.sendError(p, Translate.generic, "owner");
 					}
 				}
 			}
 		}
 		
 		//caravans. Still not ready for release.
-		Player player = event.getPlayer();
 		if (event.getRightClicked() instanceof Horse) {
 			
-			if (player.getItemInHand().getType() == Material.STICK) {
-				PlayerInventory inventory = player.getInventory();
+			if (p.getItemInHand().getType() == Material.STICK) {
+				PlayerInventory inventory = p.getInventory();
 				
 				if (inventory.contains(Material.LEASH)) {
 					int i = inventory.first(Material.LEASH);
@@ -83,11 +80,11 @@ public class HorseStatsHorseInteractListener extends HorseStatsListenerBase impl
 			
 			event.setCancelled(true);
 			Horse horse = (Horse) event.getRightClicked();
-			if (!caravanList.containsKey(player)) {
-				caravanList.put(player, horse);
+			if (!caravanList.containsKey(p)) {
+				caravanList.put(p, horse);
 			} else {
-				caravanList.get(player).setLeashHolder(horse);
-				caravanList.remove(player);
+				caravanList.get(p).setLeashHolder(horse);
+				caravanList.remove(p);
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 main: me.bdubz4552.horsestats.HorseStatsMain
 name: HorseStats
-version: 3.0.3
+version: 3.1
 author: bdubz4552
 description: Displays stats of a horse.
 
@@ -37,15 +37,19 @@ commands:
     htp:
         description: Teleports the selected horse
         usage: /htp
+        permission: HorseStats.htp
     setstyle:
         description: Changes a horse's color and style.
         usage: /setstyle <type> <value>
+        permission: HorseStats.setstyle
     setstat:
         description: Sets the specified stat for a horse.
         usage: /setstat <health|jump|speed> <value>
+        permission: HorseStats.setstat
     tame:
         description: Tames a horse
         usage: /tame
+        permission: HorseStats.tame
 #Start Permissions List
 permissions:
     HorseStats.*:

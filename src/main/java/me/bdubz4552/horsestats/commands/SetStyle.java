@@ -1,8 +1,8 @@
 package me.bdubz4552.horsestats.commands;
 
 import static org.bukkit.ChatColor.*;
+
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Horse.Variant;
@@ -12,13 +12,16 @@ import org.bukkit.entity.Horse.Style;
 
 import me.bdubz4552.horsestats.HorseStatsCommand;
 import me.bdubz4552.horsestats.HorseStatsMain;
-import me.bdubz4552.horsestats.Message;
+import me.bdubz4552.horsestats.utilities.Translate;
 
-public class SetStyle extends HorseStatsCommand implements CommandExecutor {
+
+public class SetStyle extends HorseStatsCommand {
+	
 	public SetStyle(HorseStatsMain horseStatsMain) {
-		this.main = horseStatsMain;
+		super(horseStatsMain);
 	}
 
+	@Override
 	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
@@ -28,22 +31,18 @@ public class SetStyle extends HorseStatsCommand implements CommandExecutor {
 					h = (Horse) p.getVehicle();
 				}
 			}
-			if (label.equalsIgnoreCase("setstyle")) {
-				if (this.permCheck(p, "setstyle")) {
-					this.run(p, h, args);
-				}
-			}
+			this.run(p, h, args);
 		} else {
-			sender.sendMessage(Message.CONSOLE.getString());
+			sender.sendMessage(Translate.generic("console"));
 		}
 		return true;
 	}
 
 	public void run(Player p, Horse h, String[] args) {
 		if (h != null) {
-			if (h.getOwner() == p || main.hasGlobalOverride(p)) {
+			if (h.getOwner() == p || main.override(p)) {
 				if (h.getVariant() == Variant.HORSE) {
-					if (args.length == 2) {
+					if (args.length >= 2) {
 						if (args[0].equalsIgnoreCase("color")) {
 							if (args[1].equalsIgnoreCase("black")) {
 								h.setColor(Color.BLACK);
@@ -64,10 +63,10 @@ public class SetStyle extends HorseStatsCommand implements CommandExecutor {
 							else if (args[1].equalsIgnoreCase("gray")) {
 								h.setColor(Color.GRAY);
 							}
-							else if (args[1].equalsIgnoreCase("black")) {
+							else if (args[1].equalsIgnoreCase("white")) {
 								h.setColor(Color.WHITE);
 							} else {
-								Message.STYLE_PARAMS.send(p);
+								this.sendError(p, Translate.setStyle, "styleParams");
 							}
 						}
 						if (args[0].equalsIgnoreCase("style")) {
@@ -86,38 +85,35 @@ public class SetStyle extends HorseStatsCommand implements CommandExecutor {
 							else if (args[1].equalsIgnoreCase("whitefield")) {
 								h.setStyle(Style.WHITEFIELD);
 							} else {
-								Message.STYLE_PARAMS.send(p);
+								this.sendError(p, Translate.setStyle, "styleParams");
 							}
 						}
 					} else if (args.length == 1){
 						if (args[0].equals("?")) {
 							setstatHelp(p);
 						} else {
-							Message.STYLE_PARAMS.send(p);
+							this.sendError(p, Translate.setStyle, "styleParams");
 						}
 					} else {
-						Message.STYLE_PARAMS.send(p);
+						this.sendError(p, Translate.setStyle, "styleParams");
 					}
 				} else {
-					Message.ONLY_MODIFY_HORSE.send(p);
+					this.sendError(p, Translate.setStyle, "onlyHorse");
 				}
 			} else {
-				Message.OWNER.send(p);
+				this.sendError(p, Translate.generic, "owner");
 			}
 		} else {
-			Message.RIDING.send(p);
+			this.sendError(p, Translate.generic, "riding");
 		}
 	}
 	public void setstatHelp(Player p) {
 		String[] styleHelp =
-		{ GREEN  + "========================"
-		, YELLOW + "Help for /setstyle"
-		, GREEN  + "========================"
-		, YELLOW + "Usage: /setstyle <color|style> <value>"
-		, YELLOW + "Values for styles:"
-		, GREEN  + "-none -blackdots -whitedots -white -whitefield"
-		, YELLOW + "Values for color:"
-		, GREEN  + "-black -brown -chestnut -creamy -darkbrown -gray -black"
+		{ YELLOW + "/setstyle <color|style> <value>"
+		, YELLOW + "Styles:"
+		, GREEN  + "none, blackdots, whitedots, white, whitefield"
+		, YELLOW + "Colors:"
+		, GREEN  + "white, brown, chestnut, creamy, darkbrown, gray, black"
 		};
 		p.sendMessage(styleHelp);
 	}

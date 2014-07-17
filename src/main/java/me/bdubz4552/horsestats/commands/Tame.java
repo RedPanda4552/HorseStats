@@ -1,21 +1,22 @@
 package me.bdubz4552.horsestats.commands;
 
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
 import me.bdubz4552.horsestats.HorseStatsCommand;
 import me.bdubz4552.horsestats.HorseStatsMain;
-import me.bdubz4552.horsestats.Message;
+import me.bdubz4552.horsestats.utilities.Translate;
 
-public class Tame extends HorseStatsCommand implements CommandExecutor {
+
+public class Tame extends HorseStatsCommand {
 	
 	public Tame(HorseStatsMain horseStatsMain) {
-		this.main = horseStatsMain;
+		super(horseStatsMain);
 	}
 	
+	@Override
 	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
@@ -25,13 +26,9 @@ public class Tame extends HorseStatsCommand implements CommandExecutor {
 					h = (Horse) p.getVehicle();
 				}
 			}
-			if (label.equalsIgnoreCase("tame")) {
-				if (this.permCheck(p, "tame")) {
-					this.run(p, h);
-				}
-			}
+			this.run(p, h);
 		} else {
-			sender.sendMessage(Message.CONSOLE.getString());
+			sender.sendMessage(Translate.generic("console"));
 		}
 		return true;
 	}
@@ -40,14 +37,14 @@ public class Tame extends HorseStatsCommand implements CommandExecutor {
 		if (h != null) {
 			if (h.getOwner() == null) {
 				h.setOwner(p);
-				Message.NOW_OWN.send(p);
+				this.sendNormal(p, Translate.tame, "nowOwn");
 			} else if (h.getOwner() == p) {
-				Message.ALREADY_OWN.send(p);
+				this.sendNormal(p, Translate.tame, "alreadyOwn");
 			} else {
-				Message.OWNER.send(p);
+				this.sendError(p, Translate.generic, "owner");
 			}
 		} else {
-			Message.RIDING.send(p);
+			this.sendError(p, Translate.generic, "riding");
 		}
 	}
 }
