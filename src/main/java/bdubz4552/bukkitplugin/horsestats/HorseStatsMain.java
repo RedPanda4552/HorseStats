@@ -1,20 +1,21 @@
-package me.bdubz4552.horsestats;
+package bdubz4552.bukkitplugin.horsestats;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Logger;
+
+import net.gravitydevelopment.updater.Updater;
+import net.gravitydevelopment.updater.Updater.UpdateResult;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.bdubz4552.horsestats.commands.*;
-import me.bdubz4552.horsestats.event.*;
-import me.bdubz4552.horsestats.utilities.Translate;
-import net.gravitydevelopment.updater.*;
-import net.gravitydevelopment.updater.Updater.*;
-//TODO Multi threading!
+import bdubz4552.bukkitplugin.horsestats.commands.*;
+import bdubz4552.bukkitplugin.horsestats.event.*;
+import bdubz4552.bukkitplugin.horsestats.utilities.Translate;
+
 public class HorseStatsMain extends JavaPlugin {
 	
 	protected Logger log;
@@ -83,7 +84,7 @@ public class HorseStatsMain extends JavaPlugin {
 		 * if the config is updated, the config version will be updated to match HorseStats version.
 		 * Otherwise it will remain the same. 
 		 */
-		if (this.getConfig().getString("information.configVersion") == null || this.getConfig().getDouble("information.configVersion") != 3.03) {
+		if (this.getConfig().getString("information.configVersion") == null || this.getConfig().getDouble("information.configVersion") != 3.1) {
 			outofdateConfig = true;			
 			log.warning("It appears your HorseStats configuration file is out of date.");
 			log.warning("Please take note of the settings you have in it, and delete it.");

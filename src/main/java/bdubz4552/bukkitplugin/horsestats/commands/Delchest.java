@@ -1,18 +1,17 @@
-package me.bdubz4552.horsestats.commands;
+package bdubz4552.bukkitplugin.horsestats.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
-import me.bdubz4552.horsestats.HorseStatsCommand;
-import me.bdubz4552.horsestats.HorseStatsMain;
-import me.bdubz4552.horsestats.utilities.Translate;
+import bdubz4552.bukkitplugin.horsestats.HorseStatsCommand;
+import bdubz4552.bukkitplugin.horsestats.HorseStatsMain;
+import bdubz4552.bukkitplugin.horsestats.utilities.Translate;
 
-
-public class Tame extends HorseStatsCommand {
+public class Delchest extends HorseStatsCommand {
 	
-	public Tame(HorseStatsMain horseStatsMain) {
+	public Delchest(HorseStatsMain horseStatsMain) {
 		super(horseStatsMain);
 	}
 	
@@ -35,11 +34,9 @@ public class Tame extends HorseStatsCommand {
 	
 	public void run(Player p, Horse h) {
 		if (h != null) {
-			if (h.getOwner() == null) {
-				h.setOwner(p);
-				this.sendNormal(p, Translate.tame, "nowOwn");
-			} else if (h.getOwner() == p) {
-				this.sendNormal(p, Translate.tame, "alreadyOwn");
+			if (h.getOwner() == p || main.override(p)) {
+				h.setCarryingChest(false);
+				this.sendNormal(p, Translate.delchest, "chestDelete");
 			} else {
 				this.sendError(p, Translate.generic, "owner");
 			}

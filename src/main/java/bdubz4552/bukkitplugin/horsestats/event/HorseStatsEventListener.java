@@ -1,24 +1,28 @@
-package me.bdubz4552.horsestats.event;
+package bdubz4552.bukkitplugin.horsestats.event;
+
+import net.minecraft.server.v1_7_R3.NBTBase;
+import net.minecraft.server.v1_7_R3.NBTTagCompound;
+import net.minecraft.server.v1_7_R3.NBTTagList;
 
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_7_R3.entity.CraftHorse;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import me.bdubz4552.horsestats.HorseStatsMain;
-
-import me.bdubz4552.horsestats.utilities.Translate;
+import bdubz4552.bukkitplugin.horsestats.HorseStatsMain;
+import bdubz4552.bukkitplugin.horsestats.utilities.Translate;
 
 /**
- * Dupe of main listener. For when CraftBukkit versions are not compatibile.
+ * The main listener. Imports CraftBukkit code and can break with version changes.
+ * Events are registered here if server CB precisely matches HorseStats CB.
  */
-public class HorseStatsNoSpeedEventListener extends HorseStatsListenerBase implements Listener {
+public class HorseStatsEventListener extends HorseStatsListenerBase {
 		
-	public HorseStatsNoSpeedEventListener(HorseStatsMain horseStatsMain) {
+	public HorseStatsEventListener(HorseStatsMain horseStatsMain) {
 		super (horseStatsMain);
 	}
 	
@@ -135,7 +139,7 @@ public class HorseStatsNoSpeedEventListener extends HorseStatsListenerBase imple
 		this.sendStat(p, Translate.event("maxHealth") + " " + (float) healthMax + " (" + (int) heartMax + " " + Translate.event("hearts") + ")");
 		this.sendStat(p, Translate.event("health") + " " + (float) health + " (" + (int) heart + " " + Translate.event("hearts") + ")");
 		this.sendStat(p, Translate.event("jump") + " " + (float) jump);
-		this.sendStat(p, Translate.event("noSpeed"));
+		this.sendStat(p, Translate.event("speed") + " " + (float) getSpeed(horse) * 43);
 		this.sendStat(p, Translate.event("breed") + " " + breed);
 		this.sendStat(p, Translate.event("teleportStatus") + " " + tpStatus);
 		this.sendStat(p, Translate.event("isAdult") + " " + adult + ageTime);
@@ -161,6 +165,30 @@ public class HorseStatsNoSpeedEventListener extends HorseStatsListenerBase imple
 		} else {
 			this.sendError(p, Translate.generic, "owner");
 		}
+	}
+	
+	/**
+	 * The 'fragile' code used to retrieve horse speed. NBT stuff.
+	 * Needs re-imported when NBT code changes, or build number changes (e.g. CB 1.7.2-R0.1 to CB 1.7.2-R0.2)
+	 * @param horse - The horse that was hit with a lead.
+	 * @return Double that represents horse speed.
+	 */
+	public double getSpeed(Horse horse) {
+		CraftHorse cHorse = (CraftHorse) horse;
+		NBTTagCompound compound = new NBTTagCompound();
+		cHorse.getHandle().b(compound);
+		double speed = -1;
+		NBTTagList list = (NBTTagList) compound.get("Attributes");
+		for(int i = 0; i < list.size() ; i++) {
+			NBTBase base = list.get(i);
+			if (base.getTypeId() == 10) {
+				NBTTagCompound attrCompound = (NBTTagCompound)base;
+				if (base.toString().contains("generic.movementSpeed")) {
+					speed = attrCompound.getDouble("Base");
+				}
+			}
+		}
+		return speed;
 	}		
 }
 

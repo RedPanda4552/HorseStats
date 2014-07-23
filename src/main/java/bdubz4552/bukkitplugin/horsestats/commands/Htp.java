@@ -1,12 +1,12 @@
-package me.bdubz4552.horsestats.commands;
+package bdubz4552.bukkitplugin.horsestats.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
-import me.bdubz4552.horsestats.*;
-import me.bdubz4552.horsestats.utilities.Translate;
+import bdubz4552.bukkitplugin.horsestats.*;
+import bdubz4552.bukkitplugin.horsestats.utilities.Translate;
 
 public class Htp extends HorseStatsCommand {
 	

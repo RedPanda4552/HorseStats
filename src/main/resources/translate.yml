@@ -56,7 +56,19 @@ HorseStatsEventListener:
     teleportDeselected: "Horse deselected for teleport."
     teleportUntame: "You cannot select an untamed horse for teleporting."
 HorseStats:
-    #Stuff to be added
+    by: "by"
+    version: "Version"
+    statDisplay: "Stat Display"
+    instruction: "Equip a lead and punch a horse to return a list of statistics:"
+    statLine1: "-MaxHealth -Health -Jump Height -Speed (Blocks per Second)"
+    statLine2: "-Can Breed -Is Adult -Owner"
+    noteworthy: "Noteworthy Things:"
+    note1: "1) Horses will NOT take damage from the punch"
+    note2: "2) Speed and jump values are not infinitely precise."
+    teleportTitle: "Horse Teleporting"
+    teleport1: "Grab an ender pearl and punch a horse to select it. The damage will be canceled, and the horse will be selected for teleporting. To teleport the horse, use"
+    teleport2: "at the desired destination and the horse will teleport to you."
+    command: "To see HorseStats commands, use"
 Generic:
     riding: "You must be riding the horse you want to use this on."
     attack: "You cannot hurt another player's horse."

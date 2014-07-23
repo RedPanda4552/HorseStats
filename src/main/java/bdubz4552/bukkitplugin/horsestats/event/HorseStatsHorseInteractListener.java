@@ -1,22 +1,17 @@
-package me.bdubz4552.horsestats.event;
+package bdubz4552.bukkitplugin.horsestats.event;
 
-import java.util.HashMap;
-
-import org.bukkit.Material;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
-import me.bdubz4552.horsestats.HorseStatsMain;
-import me.bdubz4552.horsestats.utilities.Translate;
+import bdubz4552.bukkitplugin.horsestats.HorseStatsMain;
+import bdubz4552.bukkitplugin.horsestats.utilities.Translate;
 
-
+//Comments toggled on Caravan components.
 public class HorseStatsHorseInteractListener extends HorseStatsListenerBase {
 
-	private HashMap<Player, Horse> caravanList = new HashMap<Player, Horse>();
+//	private HashMap<Player, Horse> caravanList = new HashMap<Player, Horse>();
 	
 	public HorseStatsHorseInteractListener(HorseStatsMain horseStatsMain) {
 		super(horseStatsMain);
@@ -64,28 +59,28 @@ public class HorseStatsHorseInteractListener extends HorseStatsListenerBase {
 			}
 		}
 		
-		//caravans. Still not ready for release.
-		if (event.getRightClicked() instanceof Horse) {
-			
-			if (p.getItemInHand().getType() == Material.STICK) {
-				PlayerInventory inventory = p.getInventory();
-				
-				if (inventory.contains(Material.LEASH)) {
-					int i = inventory.first(Material.LEASH);
-					ItemStack stack = inventory.getItem(i);
-					stack.setAmount(stack.getAmount() - 1);
-					
-				}
-			}
-			
-			event.setCancelled(true);
-			Horse horse = (Horse) event.getRightClicked();
-			if (!caravanList.containsKey(p)) {
-				caravanList.put(p, horse);
-			} else {
-				caravanList.get(p).setLeashHolder(horse);
-				caravanList.remove(p);
-			}
-		}
+		//caravans. Still not ready for release. Comment toggled for now.
+//		if (event.getRightClicked() instanceof Horse) {
+//			
+//			if (p.getItemInHand().getType() == Material.STICK) {
+//				PlayerInventory inventory = p.getInventory();
+//				
+//				if (inventory.contains(Material.LEASH)) {
+//					int i = inventory.first(Material.LEASH);
+//					ItemStack stack = inventory.getItem(i);
+//					stack.setAmount(stack.getAmount() - 1);
+//					
+//				}
+//			}
+//			
+//			event.setCancelled(true);
+//			Horse horse = (Horse) event.getRightClicked();
+//			if (!caravanList.containsKey(p)) {
+//				caravanList.put(p, horse);
+//			} else {
+//				caravanList.get(p).setLeashHolder(horse);
+//				caravanList.remove(p);
+//			}
+//		}
 	}
 }

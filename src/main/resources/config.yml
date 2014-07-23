@@ -1,9 +1,7 @@
 #Hard to read YAML files in Notepad? I use Notepad++. Google it.
-
 #  - Config Info -
 #All Configuration Options should be "true" or "false".
 #Do not capitalize "true" or "false".
-
 #Broken config? Save this file to your desktop, delete the config.yml
 #found in your server, and reload or restart your server. A new one
 #will generate, and you can retype your old settings back into the
@@ -14,7 +12,9 @@
 #Do not modify anything in this section. These are used by HorseStats
 #internally, and if altered, may cause false warning messages.
 information:
-    configVersion: 3.03
+    configVersion: 3.1
+    #If No Speed Mode is on, you probably are using a different CraftBukkit build.
+    #This is the build of CB that this HorseStats build is made to run on.
     HorseStatsIsRunning: craftbukkit-1.7.9-R0.2
 #==============================================================
 #  - Configuration Options -

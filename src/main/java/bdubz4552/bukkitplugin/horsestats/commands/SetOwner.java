@@ -1,4 +1,4 @@
-package me.bdubz4552.horsestats.commands;
+package bdubz4552.bukkitplugin.horsestats.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -6,10 +6,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
-import me.bdubz4552.horsestats.HorseStatsCommand;
-import me.bdubz4552.horsestats.HorseStatsMain;
-
-import me.bdubz4552.horsestats.utilities.Translate;
+import bdubz4552.bukkitplugin.horsestats.HorseStatsCommand;
+import bdubz4552.bukkitplugin.horsestats.HorseStatsMain;
+import bdubz4552.bukkitplugin.horsestats.utilities.Translate;
 
 public class SetOwner extends HorseStatsCommand {
 	

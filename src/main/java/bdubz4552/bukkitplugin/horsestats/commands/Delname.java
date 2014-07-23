@@ -1,18 +1,17 @@
-package me.bdubz4552.horsestats.commands;
+package bdubz4552.bukkitplugin.horsestats.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
-import me.bdubz4552.horsestats.HorseStatsCommand;
-import me.bdubz4552.horsestats.HorseStatsMain;
-import me.bdubz4552.horsestats.utilities.Translate;
+import bdubz4552.bukkitplugin.horsestats.HorseStatsCommand;
+import bdubz4552.bukkitplugin.horsestats.HorseStatsMain;
+import bdubz4552.bukkitplugin.horsestats.utilities.Translate;
 
-//TODO Use this as model for other refactors.
-public class Delchest extends HorseStatsCommand {
+public class Delname extends HorseStatsCommand {
 	
-	public Delchest(HorseStatsMain horseStatsMain) {
+	public Delname(HorseStatsMain horseStatsMain) {
 		super(horseStatsMain);
 	}
 	
@@ -36,8 +35,8 @@ public class Delchest extends HorseStatsCommand {
 	public void run(Player p, Horse h) {
 		if (h != null) {
 			if (h.getOwner() == p || main.override(p)) {
-				h.setCarryingChest(false);
-				this.sendNormal(p, Translate.delchest, "chestDelete");
+				h.setCustomName(null);
+				this.sendNormal(p, Translate.delname, "nameDelete");
 			} else {
 				this.sendError(p, Translate.generic, "owner");
 			}

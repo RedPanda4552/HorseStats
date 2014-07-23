@@ -1,12 +1,11 @@
-package me.bdubz4552.horsestats.event;
+package bdubz4552.bukkitplugin.horsestats.event;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import me.bdubz4552.horsestats.HorseStatsMain;
-
-import me.bdubz4552.horsestats.utilities.Translate;
+import bdubz4552.bukkitplugin.horsestats.HorseStatsMain;
+import bdubz4552.bukkitplugin.horsestats.utilities.Translate;
 
 public class AdminNotificationListener extends HorseStatsListenerBase {
 

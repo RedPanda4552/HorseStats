@@ -1,4 +1,4 @@
-package me.bdubz4552.horsestats.commands;
+package bdubz4552.bukkitplugin.horsestats.commands;
 
 import static org.bukkit.ChatColor.*;
 
@@ -10,9 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Horse.Color;
 import org.bukkit.entity.Horse.Style;
 
-import me.bdubz4552.horsestats.HorseStatsCommand;
-import me.bdubz4552.horsestats.HorseStatsMain;
-import me.bdubz4552.horsestats.utilities.Translate;
+import bdubz4552.bukkitplugin.horsestats.HorseStatsCommand;
+import bdubz4552.bukkitplugin.horsestats.HorseStatsMain;
+import bdubz4552.bukkitplugin.horsestats.utilities.Translate;
 
 
 public class SetStyle extends HorseStatsCommand {
