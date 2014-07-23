@@ -1,4 +1,6 @@
-package bdubz4552.bukkitplugin.horsestats.utilities;
+package io.github.redpanda4552.HorseStats.utilities;
+
+import io.github.redpanda4552.HorseStats.HorseStatsMain;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,8 +8,6 @@ import java.io.IOException;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-import bdubz4552.bukkitplugin.horsestats.HorseStatsMain;
 
 public class Translate {
 	

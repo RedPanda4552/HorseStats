@@ -1,5 +1,7 @@
-package bdubz4552.bukkitplugin.horsestats.event;
+package io.github.redpanda4552.HorseStats.event;
 
+import io.github.redpanda4552.HorseStats.HorseStatsMain;
+import io.github.redpanda4552.HorseStats.utilities.Translate;
 import net.minecraft.server.v1_7_R3.NBTBase;
 import net.minecraft.server.v1_7_R3.NBTTagCompound;
 import net.minecraft.server.v1_7_R3.NBTTagList;
@@ -12,9 +14,6 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-
-import bdubz4552.bukkitplugin.horsestats.HorseStatsMain;
-import bdubz4552.bukkitplugin.horsestats.utilities.Translate;
 
 /**
  * The main listener. Imports CraftBukkit code and can break with version changes.

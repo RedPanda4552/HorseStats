@@ -1,4 +1,8 @@
-package bdubz4552.bukkitplugin.horsestats.commands;
+package io.github.redpanda4552.HorseStats.commands;
+
+import io.github.redpanda4552.HorseStats.HorseStatsCommand;
+import io.github.redpanda4552.HorseStats.HorseStatsMain;
+import io.github.redpanda4552.HorseStats.utilities.Translate;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -6,10 +10,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Horse.Variant;
-
-import bdubz4552.bukkitplugin.horsestats.HorseStatsCommand;
-import bdubz4552.bukkitplugin.horsestats.HorseStatsMain;
-import bdubz4552.bukkitplugin.horsestats.utilities.Translate;
 
 public class Hspawn extends HorseStatsCommand {
 	

@@ -1,4 +1,4 @@
-main: bdubz4552.bukkitplugin.horsestats.HorseStatsMain
+main: io.github.redpanda4552.HorseStats.HorseStatsMain
 name: HorseStats
 version: 3.1
 author: bdubz4552

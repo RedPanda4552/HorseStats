@@ -1,4 +1,8 @@
-package bdubz4552.bukkitplugin.horsestats;
+package io.github.redpanda4552.HorseStats;
+
+import io.github.redpanda4552.HorseStats.commands.*;
+import io.github.redpanda4552.HorseStats.event.*;
+import io.github.redpanda4552.HorseStats.utilities.Translate;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -11,10 +15,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import bdubz4552.bukkitplugin.horsestats.commands.*;
-import bdubz4552.bukkitplugin.horsestats.event.*;
-import bdubz4552.bukkitplugin.horsestats.utilities.Translate;
 
 public class HorseStatsMain extends JavaPlugin {
 	
