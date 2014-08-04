@@ -25,6 +25,7 @@ public class AdminNotificationListener extends HorseStatsListenerBase {
 				this.sendNormal(p, Translate.adminNotificationListener, "noSpeed");
 			}
 			
+			//TODO Put this field back in and properly document it
 			if (main.updateAvailable == true) {
 				this.sendNormal(p, Translate.admin("newBuild") + " " + main.updateName + " " + Translate.admin("at"));
 				//Sent as stat to avoid second [HorseStats] header. Want this to look like one message, but separated lines.
