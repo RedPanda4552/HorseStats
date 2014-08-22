@@ -25,6 +25,7 @@ public class SetStat extends HorseStatsCommand {
 					h = (Horse) p.getVehicle();
 				}
 			}
+			
 			this.run(p, h, args);
 		} else {
 			sender.sendMessage(Translate.generic("console"));
@@ -46,6 +47,7 @@ public class SetStat extends HorseStatsCommand {
 							jump = 22;
 							this.sendError(p, Translate.setStat, "jumpLimit");
 						}
+						
 						h.setJumpStrength(Math.sqrt(jump / 5.5));
 						this.sendNormal(p, Translate.setstat("jumpSetTo") + " " + jump + " " + Translate.setstat("blocks"));
 					} else {

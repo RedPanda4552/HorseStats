@@ -49,8 +49,13 @@ public abstract class HorseStatsCommand implements CommandExecutor {
 	public void sendError(Player player, ConfigurationSection section, String path) {
 		if (section == null || path == null) {
 			player.sendMessage(errorTag + "String translate failure at '" + section.toString() + "." + path + "'. "
-					+ "Please check your translate.yml for errors.");
+					+ "Please notify an administrator.");
 		}
+		
+		if (section.getString(path) == null) {
+			player.sendMessage(errorTag + "String returned null");
+		}
+		
 		player.sendMessage(errorTag + section.getString(path));
 	}
 	

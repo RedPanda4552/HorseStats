@@ -50,6 +50,7 @@ commands:
         description: Tames a horse
         usage: /tame
         permission: HorseStats.tame
+    
 #Start Permissions List
 permissions:
     HorseStats.*:

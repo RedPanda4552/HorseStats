@@ -7,10 +7,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-/**
- * Base class for event listeners. Seems useless at the moment,
- * but if things expand this will be handy.
- */
 public abstract class HorseStatsListenerBase implements Listener {
 	
 	protected final String normalTag = ChatColor.YELLOW + "[HorseStats] " + ChatColor.GREEN;

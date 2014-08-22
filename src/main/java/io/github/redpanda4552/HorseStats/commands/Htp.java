@@ -26,9 +26,7 @@ public class Htp extends HorseStatsCommand {
 	}
 	
 	/**
-	 * Does not work if chunks are not loaded. Attempts at loading chunks were made,
-	 * but no success.
-	 * TODO Modify htp to despawn and respawn horses.
+	 * Does not work if chunks are not loaded.
 	 * @param p - The player who initiated the teleport.
 	 */
 	public void run(Player p) {

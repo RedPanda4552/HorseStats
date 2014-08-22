@@ -57,7 +57,6 @@ HorseStatsEventListener:
     teleportUntame: "You cannot select an untamed horse for teleporting."
 HorseStats:
     by: "by"
-    version: "Version"
     statDisplay: "Stat Display"
     instruction: "Equip a lead and punch a horse to return a list of statistics:"
     statLine1: "-MaxHealth -Health -Jump Height -Speed (Blocks per Second)"
@@ -92,6 +91,7 @@ Htp:
     teleportFail: "Teleport failed."
 SetOwner:
     setOwner: "Owner changed successfully."
+    usage: "/setowner <player>"
 SetStat:
     usage: "/setstat <jump|health> <value>. Health is measured in hearts. Jump is measured in blocks."
     healthSetTo: "Horse's health has been set to"
@@ -103,7 +103,9 @@ SetStyle:
     onlyHorse: "Only horses can be modified."
     styleParams: "Bad arguments; use '/setstyle ?' to see arguments and usage."
 Slayhorse:
-    launch: "♫ He's a magical pony, flying through the sky--shoot it down. *boom*"
+    #"\u266B" is a UTF-8 code for a music eighth note sign. If you delete it and want to add it back,
+    #then you can copy it out of this note.
+    launch: "\u266B He's a magical pony, flying through the sky--shoot it down. *boom*"
     slain: "Horse slain."
 Tame:
     nowOwn: "You now own this horse."

@@ -157,9 +157,10 @@ public class HorseStatsMain extends JavaPlugin {
 	 */
 	public void onEnable() {
 		this.log = this.getLogger();
-		saveDefaultConfig();
-		registerCommands();
 		initTranslate();
+		saveDefaultConfig();
+		initTranslate();
+		registerCommands();
 		initMainEventListener();
 		getServer().getPluginManager().registerEvents(new AdminNotificationListener(this), this);		
 		getServer().getPluginManager().registerEvents(new HorseStatsHorseInteractListener(this), this);

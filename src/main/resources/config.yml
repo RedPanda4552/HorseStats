@@ -28,12 +28,18 @@ options:
     #When false, this will block melee and arrows of non-owners.
     horseGrief: false
     
+    #Saddle lock and non owner horse interaction are two different
+    #types of the same thing. Saddle lock keeps people from right
+    #clicking horses they don't own, IF the horse has a saddle.
+    #Non owner horse interaction keeps people from right clicking
+    #horses they don't own, regardless of any condition.
+    
     #Should saddled horses be only accessible by their owners,
     #and unsaddled horses accessible to anyone?
     saddleLock: true
 
     #Should someone be able to interact with a horse that is not theirs?
-    nonOwnerHorseInteraction: true
+    nonOwnerHorseInteraction: false
 
     #Should horses be able to teleport between worlds?
     #IMPORTANT: Initial testing showed that horse data for the entire

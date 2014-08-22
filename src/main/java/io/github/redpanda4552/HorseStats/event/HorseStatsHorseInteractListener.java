@@ -20,14 +20,12 @@ public class HorseStatsHorseInteractListener extends HorseStatsListenerBase {
 	@EventHandler(ignoreCancelled=true)
 	/**
 	 * Event listener for nonOwnerHorseInteraction and saddleLock config settings.
-	 * Conditionals are separated to prevent any contingencies.
 	 * @param event - The PlayerInteractEntityEvent that triggered this.
 	 */
 	public void onPlayerInteractHorse(PlayerInteractEntityEvent event) {
 		Player p = event.getPlayer();
 		//nonOwnerHorseInteraction
 		if (main.configBoolean("nonOwnerHorseInteraction") == false) {
-			//Kill this method before it cancels.
 			if (main.override(p)) {
 				return;
 			}
@@ -43,7 +41,6 @@ public class HorseStatsHorseInteractListener extends HorseStatsListenerBase {
 
 		//saddleLock
 		if (main.configBoolean("saddleLock") == true) {
-			//Kill this method before it cancels.
 			if (main.override(p)) {
 				return;
 			}
@@ -60,6 +57,7 @@ public class HorseStatsHorseInteractListener extends HorseStatsListenerBase {
 		}
 		
 		//caravans. Still not ready for release. Comment toggled for now.
+		
 //		if (event.getRightClicked() instanceof Horse) {
 //			
 //			if (p.getItemInHand().getType() == Material.STICK) {

@@ -12,8 +12,7 @@ public class Horsestats extends HorseStatsCommand {
 	
 	private String[] help =
 	{ GREEN  + "========================"
-	, YELLOW + "HorseStats " + Translate.horsestats("by") + " 'bdubz4552'"
-	, YELLOW + Translate.horsestats("version") + " " + main.getDescription().getVersion()
+	, YELLOW + "HorseStats " + main.getDescription().getVersion() + " " + Translate.horsestats("by") + " 'bdubz4552'"
 	, GREEN  + "========================"
 	, YELLOW + Translate.horsestats("statDisplay")
 	, GREEN  + Translate.horsestats("instruction")

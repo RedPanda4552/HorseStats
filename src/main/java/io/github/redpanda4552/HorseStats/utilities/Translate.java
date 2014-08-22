@@ -12,7 +12,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class Translate {
 	
 	private File file;
-	private static MemoryConfiguration translateFile;
+	private MemoryConfiguration translateFile;
 	
 	public static ConfigurationSection adminNotificationListener;
 	public static ConfigurationSection horseStatsEventListener;
@@ -68,7 +68,7 @@ public class Translate {
 	 * @param path - The YAML header to check in this section
 	 * @return The translated String at the specified YAML header
 	 */
-	public static final String admin(String path) {
+	public final static String admin(String path) {
 		return adminNotificationListener.getString(path);
 	}
 	

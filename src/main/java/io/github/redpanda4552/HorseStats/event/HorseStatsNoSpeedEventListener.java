@@ -45,7 +45,6 @@ public class HorseStatsNoSpeedEventListener extends HorseStatsListenerBase imple
 				//They held something else
 				} else {
 					if (main.configBoolean("horseGrief") == false) {
-						//Kill this method before it is cancelled.
 						if (main.override(p)) {
 							return;
 						}	
@@ -63,8 +62,6 @@ public class HorseStatsNoSpeedEventListener extends HorseStatsListenerBase imple
 					Arrow a = (Arrow) event.getDamager();
 					if (a.getShooter() instanceof Player) {
 						Player p = (Player) a.getShooter();
-						
-						//Kill this method before it is cancelled.
 						if (main.override(p)) {
 							return;
 						}
