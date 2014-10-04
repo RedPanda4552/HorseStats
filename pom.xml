@@ -25,9 +25,9 @@
            <scope>provided</scope>
        </dependency>
 		<dependency>
-			<groupId>org.bukkit</groupId>
-			<artifactId>craftbukkit</artifactId>
-			<version>1.7.9-R0.2</version>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigot</artifactId>
+			<version>1649-patched</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>

@@ -2,12 +2,12 @@ package io.github.redpanda4552.HorseStats.event;
 
 import io.github.redpanda4552.HorseStats.HorseStatsMain;
 import io.github.redpanda4552.HorseStats.utilities.Translate;
-import net.minecraft.server.v1_7_R3.NBTBase;
-import net.minecraft.server.v1_7_R3.NBTTagCompound;
-import net.minecraft.server.v1_7_R3.NBTTagList;
+import net.minecraft.server.v1_7_R4.NBTBase;
+import net.minecraft.server.v1_7_R4.NBTTagCompound;
+import net.minecraft.server.v1_7_R4.NBTTagList;
 
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_7_R3.entity.CraftHorse;
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftHorse;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Horse;

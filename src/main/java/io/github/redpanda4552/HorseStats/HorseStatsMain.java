@@ -98,8 +98,8 @@ public class HorseStatsMain extends JavaPlugin {
 	 */
 	public boolean initMainEventListener() {
 		try {
-			Class.forName("net.minecraft.server.v1_7_R3.NBTBase"); //Checking vanilla MC
-			Class.forName("org.bukkit.craftbukkit.v1_7_R3.entity.CraftHorse"); //Checking CB
+			Class.forName("net.minecraft.server.v1_7_R4.NBTBase"); //Checking vanilla MC
+			Class.forName("org.bukkit.craftbukkit.v1_7_R4.entity.CraftHorse"); //Checking CB
 			getServer().getPluginManager().registerEvents(new HorseStatsEventListener(this), this);
 			return true;
 		} catch (ClassNotFoundException e) {
