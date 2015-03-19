@@ -1,45 +1,73 @@
-#Hard to read YAML files in Notepad? I use Notepad++. Google it.
-#  - Config Info -
-#All Configuration Options should be "true" or "false".
-#Do not capitalize "true" or "false".
-#Broken config? Save this file to your desktop, delete the config.yml
-#found in your server, and reload or restart your server. A new one
-#will generate, and you can retype your old settings back into the
-#freshly generated file. Don't just copy and paste everything, because
-#that just re-adds your broken stuff.
-#==============================================================
-#  - Plugin Information -
-#Do not modify anything in this section. These are used by HorseStats
-#internally, and if altered, may cause false warning messages.
-information:
-    configVersion: 3.1
-#==============================================================
-#  - Configuration Options -
+#YAML Editor Suggestions
+#Windows? This file might not display well in Notepad. I suggest Notepad++.
+#Linux? You probably know what you're doing. If not, I think gedit can display YAML
+#properly? If not, I just run Notepad++ in Wine.
+
+#Broken config? Save this file to your desktop, delete the config.yml found in your
+#server, and reload or restart your server. A new one will generate, and you can
+#retype your old settings back into the freshly generated file. Don't just copy and
+#paste everything, because that just re-adds your broken stuff.
+
+#Do not modify this. this is used by HorseStats internally, and if altered, may cause
+#false warning messages.
+config-version: 3.3
+
 options:
-    #Allow the plugin to check for updates at startup?
-    #If an update is available, HorseStats will notify you in the
-    #console when the plugin is enabled.
-    allowUpdateChecks: true
-    
-    #Allow horses to be killable by players who don't own them?
-    #When false, this will block melee and arrows of non-owners.
-    horseGrief: false
-    
-    #Saddle lock and non owner horse interaction are two different
-    #types of the same thing. Saddle lock keeps people from right
-    #clicking horses they don't own, IF the horse has a saddle.
-    #Non owner horse interaction keeps people from right clicking
-    #horses they don't own, regardless of any condition.
-    
-    #Should saddled horses be only accessible by their owners,
-    #and unsaddled horses accessible to anyone?
-    saddleLock: true
+    #If you need to look up the name of a Bukkit Material type, they are all in here:
+    #https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/Material.java
+    #The list of Material types starts down the page a bit. Scroll past the lines that
+    #start with "import" and you will see "public enum Material {", the Material types
+    #are listed below that. You only need the plain English name; only worry about the
+    #stuff on the left side of the parentheses.
 
-    #Should someone be able to interact with a horse that is not theirs?
-    nonOwnerHorseInteraction: false
+    #This is the item used to display a horse's stats. Note that this MUST be a valid
+    #Bukkit Material type. If it is not, HorseStats will say so in console at startup
+    #and fall back to the lead as a default.
+    stat-item: LEASH
+    
+    #This is the user-friendly name of the above Material type. This is what will be
+    #shown in /horsestats as the item to use for stat display. This should be surrounded
+    #in quotation marks.
+    stat-item-name: "Lead"
 
-    #Should horses be able to teleport between worlds?
-    #IMPORTANT: Initial testing showed that horse data for the entire
-    #server could be lost if this is allowed.
-    allowMultiWorldTeleport: false
+    #This is the item used to toggle horse teleport. Note that this MUST be a valid
+    #Bukkit Material type. If it is not, HorseStats will say so in console at startup
+    #and fall back to the lead as a default.
+    teleport-item: ENDER_PEARL
+    
+    #This is the user-friendly name of the above Material type. This is what will be
+    #shown in /horsestats as the item to use for teleporting. This should be surrounded
+    #in quotation marks.
+    teleport-item-name: "Ender Pearl"
 
+    #Allow the plugin to check for updates at startup? If an update is available,
+    #HorseStats will notify you in the console when the plugin is enabled, and players
+    #with the 'HorseStats.plugin-alerts' permission will get this message when they
+    #join the server as well.
+    update-checks: true
+    
+    #Note about "Access Rights"
+    #It should be mentioned here that "Access Rights" mentioned below refers to a few
+    #people. First, the legitimate owner of the horse. Second, any server staff with
+    #the "HorseStats.global-override" permission. Third, any friends on the legitimate
+    #owner's friend list.
+    
+    #Allow horses to be killable by players who don't have "access rights"? If this is
+    #true, any left clicks or arrow strikes from players without "access rights" will
+    #be cancelled. Since small projectiles do no damage, those are not blocked.
+    anti-grief: true
+    
+    #Should players without "access rights" be able right click horses? If false,
+    #this will cancel any attempts by players without "access rights" to right click
+    #horses, no matter what the intended purpose is. Horses that are not tamed are
+    #unaffected by this setting.
+    anti-interact: false
+    
+    #Should horses be able to teleport between worlds? IMPORTANT: Initial testing
+    #showed that horse data for the entire server could be lost if this is allowed.
+    #However, this result has not been reproduced in recent tests.
+    multi-world-teleport: false
+    
+    #Should the stats of an owned horse be blocked when a player without "access rights"
+    #tries to view its stats?
+    block-stats: false

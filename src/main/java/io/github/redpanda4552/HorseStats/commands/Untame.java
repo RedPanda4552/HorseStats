@@ -1,8 +1,31 @@
+/**
+ * This file is part of HorseStats, licensed under the MIT License (MIT)
+ * 
+ * Copyright (c) 2015 Brian Wood
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package io.github.redpanda4552.HorseStats.commands;
 
 import io.github.redpanda4552.HorseStats.HorseStatsCommand;
 import io.github.redpanda4552.HorseStats.HorseStatsMain;
-import io.github.redpanda4552.HorseStats.utilities.Translate;
+import io.github.redpanda4552.HorseStats.translate.Translate;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,8 +35,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class Untame extends HorseStatsCommand {
 	
-	public Untame(HorseStatsMain horseStatsMain) {
-		super(horseStatsMain);	
+	public Untame(HorseStatsMain main, Translate tl) {
+		super(main, tl);	
 	}
 	
 	@Override
@@ -28,14 +51,14 @@ public class Untame extends HorseStatsCommand {
 			}
 			this.run(p, h);
 		} else {
-			sender.sendMessage(Translate.generic("console"));
+			sender.sendMessage(tl.generic("console"));
 		}
 		return true;
 	}
 	
 	public void run(Player p, Horse h) {
 		if (h != null) {
-			if (h.getOwner() == p || main.override(p)) {
+			if (this.isOwner(h, p)) {
 				h.eject();
 				h.setOwner(null);
 				h.setTamed(false);
@@ -44,12 +67,12 @@ public class Untame extends HorseStatsCommand {
 					h.getInventory().setSaddle(null);
 					h.getWorld().dropItemNaturally(h.getLocation(), stack);
 				}
-				this.sendNormal(p, Translate.untame, "untame");
+				p.sendMessage(tl.n + tl.untame("untame"));
 			} else {
-				this.sendNormal(p, Translate.generic, "owner");
+				p.sendMessage(tl.n + tl.generic("owner"));
 			}
 		} else {
-			this.sendNormal(p, Translate.generic, "riding");
+			p.sendMessage(tl.n + tl.generic("riding"));
 		}
 	}
 }

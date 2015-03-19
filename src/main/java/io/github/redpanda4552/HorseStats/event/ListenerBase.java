@@ -21,63 +21,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.github.redpanda4552.HorseStats.commands;
+package io.github.redpanda4552.HorseStats.event;
 
-import io.github.redpanda4552.HorseStats.HorseStatsCommand;
+import java.util.ArrayList;
+import java.util.UUID;
+
 import io.github.redpanda4552.HorseStats.HorseStatsMain;
 import io.github.redpanda4552.HorseStats.translate.Translate;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 
-public class SetOwner extends HorseStatsCommand {
+public abstract class ListenerBase implements Listener {
 	
-	public SetOwner(HorseStatsMain main, Translate tl) {
-		super(main, tl);
-	}
-
-	@Override
-	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
-		if (sender instanceof Player) {
-			Player p = (Player) sender;
-			Horse h = null;
-			if (p.isInsideVehicle()) {
-				if (p.getVehicle() instanceof Horse) {
-					h = (Horse) p.getVehicle();
-				}
-			}
-			this.run(p, h, args);
-		} else {
-			sender.sendMessage(tl.generic("console"));
-		}
-		return true;
+	protected HorseStatsMain main;
+	protected Translate tl;
+	
+	public ListenerBase(HorseStatsMain main, Translate tl) {
+		this.main = main;
+		this.tl = tl;
 	}
 	
 	/**
-	 * Since we just need to get the player at that moment in time, we can safely use their username
+	 * Check if a player owns or has access rights to a horse.
+	 * @param horse - The Horse to check
+	 * @param player - The Player to check.
+	 * @return True if access is allowed for any reason, false if no owner or no conditions are met.
 	 */
-	public void run(Player p, Horse h, String[] args) {
-		if (h != null) {
-			if (this.isOwner(h, p)) {
-				if (args.length == 1) {					
-					if (Bukkit.getServer().getPlayerExact(args[0]) != null) {
-						h.eject();
-						p.sendMessage(tl.n + tl.setOwner("set-owner"));
-						h.setOwner(p.getServer().getPlayerExact(args[0]));
-					} else {
-						p.sendMessage(tl.e + tl.generic("player-not-found"));
-					}
-				} else {
-					p.sendMessage(tl.n + tl.setOwner("usage"));
+	protected boolean canAccess(Horse horse, Player player) {
+		if (horse.getOwner() == null) {
+			return true;
+		} else if (player.hasPermission("HorseStats.global-override")) {
+			return true;
+		} else if (horse.getOwner() == player) {
+			return true;
+		} else if (Bukkit.getPlayer(horse.getOwner().getUniqueId()).hasPermission("HorseStats.friend")) {
+			ArrayList<UUID> friends = main.friendHelper.readFriendListFromIndex(horse.getOwner().getUniqueId());
+			if (friends != null) {
+				if (friends.contains(player.getUniqueId())) {
+					return true;
 				}
-			} else {
-				p.sendMessage(tl.e + tl.generic("owner"));
 			}
-		} else {
-			p.sendMessage(tl.e + tl.generic("riding"));
 		}
+		return false;
 	}
 }

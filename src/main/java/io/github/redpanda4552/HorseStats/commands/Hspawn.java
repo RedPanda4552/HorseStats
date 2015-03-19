@@ -1,8 +1,31 @@
+/**
+ * This file is part of HorseStats, licensed under the MIT License (MIT)
+ * 
+ * Copyright (c) 2015 Brian Wood
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package io.github.redpanda4552.HorseStats.commands;
 
 import io.github.redpanda4552.HorseStats.HorseStatsCommand;
 import io.github.redpanda4552.HorseStats.HorseStatsMain;
-import io.github.redpanda4552.HorseStats.utilities.Translate;
+import io.github.redpanda4552.HorseStats.translate.Translate;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,8 +36,8 @@ import org.bukkit.entity.Horse.Variant;
 
 public class Hspawn extends HorseStatsCommand {
 	
-	public Hspawn(HorseStatsMain horseStatsMain) {
-		super(horseStatsMain);
+	public Hspawn(HorseStatsMain main, Translate tl) {
+		super(main, tl);
 	}
 	
 	@Override
@@ -29,7 +52,7 @@ public class Hspawn extends HorseStatsCommand {
 			}
 			this.run(p, h, args);
 		} else {
-			sender.sendMessage(Translate.generic("console"));
+			sender.sendMessage(tl.generic("console"));
 		}
 		return true;
 	}
@@ -40,12 +63,12 @@ public class Hspawn extends HorseStatsCommand {
 			if (args.length >= 1) {
 				if (args[0].equalsIgnoreCase("donkey")) {
 					v = Variant.DONKEY;
-					this.sendNormal(p, Translate.hspawn, "donkeySpawn");
+					p.sendMessage(tl.n + tl.hspawn("donkey-spawn"));
 				} else if (args[0].equalsIgnoreCase("mule")) {
 					v = Variant.MULE;
-					this.sendNormal(p, Translate.hspawn, "muleSpawn");
+					p.sendMessage(tl.n + tl.hspawn("mule-spawn"));
 				} else {
-					this.sendError(p, Translate.hspawn, "usage");
+					p.sendMessage(tl.n + tl.hspawn("usage"));
 					return;
 				}
 			} else{
@@ -56,10 +79,10 @@ public class Hspawn extends HorseStatsCommand {
 			h.setVariant(v);
 			if (v == Variant.HORSE) {
 				
-				this.sendNormal(p, Translate.hspawn, "horseSpawn");
+				p.sendMessage(tl.n + tl.hspawn("horse-spawn"));
 			}
 		} else {
-			this.sendError(p, Translate.generic, "cannotRide");
+			p.sendMessage(tl.e + tl.generic("cannot-ride"));
 		}
 	}
 }

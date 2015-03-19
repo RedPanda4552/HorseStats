@@ -1,3 +1,4 @@
+
 /**
  * This file is part of HorseStats, licensed under the MIT License (MIT)
  * 
@@ -21,63 +22,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.github.redpanda4552.HorseStats.commands;
+package io.github.redpanda4552.HorseStats.event;
 
-import io.github.redpanda4552.HorseStats.HorseStatsCommand;
 import io.github.redpanda4552.HorseStats.HorseStatsMain;
 import io.github.redpanda4552.HorseStats.translate.Translate;
 
-import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-public class SetOwner extends HorseStatsCommand {
-	
-	public SetOwner(HorseStatsMain main, Translate tl) {
+public class HorseInteractListener extends ListenerBase {
+
+	public HorseInteractListener(HorseStatsMain main, Translate tl) {
 		super(main, tl);
 	}
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
-		if (sender instanceof Player) {
-			Player p = (Player) sender;
-			Horse h = null;
-			if (p.isInsideVehicle()) {
-				if (p.getVehicle() instanceof Horse) {
-					h = (Horse) p.getVehicle();
-				}
-			}
-			this.run(p, h, args);
-		} else {
-			sender.sendMessage(tl.generic("console"));
-		}
-		return true;
-	}
-	
 	/**
-	 * Since we just need to get the player at that moment in time, we can safely use their username
+	 * Event listener for nonOwnerHorseInteraction config setting.
+	 * @param event - The PlayerInteractEntityEvent that triggered this.
 	 */
-	public void run(Player p, Horse h, String[] args) {
-		if (h != null) {
-			if (this.isOwner(h, p)) {
-				if (args.length == 1) {					
-					if (Bukkit.getServer().getPlayerExact(args[0]) != null) {
-						h.eject();
-						p.sendMessage(tl.n + tl.setOwner("set-owner"));
-						h.setOwner(p.getServer().getPlayerExact(args[0]));
-					} else {
-						p.sendMessage(tl.e + tl.generic("player-not-found"));
-					}
-				} else {
-					p.sendMessage(tl.n + tl.setOwner("usage"));
+	@EventHandler
+	public void onPlayerInteractHorse(PlayerInteractEntityEvent event) {
+		if (event.getRightClicked() instanceof Horse) {
+			if (main.configBoolean("anti-interact")) {
+				Horse h = (Horse) event.getRightClicked();
+				Player p = event.getPlayer();
+				if (!this.canAccess(h, p)) {
+					event.setCancelled(true);
+					p.sendMessage(tl.e + tl.generic("owner"));
 				}
-			} else {
-				p.sendMessage(tl.e + tl.generic("owner"));
 			}
-		} else {
-			p.sendMessage(tl.e + tl.generic("riding"));
-		}
+		}	
 	}
 }

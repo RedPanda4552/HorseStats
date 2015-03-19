@@ -1,9 +1,32 @@
+/**
+ * This file is part of HorseStats, licensed under the MIT License (MIT)
+ * 
+ * Copyright (c) 2015 Brian Wood
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package io.github.redpanda4552.HorseStats.commands;
 
 import static org.bukkit.ChatColor.*;
 import io.github.redpanda4552.HorseStats.HorseStatsCommand;
 import io.github.redpanda4552.HorseStats.HorseStatsMain;
-import io.github.redpanda4552.HorseStats.utilities.Translate;
+import io.github.redpanda4552.HorseStats.translate.Translate;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -16,8 +39,8 @@ import org.bukkit.entity.Horse.Style;
 
 public class SetStyle extends HorseStatsCommand {
 	
-	public SetStyle(HorseStatsMain horseStatsMain) {
-		super(horseStatsMain);
+	public SetStyle(HorseStatsMain main, Translate tl) {
+		super(main, tl);
 	}
 
 	@Override
@@ -32,14 +55,14 @@ public class SetStyle extends HorseStatsCommand {
 			}
 			this.run(p, h, args);
 		} else {
-			sender.sendMessage(Translate.generic("console"));
+			sender.sendMessage(tl.generic("console"));
 		}
 		return true;
 	}
 
 	public void run(Player p, Horse h, String[] args) {
 		if (h != null) {
-			if (h.getOwner() == p || main.override(p)) {
+			if (this.canAccess(h, p)) {
 				if (h.getVariant() == Variant.HORSE) {
 					if (args.length >= 2) {
 						if (args[0].equalsIgnoreCase("color")) {
@@ -65,10 +88,11 @@ public class SetStyle extends HorseStatsCommand {
 							else if (args[1].equalsIgnoreCase("white")) {
 								h.setColor(Color.WHITE);
 							} else {
-								this.sendError(p, Translate.setStyle, "styleParams");
+								p.sendMessage(tl.e + tl.setStyle("style-params"));
+								return;
 							}
-						}
-						if (args[0].equalsIgnoreCase("style")) {
+							p.sendMessage(tl.n + tl.setStyle("color-change") + " " + YELLOW + h.getColor());
+						} else if (args[0].equalsIgnoreCase("style")) {
 							if (args[1].equalsIgnoreCase("blackdots")) {
 								h.setStyle(Style.BLACK_DOTS);
 							}
@@ -84,31 +108,35 @@ public class SetStyle extends HorseStatsCommand {
 							else if (args[1].equalsIgnoreCase("whitefield")) {
 								h.setStyle(Style.WHITEFIELD);
 							} else {
-								this.sendError(p, Translate.setStyle, "styleParams");
+								p.sendMessage(tl.e + tl.setStyle("style-params"));
+								return;
 							}
+							p.sendMessage(tl.n + tl.setStyle("style-change") + " " + YELLOW + h.getStyle());
+						} else {
+							p.sendMessage(tl.n + tl.setStyle("style-params"));
 						}
 					} else if (args.length == 1){
 						if (args[0].equals("?")) {
 							setstatHelp(p);
 						} else {
-							this.sendError(p, Translate.setStyle, "styleParams");
+							p.sendMessage(tl.n + tl.setStyle("style-params"));
 						}
 					} else {
-						this.sendError(p, Translate.setStyle, "styleParams");
+						p.sendMessage(tl.n + tl.setStyle("style-params"));
 					}
 				} else {
-					this.sendError(p, Translate.setStyle, "onlyHorse");
+					p.sendMessage(tl.e + tl.setStyle("only-horse"));
 				}
 			} else {
-				this.sendError(p, Translate.generic, "owner");
+				p.sendMessage(tl.e + tl.generic("owner"));
 			}
 		} else {
-			this.sendError(p, Translate.generic, "riding");
+			p.sendMessage(tl.e + tl.generic("riding"));
 		}
 	}
 	public void setstatHelp(Player p) {
 		String[] styleHelp =
-		{ YELLOW + "/setstyle <color|style> <value>"
+		{ YELLOW + "/setstyle <color | style> <value>"
 		, YELLOW + "Styles:"
 		, GREEN  + "none, blackdots, whitedots, white, whitefield"
 		, YELLOW + "Colors:"
