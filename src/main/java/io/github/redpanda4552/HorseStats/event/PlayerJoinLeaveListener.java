@@ -58,15 +58,27 @@ public class PlayerJoinLeaveListener extends ListenerBase {
 				p.sendMessage(tl.s + "https://dev.bukkit.org/bukkit-plugins/horsestats");
 			}
 		}
-		
+
 		if (p.hasPermission("HorseStats.friend")) {
 			main.friendHelper.readFriendListFromFile(p.getUniqueId());
+		}
+		
+		if (main.friendHelper.readFriendListFromIndex(p.getUniqueId()) != null) {
+			main.friendHelper.setPermissionStatus(p.getUniqueId(), p.hasPermission("HorseStats.friend"));
+
+			main.friendHelper.saveFriendLists();
 		}
 	}
 	
 	@EventHandler
 	public void playerLeave(PlayerQuitEvent event) {
 		ArrayList<UUID> friends = main.friendHelper.readFriendListFromIndex(event.getPlayer().getUniqueId());
+		
+		if (main.friendHelper.readFriendListFromIndex(event.getPlayer().getUniqueId()) != null) {
+			main.friendHelper.setPermissionStatus(event.getPlayer().getUniqueId(), event.getPlayer().hasPermission("HorseStats.friend"));
+
+			main.friendHelper.saveFriendLists();
+		}
 		
 		if (friends != null) {
 			main.friendHelper.removeFriendList(event.getPlayer().getUniqueId());

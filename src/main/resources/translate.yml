@@ -118,10 +118,11 @@ Delchest:
 Delname:
     name-delete: "Custom name erased."
 HFriend:
-    usage: "/hfriend <add | remove | view> <player name or UUID> -- Players being added must be online. When using 'view', you do not need to specify a player name or UUID."
+    usage: "/hfriend <add | remove | view> <player name or UUID> -- Players being added must be online. When removing players, a name can only be used when the player is online. Otherwise the UUID must be used. When using 'view', you do not need to specify a player name or UUID."
     friend: "Friend"
     friend-add: "was successfully added to your friend list."
     friend-remove: "was successfully removed from your friend list."
+    bad-uuid: "Invalid player name or UUID, please try again."
     list-empty: "Your friend list is currently empty."
     already-on-list: "This player is already on your friends list."
     not-on-list: "This player is not on your friends list."

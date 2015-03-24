@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -37,8 +38,9 @@ import io.github.redpanda4552.HorseStats.HorseStatsMain;
 
 public class FriendHelper {
 
+	
 	public File friendFile;	
-	public YamlConfiguration yc;
+	public FileConfiguration yc;
 	
 	public HashMap<UUID, ArrayList<UUID>> index;
 	
@@ -53,6 +55,16 @@ public class FriendHelper {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			readFriendListFromFile(player.getUniqueId());
 		}
+	}
+	
+	/**
+	 * Update the offline permission status of the specified player.
+	 * @param uuid - The UUID of the Player to update the offline permission status.
+	 * @param status - The new offline permission status.
+	 */
+	public void setPermissionStatus(UUID uuid, boolean status) {
+		yc.set("offline-permissions." + uuid.toString(), null);
+		yc.set("offline-permissions." + uuid.toString(), status);
 	}
 	
 	/**
@@ -103,17 +115,27 @@ public class FriendHelper {
 	 * Read a friend list from the storage file and add it to the index.
 	 * If a friend list for the specified Player does not exist, this will do nothing.
 	 * @param uuid - The UUID to look for in the storage file.
+	 * @return True if a friend list was added to the index, or false if nothing happened.
 	 */
-	public void readFriendListFromFile(UUID uuid) {
-		for (String key : yc.getKeys(false)) {
-			if (uuid.toString().equalsIgnoreCase(key)) {
-				ArrayList<UUID> friends = new ArrayList<UUID>();
-				for (String str : yc.getConfigurationSection(key).getKeys(false)) {
-					friends.add(UUID.fromString(str));
+	public boolean readFriendListFromFile(UUID uuid) {
+		ArrayList<UUID> friends = new ArrayList<UUID>();
+		for (String key : yc.getKeys(true)) {
+			String[] levels = key.split("\\.");
+			
+			if (levels.length >= 3) {
+				if (levels[0].equalsIgnoreCase("friend-lists")) {
+					if (levels[1].equalsIgnoreCase(uuid.toString())) {
+						friends.add(UUID.fromString(levels[2]));
+					}
 				}
-				
-				index.put(uuid, friends);
-			}			
+			}
+		}
+		
+		if (!friends.isEmpty()) {
+			index.put(uuid, friends);
+			return true;
+		} else {
+			return false;
 		}
 	}
 	
@@ -122,15 +144,11 @@ public class FriendHelper {
 	 * @param uuid - The UUID of the Player who's friends are being saved.
 	 */
 	public void writeToFile(UUID uuid) {
-		yc.createSection(uuid.toString());
+		yc.set("friend-lists." + uuid.toString(), null);
 		for (UUID friendUUID : index.get(uuid)) {
-			yc.getConfigurationSection(uuid.toString()).createSection(friendUUID.toString());
+			yc.createSection("friend-lists." + uuid.toString() + "." + friendUUID.toString());
 		}
-		try {
-			yc.save(this.friendFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		saveFriendLists();
 	}
 	
 	/**
@@ -139,5 +157,17 @@ public class FriendHelper {
 	 */
 	public void addEmptyFriendList(UUID uuid) {
 		index.put(uuid, new ArrayList<UUID>());
+	}
+	
+	/**
+	 * Perform a friend file write and load the new copy into memory.
+	 */
+	public void saveFriendLists() {
+		try {
+			yc.save(this.friendFile);
+			yc = YamlConfiguration.loadConfiguration(friendFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

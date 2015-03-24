@@ -69,10 +69,10 @@ public class Untame extends HorseStatsCommand {
 				}
 				p.sendMessage(tl.n + tl.untame("untame"));
 			} else {
-				p.sendMessage(tl.n + tl.generic("owner"));
+				p.sendMessage(tl.e + tl.generic("owner"));
 			}
 		} else {
-			p.sendMessage(tl.n + tl.generic("riding"));
+			p.sendMessage(tl.e + tl.generic("riding"));
 		}
 	}
 }

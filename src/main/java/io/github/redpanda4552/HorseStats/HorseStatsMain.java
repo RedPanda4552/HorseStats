@@ -204,7 +204,7 @@ public class HorseStatsMain extends JavaPlugin {
 	 * @param sectionName - The path to get the ConfigurationSection for.
 	 * @return A ConfigurationSection object matching the given path.
 	 */
-	public ConfigurationSection section(String sectionName) {
+	private ConfigurationSection section(String sectionName) {
 		ConfigurationSection section = this.getConfig().getConfigurationSection(sectionName);
 		return section;
 	}

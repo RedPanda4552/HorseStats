@@ -45,6 +45,15 @@ public class HFriend extends HorseStatsCommand {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
+		if (args.length == 1 && args[0].equalsIgnoreCase("debug")) {
+			sender.sendMessage("Memory index:");
+			for (UUID uuid : main.friendHelper.index.keySet()) {
+				sender.sendMessage("Key: " + uuid);
+				sender.sendMessage("Value: " + main.friendHelper.index.get(uuid));
+			}
+			return true;
+		}
+		
 		if (!(sender instanceof Player)) {
 			sender.sendMessage(tl.generic("console"));
 			return true;
@@ -80,18 +89,16 @@ public class HFriend extends HorseStatsCommand {
 		if (args.length >= 2) {
 			String id = "";
 			
-			/* 
-			 * We only ask Bukkit about Player names and UUIDs when adding players.
-			 * When removing, we can list the UUIDs on there already, and can type by hand.
-			 */
-			if (args[0].equalsIgnoreCase("add")) {
+			if (args[0].equalsIgnoreCase("add") || args[0].equalsIgnoreCase("remove")) {
 				if (Bukkit.getPlayer(args[1]) != null) { //Is our input type a name?
 					id = Bukkit.getPlayer(args[1]).getUniqueId().toString();
 				} else { //Or a UUID?
 					try {
-						if (Bukkit.getPlayer(UUID.fromString(args[1])) != null) {
-							id = Bukkit.getPlayer(args[1]).getUniqueId().toString();
-						} else {
+						if (Bukkit.getPlayer(UUID.fromString(args[1])) != null) { //If they're online
+							id = args[1];
+						} else if (main.friendHelper.readFriendListFromIndex(player.getUniqueId()).contains(UUID.fromString(args[1]))) { //If they're offline, but in the player's friend list
+							id = args[1];
+						} else { //Or in this case we don't have any idea who the player is talking about.
 							player.sendMessage(tl.e + tl.generic("player-not-found"));
 							return true;
 						}
@@ -121,12 +128,16 @@ public class HFriend extends HorseStatsCommand {
 					player.sendMessage(tl.e + tl.hFriend("already-on-list"));
 				}
 			} else if (args[0].equalsIgnoreCase("remove")) {
-				if (friends.contains(UUID.fromString(id))) {
-					main.friendHelper.removeFriend(player.getUniqueId(), UUID.fromString(id));
-					main.friendHelper.writeToFile(player.getUniqueId());
-					sender.sendMessage(tl.n + tl.hFriend("friend") + " " + ChatColor.YELLOW + id + ChatColor.GREEN + " " + tl.hFriend("friend-remove"));
-				} else {
-					player.sendMessage(tl.e + tl.hFriend("not-on-list"));
+				try {
+					if (friends.contains(UUID.fromString(id))) {
+						main.friendHelper.removeFriend(player.getUniqueId(), UUID.fromString(id));
+						main.friendHelper.writeToFile(player.getUniqueId());
+						player.sendMessage(tl.n + tl.hFriend("friend") + " " + ChatColor.YELLOW + id + ChatColor.GREEN + " " + tl.hFriend("friend-remove"));
+					} else {
+						player.sendMessage(tl.e + tl.hFriend("not-on-list"));
+					}
+				} catch (IllegalArgumentException e) {
+					player.sendMessage(tl.e + tl.hFriend("bad-uuid"));
 				}
 			}
 			return true;
