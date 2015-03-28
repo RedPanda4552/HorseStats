@@ -208,14 +208,14 @@ public class PunchListener extends ListenerBase {
 		if (main.noSpeedMode) {
 			return speed;
 		}
-		org.bukkit.craftbukkit.v1_8_R1.entity.CraftHorse cHorse = (org.bukkit.craftbukkit.v1_8_R1.entity.CraftHorse) horse;
-		net.minecraft.server.v1_8_R1.NBTTagCompound compound = new net.minecraft.server.v1_8_R1.NBTTagCompound();
+		org.bukkit.craftbukkit.v1_8_R2.entity.CraftHorse cHorse = (org.bukkit.craftbukkit.v1_8_R2.entity.CraftHorse) horse;
+		net.minecraft.server.v1_8_R2.NBTTagCompound compound = new net.minecraft.server.v1_8_R2.NBTTagCompound();
 		cHorse.getHandle().b(compound);
-		net.minecraft.server.v1_8_R1.NBTTagList list = (net.minecraft.server.v1_8_R1.NBTTagList) compound.get("Attributes");
+		net.minecraft.server.v1_8_R2.NBTTagList list = (net.minecraft.server.v1_8_R2.NBTTagList) compound.get("Attributes");
 		for(int i = 0; i < list.size() ; i++) {
-			net.minecraft.server.v1_8_R1.NBTTagCompound base = list.get(i);
+			net.minecraft.server.v1_8_R2.NBTTagCompound base = list.get(i);
 			if (base.getTypeId() == 10) {
-				net.minecraft.server.v1_8_R1.NBTTagCompound attrCompound = (net.minecraft.server.v1_8_R1.NBTTagCompound)base;
+				net.minecraft.server.v1_8_R2.NBTTagCompound attrCompound = (net.minecraft.server.v1_8_R2.NBTTagCompound)base;
 				if (base.toString().contains("generic.movementSpeed")) {
 					speed = attrCompound.getDouble("Base");
 				}

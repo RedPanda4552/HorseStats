@@ -148,13 +148,13 @@ public class HorseStatsMain extends JavaPlugin {
 	 */
 	public boolean testNoSpeedMode() {
 		try {
-			Class.forName("org.bukkit.craftbukkit.v1_8_R1.entity.CraftHorse");
+			Class.forName("org.bukkit.craftbukkit.v1_8_R2.entity.CraftHorse");
 			return false;
 		} catch (ClassNotFoundException e) {
 			noSpeedMode = true;			
 			log.warning("The version of CraftBukkit/Spigot on this server does not match that of HorseStats.");
 			log.warning("To avoid full plugin failure, the speed value in the stat display will be disabled.");
-			log.warning("To fix this issue, get a HorseStats build that is made for your version of CraftBukkit.");
+			log.warning("To fix this issue, get a HorseStats build that is made for your version of CraftBukkit/Spigot.");
 			return true;
 		}
 	}
@@ -167,7 +167,7 @@ public class HorseStatsMain extends JavaPlugin {
 	 * @return True if config is fine. False if outdated.
 	 */
 	public boolean checkConfiguration() {
-		if (this.getConfig().getString("config-version") == null || this.getConfig().getDouble("config-version") != 3.3) {
+		if (this.getConfig().getString("config-version") == null || this.getConfig().getDouble("config-version") != 3.31) {
 			outofdateConfig = true;			
 			log.warning("It appears your HorseStats configuration file is out of date.");
 			log.warning("Please take note of the settings you have in it, and delete it.");
@@ -210,8 +210,8 @@ public class HorseStatsMain extends JavaPlugin {
 	}
 	
 	/**
-	 * Returns the boolean value of the specified option node. This method is <b><i>exclusive</i></b>
-	 * to the "options" section of the configuration.
+	 * Returns the boolean value of the specified option node.
+	 * This method is <b><i>exclusive</i></b> to the "options" section of the configuration.
 	 * @param configBoolean - The boolean to be checked.
 	 * @return The boolean value of the specified node.
 	 */

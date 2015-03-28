@@ -49,7 +49,7 @@ public class PlayerJoinLeaveListener extends ListenerBase {
 			}
 			
 			if (main.noSpeedMode) {
-				p.sendMessage(tl.n + tl.playerJoinLeave("noSpeed"));
+				p.sendMessage(tl.n + tl.playerJoinLeave("no-speed"));
 			}
 			
 			if (main.updateAvailable) {
