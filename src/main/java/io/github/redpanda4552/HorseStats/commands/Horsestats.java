@@ -39,9 +39,7 @@ public class Horsestats extends HorseStatsCommand {
 	
 	private String[] genHelp =
 	{ " "
-	, GREEN  + "========================"
-	, YELLOW + "HorseStats v" + main.getDescription().getVersion() + " " + tl.horsestats("by") + " 'bdubz4552'"
-	, GREEN  + "========================"
+	, YELLOW + "== HorseStats v" + main.getDescription().getVersion() + " " + tl.horsestats("by") + " 'bdubz4552' =="
 	, YELLOW + tl.horsestats("choose")
 	, GREEN  + "/hs stats"
 	, GREEN  + "/hs teleport"
@@ -118,7 +116,7 @@ public class Horsestats extends HorseStatsCommand {
 					} else if (args[1].equalsIgnoreCase("interact")) {
 						sender.sendMessage(antiInteractHelp);
 						return true;
-					} else if (args[1].equalsIgnoreCase("friend")) {
+					} else if (args[1].equalsIgnoreCase("friends")) {
 						sender.sendMessage(friendHelp);
 						return true;
 					}
