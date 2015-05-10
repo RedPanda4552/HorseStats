@@ -39,7 +39,7 @@ public class HorseInteractListener extends ListenerBase {
 	}
 
 	/**
-	 * Event listener for nonOwnerHorseInteraction config setting.
+	 * Event listener for Anti-Interact config setting.
 	 * @param event - The PlayerInteractEntityEvent that triggered this.
 	 */
 	@EventHandler

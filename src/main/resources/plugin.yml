@@ -6,101 +6,101 @@ description: Displays stats of a horse.
 
 #Start Command List
 commands:
-    horsestats:
-        description: Displays plugin usage.
-        usage: /horsestats
-        aliases: hs
-        #No permission node
-    setowner:
-        description: Changes the owner of a horse.
-        usage: /setowner <new owner>
-        permission: HorseStats.setowner
-    untame:
-        description: Untames a horse.
-        usage: /untame
-        permission: HorseStats.untame
-    delname:
-        description: Delete a horse's custom name.
-        usage: /delname
-        permission: HorseStats.delname
-    delchest:
-        description: Delete a horse's chest.
-        usage: /delchest
-        permission: HorseStats.delchest
-    slayhorse:
-        description: Slays the ridden horse.
-        usage: /slayhorse <launch>
-        permission: HorseStats.slayhorse
-    hfriend:
-        description: Command for adding and removing friends.
-        usage: /hfriend <add|remove> <player name or UUID>
-        permission: HorseStats.friend
-    hspawn:
-        description: Spawns a horse/donkey/mule.
-        usage: /hspawn <donkey|mule>
-        permission: HorseStats.hspawn
-    htp:
-        description: Teleports the selected horse
-        usage: /htp
-        permission: HorseStats.htp
-    setstyle:
-        description: Changes a horse's color and style.
-        usage: /setstyle <type> <value>
-        permission: HorseStats.setstyle
-    setstat:
-        description: Sets the specified stat for a horse.
-        usage: /setstat <health|jump|speed> <value>
-        permission: HorseStats.setstat
-    tame:
-        description: Tames a horse
-        usage: /tame
-        permission: HorseStats.tame
-        permission-message: "Bruh, you can't do that."
-    
+     horsestats:
+          description: Displays plugin usage.
+          usage: /horsestats
+          aliases: hs
+          #No permission node
+     setowner:
+          description: Changes the owner of a horse.
+          usage: /setowner <new owner>
+          permission: HorseStats.setowner
+     untame:
+          description: Untames a horse.
+          usage: /untame
+          permission: HorseStats.untame
+     delname:
+          description: Delete a horse's custom name.
+          usage: /delname
+          permission: HorseStats.delname
+     delchest:
+          description: Delete a horse's chest.
+          usage: /delchest
+          permission: HorseStats.delchest
+     slayhorse:
+          description: Slays the ridden horse.
+          usage: /slayhorse <launch>
+          permission: HorseStats.slayhorse
+     hfriend:
+          description: Command for adding and removing friends.
+          usage: /hfriend <add|remove> <player name or UUID>
+          permission: HorseStats.friend
+     hspawn:
+          description: Spawns a horse/donkey/mule.
+          usage: /hspawn <donkey|mule>
+          permission: HorseStats.hspawn
+     htp:
+          description: Teleports the selected horse
+          usage: /htp
+          permission: HorseStats.htp
+     setstyle:
+          description: Changes a horse's color and style.
+          usage: /setstyle <type> <value>
+          permission: HorseStats.setstyle
+     setstat:
+          description: Sets the specified stat for a horse.
+          usage: /setstat <health|jump|speed> <value>
+          permission: HorseStats.setstat
+     tame:
+          description: Tames a horse
+          usage: /tame
+          permission: HorseStats.tame
+          permission-message: "Bruh, you can't do that."
+     
 #Start Permissions List
 permissions:
-    HorseStats.*:
-        description: Gives access to ALL HorseStats permissions
-        children:
-            HorseStats.plugin-alerts: true
-            HorseStats.global-override: true
-            HorseStats.slayhorse: true
-            HorseStats.slayhorse.launch: true
-            HorseStats.hspawn: true
-            HorseStats.untame: true
-            HorseStats.delname: true
-            HorseStats.delchest: true
-            HorseStats.friend: true
-            HorseStats.htp: true
-            HorseStats.setstyle: true
-            HorseStats.setstat: true
-            HorseStats.setowner: true
-            HorseStats.tame: true
-    HorseStats.plugin-alerts:
-        description: Allows the player to recieve messages about plugin warnings.
-    HorseStats.global-override:
-        description: Allows the player to bypass ANY and ALL owner restrictions.
-    HorseStats.slayhorse:
-        description: Allows use of /slayhorse
-    HorseStats.slayhorse.launch:
-        description: Allows use of /slayhorse launch
-    HorseStats.friend:
-        description: Allows use of /hfriend, and recognition of friends as co-owners.
-    HorseStats.hspawn:
-        description: Allows use of /hspawn
-    HorseStats.untame:
-        description: Allows use of /untame
-    HorseStats.delname:
-        description: Allows use of /delname
-    HorseStats.delchest:
-        description: Allows use of /delchest
-    HorseStats.htp:
-        description: Allows use of /htp
-    HorseStats.setstyle:
-        description: Allows use of /setstyle
-    HorseStats.setstat:
-        description: Allows use of /setstat
-    HorseStats.setowner:
-        description: Allows use of /setowner
-    HorseStats.tame:
-        description: Allows use of /tame
+     HorseStats.*:
+          description: Gives access to ALL HorseStats permissions
+          children:
+                HorseStats.plugin-alerts: true
+                HorseStats.global-override: true
+                HorseStats.slayhorse: true
+                HorseStats.slayhorse.launch: true
+                HorseStats.hspawn: true
+                HorseStats.untame: true
+                HorseStats.delname: true
+                HorseStats.delchest: true
+                HorseStats.friend: true
+                HorseStats.htp: true
+                HorseStats.setstyle: true
+                HorseStats.setstat: true
+                HorseStats.setowner: true
+                HorseStats.tame: true
+     HorseStats.plugin-alerts:
+          description: Allows the player to recieve messages about plugin warnings.
+     HorseStats.global-override:
+          description: Allows the player to bypass ANY and ALL owner restrictions.
+     HorseStats.slayhorse:
+          description: Allows use of /slayhorse
+     HorseStats.slayhorse.launch:
+          description: Allows use of /slayhorse launch
+     HorseStats.friend:
+          description: Allows use of /hfriend, and recognition of friends as co-owners.
+     HorseStats.hspawn:
+          description: Allows use of /hspawn
+     HorseStats.untame:
+          description: Allows use of /untame
+     HorseStats.delname:
+          description: Allows use of /delname
+     HorseStats.delchest:
+          description: Allows use of /delchest
+     HorseStats.htp:
+          description: Allows use of /htp
+     HorseStats.setstyle:
+          description: Allows use of /setstyle
+     HorseStats.setstat:
+          description: Allows use of /setstat
+     HorseStats.setowner:
+          description: Allows use of /setowner
+     HorseStats.tame:
+          description: Allows use of /tame
