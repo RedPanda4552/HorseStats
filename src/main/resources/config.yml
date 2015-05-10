@@ -52,7 +52,7 @@ options:
      #the "HorseStats.global-override" permission. Third, any friends on the legitimate
      #owner's friend list.
      
-     #Should horses be protected from damage by players who do not have"access rights"?
+     #Should horses be protected from damage by players who do not have "access rights"?
      #If this is true, any left clicks or arrow strikes from players without "access rights"
      #will be cancelled. Since small projectiles do no damage, those are not blocked.
      anti-grief: true

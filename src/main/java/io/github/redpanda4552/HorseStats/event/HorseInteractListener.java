@@ -48,6 +48,7 @@ public class HorseInteractListener extends ListenerBase {
 			if (main.configBoolean("anti-interact")) {
 				Horse h = (Horse) event.getRightClicked();
 				Player p = event.getPlayer();
+				
 				if (!this.canAccess(h, p)) {
 					event.setCancelled(true);
 					p.sendMessage(tl.e + tl.generic("owner"));
