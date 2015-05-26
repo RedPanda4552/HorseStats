@@ -186,6 +186,7 @@ public class HorseStatsMain extends JavaPlugin {
 			public void run() {
 				if (configBoolean("update-checks") == true) {
 					Updater updater = new Updater(main, 62378, main.getFile(), Updater.UpdateType.NO_DOWNLOAD, false);
+					
 					if (updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
 						updateName = updater.getLatestName();
 						updateAvailable = true;
