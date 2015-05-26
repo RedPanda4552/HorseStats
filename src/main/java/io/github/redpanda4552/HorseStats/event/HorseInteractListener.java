@@ -1,4 +1,3 @@
-
 /**
  * This file is part of HorseStats, licensed under the MIT License (MIT)
  * 
@@ -40,7 +39,6 @@ public class HorseInteractListener extends ListenerBase {
 
 	/**
 	 * Event listener for Anti-Interact config setting.
-	 * @param event - The PlayerInteractEntityEvent that triggered this.
 	 */
 	@EventHandler
 	public void onPlayerInteractHorse(PlayerInteractEntityEvent event) {
