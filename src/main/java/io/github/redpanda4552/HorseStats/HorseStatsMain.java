@@ -29,7 +29,6 @@ import io.github.redpanda4552.HorseStats.friend.FriendHelper;
 import io.github.redpanda4552.HorseStats.translate.Translate;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Logger;
