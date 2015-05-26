@@ -28,6 +28,8 @@ import io.github.redpanda4552.HorseStats.event.*;
 import io.github.redpanda4552.HorseStats.friend.FriendHelper;
 import io.github.redpanda4552.HorseStats.translate.Translate;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -77,7 +79,8 @@ public class HorseStatsMain extends JavaPlugin {
 	 */
 	public boolean noSpeedMode = false;
 	
-	public boolean outofdateConfig = false;
+	public boolean outOfDateConfig = false;
+	public boolean outOfDateTranslate = false;
 	
 	public Material pMat;
 	public String pMatName;
@@ -88,11 +91,22 @@ public class HorseStatsMain extends JavaPlugin {
 	 * Bukkit standard void for plugin start up.
 	 */
 	public void onEnable() {
-		this.log = this.getLogger();
+		log = getLogger();
 		saveDefaultConfig();
-		this.tl = new Translate(this);
-		this.friendHelper = new FriendHelper(this);
+		tl = new Translate(this);
 		
+		//If the translate file is old and not used
+		if (!checkTranslate() && !getConfig().getBoolean("use-translate")) {
+			File translateFile = new File("plugins/HorseStats/translate.yml");
+			
+			if (translateFile != null) {
+				translateFile.delete();
+			}
+			
+			tl = new Translate(this);
+		}
+		
+		friendHelper = new FriendHelper(this);
 		noSpeedMode = testNoSpeedMode();
 		
 		pMat = Material.getMaterial(section("options").getString("stat-item"));
@@ -161,17 +175,34 @@ public class HorseStatsMain extends JavaPlugin {
 	
 	/**
 	 * Check if config is outdated. Warn if so.
-	 * Config version in config.yml and HorseStats version do not need to match exactly;
-	 * if the config is updated, the config version will be updated to match HorseStats version.
-	 * Otherwise it will remain the same.
 	 * @return True if config is fine. False if outdated.
 	 */
 	public boolean checkConfiguration() {
-		if (this.getConfig().getString("config-version") == null || this.getConfig().getDouble("config-version") != 3.31) {
-			outofdateConfig = true;			
+		if (this.getConfig().getString("config-version") == null || this.getConfig().getDouble("config-version") != 3.32) {
+			outOfDateConfig = true;			
 			log.warning("It appears your HorseStats configuration file is out of date.");
 			log.warning("Please take note of the settings you have in it, and delete it.");
 			log.warning("A new configuration with new settings will generate next time you start or reload your server.");
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Check if translate.yml is outdated. Warn if so.
+	 * @return True if translate.yml is fine. False if outdated.
+	 */
+	public boolean checkTranslate() {
+		if (this.tl.version == 0 || this.tl.version != 3.32) {
+			outOfDateTranslate = true;
+
+			log.warning("It appears your HorseStats translation file is out of date.");
+			if (getConfig().getBoolean("use-translate")) {
+				log.warning("Please backup your file to another location, and delete it.");
+				log.warning("A new translate file with new fields will generate next time you start or reload your server, and you can add back any translation strings that are the same.");
+			} else {
+				log.warning("Because your config says you do not use your translate, HorseStats will now update it for you.");
+			}
 			return false;
 		}
 		return true;

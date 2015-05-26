@@ -45,7 +45,7 @@ public class PlayerJoinLeaveListener extends ListenerBase {
 		Player p = event.getPlayer();
 		
 		if (p.hasPermission("HorseStats.pluginalerts")) {
-			if (main.outofdateConfig) {
+			if (main.outOfDateConfig) {
 				p.sendMessage(tl.n + tl.playerJoinLeave("config"));
 			}
 			

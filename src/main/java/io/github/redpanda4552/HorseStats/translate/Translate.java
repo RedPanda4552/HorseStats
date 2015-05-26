@@ -35,6 +35,8 @@ public class Translate {
 	private File file;
 	private YamlConfiguration tf;
 	
+	public double version = 0;
+	
 	//Message prefixes; n = normal, e = error, s = stat; NES acronym not intended.
 	public final String n = ChatColor.YELLOW + "[HorseStats] " + ChatColor.GREEN;
 	public final String e = ChatColor.YELLOW + "[HorseStats] " + ChatColor.RED;
@@ -48,6 +50,8 @@ public class Translate {
 			this.file = new File("plugins/HorseStats/translate.yml");
 		}
 		tf = YamlConfiguration.loadConfiguration(this.file);
+		
+		version = tf.getDouble("translate-version");
 	}
 	
 	/**
