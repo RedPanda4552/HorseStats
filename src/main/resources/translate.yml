@@ -23,6 +23,12 @@
 
 #HorseStats uses the raw "true" and "false" objects returned by horse statistics,
 #and thus these cannot be translated.
+
+#Do not modify the translate version. If you do, this file might be deleted, errors
+#may pop up, false warnings may pop up in console, or text in game may be replaced with
+#the word "null".
+translate-version: 3.3.2
+
 PlayerJoinLeaveListener:
      config: "The HorseStats config is out of date. Details can be found in the console when the plugin started."
      no-speed: "HorseStats is running in 'no speed mode'. Details can be found in the console when the plugin started."
