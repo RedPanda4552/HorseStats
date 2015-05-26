@@ -8,66 +8,74 @@
 #retype your old settings back into the freshly generated file. Don't just copy and
 #paste everything, because that just re-adds your broken stuff.
 
-#Do not modify this. this is used by HorseStats internally, and if altered, may cause
+#Do not modify the config version. this is used by HorseStats internally, and if altered, may cause
 #false warning messages.
-config-version: 3.31
+config-version: 3.32
 
 options:
-     #If you need to look up the name of a Bukkit Material type, they are all in here:
-     #<https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/Material.java>
-     #The list of Material types starts down the page a bit. Scroll past the lines that
-     #start with "import" and you will see "public enum Material {", the Material types
-     #are listed below that. You only need the plain English name; only worry about the
-     #stuff on the left side of the parentheses.
+    #If you are using your translation file, set this to true. If you are not, leave
+    #this false. If this is false, the plugin will automagically update the translate
+    #file for you. Otherwise, you will need to manually update the translate file by
+    #backing it up to another folder, deleting it out of the server, restarting your
+    #server, and putting old lines that are still applicable back in.
+    use-translation: false
+    
+    #If you need to look up the name of a Bukkit Material type, they are all in here:
+    #<https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/Material.java>
+    #The list of Material types starts down the page a bit. Scroll past the lines that
+    #start with "import" and you will see "public enum Material {", the Material types
+    #are listed below that. You only need the plain English name; only worry about the
+    #stuff on the left side of the parentheses.
 
-     #This is the item used to display a horse's stats. Note that this MUST be a valid
-     #Bukkit Material type. If it is not, HorseStats will say so in console at startup
-     #and fall back to the lead as a default.
-     stat-item: LEASH
-     
-     #This is the user-friendly name of the above Material type. This is what will be
-     #shown in /horsestats as the item to use for stat display. This should be surrounded
-     #in quotation marks.
-     stat-item-name: "Lead"
-
-     #This is the item used to toggle horse teleport. Note that this MUST be a valid
-     #Bukkit Material type. If it is not, HorseStats will say so in console at startup
-     #and fall back to the lead as a default.
-     teleport-item: ENDER_PEARL
-     
-     #This is the user-friendly name of the above Material type. This is what will be
-     #shown in /horsestats as the item to use for teleporting. This should be surrounded
-     #in quotation marks.
-     teleport-item-name: "Ender Pearl"
-
-     #Allow the plugin to check for updates at startup? If an update is available,
-     #HorseStats will notify you in the console when the plugin is enabled, and players
-     #with the 'HorseStats.plugin-alerts' permission will get this message when they
-     #join the server as well.
-     update-checks: true
-     
-     #Note about "Access Rights"
-     #It should be mentioned here that "Access Rights" mentioned below refers to a few
-     #people. First, the legitimate owner of the horse. Second, any server staff with
-     #the "HorseStats.global-override" permission. Third, any friends on the legitimate
-     #owner's friend list.
-     
-     #Should horses be protected from damage by players who do not have "access rights"?
-     #If this is true, any left clicks or arrow strikes from players without "access rights"
-     #will be cancelled. Since small projectiles do no damage, those are not blocked.
-     anti-grief: true
-     
-     #Should players without "access rights" be blocked from right clicking horses? If true,
-     #this will cancel any attempts by players without "access rights" to right click
-     #horses, no matter what the intended purpose is. Horses that are not tamed are
-     #unaffected by this setting.
-     anti-interact: true
-     
-     #Should horses be able to teleport between worlds? IMPORTANT: Initial testing
-     #showed that horse data for the entire server could be lost if this is allowed.
-     #However, this result has not been reproduced in recent tests.
-     multi-world-teleport: false
-     
-     #Should the stats of an owned horse be blocked when a player without "access rights"
-     #tries to view its stats?
-     block-stats: false
+    #This is the item used to display a horse's stats. Note that this MUST be a valid
+    #Bukkit Material type. If it is not, HorseStats will say so in console at startup
+    #and fall back to the lead as a default.
+    stat-item: LEASH
+    
+    #This is the user-friendly name of the above Material type. This is what will be
+    #shown in /horsestats as the item to use for stat display. This should be surrounded
+    #in quotation marks.
+    stat-item-name: "Lead"
+    
+    #This is the item used to toggle horse teleport. Note that this MUST be a valid
+    #Bukkit Material type. If it is not, HorseStats will say so in console at startup
+    #and fall back to the lead as a default.
+    teleport-item: ENDER_PEARL
+    
+    #This is the user-friendly name of the above Material type. This is what will be
+    #shown in /horsestats as the item to use for teleporting. This should be surrounded
+    #in quotation marks.
+    teleport-item-name: "Ender Pearl"
+    
+    #Allow the plugin to check for updates at startup? If an update is available,
+    #HorseStats will notify you in the console when the plugin is enabled, and players
+    #with the 'HorseStats.plugin-alerts' permission will get this message when they
+    #join the server as well.
+    update-checks: true
+    
+    #Note about "Access Rights"
+    #It should be mentioned here that "Access Rights" mentioned below refers to a few
+    #people. First, the legitimate owner of the horse. Second, any server staff with
+    #the "HorseStats.global-override" permission. Third, any friends on the legitimate
+    #owner's friend list.
+    
+    #Should horses be protected from damage by players who do not have "access rights"?
+    #If this is true, any left clicks or arrow strikes from players without "access rights"
+    #will be cancelled. Since small projectiles do no damage, those are not blocked.
+    anti-grief: true
+    
+    #Should players without "access rights" be blocked from right clicking horses? If true,
+    #this will cancel any attempts by players without "access rights" to right click
+    #horses, no matter what the intended purpose is. Horses that are not tamed are
+    #unaffected by this setting.
+    anti-interact: true
+    
+    #Should horses be able to teleport between worlds? IMPORTANT: Initial testing
+    #showed that horse data for the entire server could be lost if this is allowed.
+    #However, this result has not been reproduced in recent tests.
+    multi-world-teleport: false
+    
+    #Should the stats of an owned horse be blocked when a player without "access rights"
+    #tries to view its stats?
+    block-stats: false
+    
