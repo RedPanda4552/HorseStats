@@ -43,6 +43,7 @@ public class PlayerJoinLeaveListener extends ListenerBase {
 	@EventHandler
 	public void playerJoin(PlayerJoinEvent event) {
 		Player p = event.getPlayer();
+		
 		if (p.hasPermission("HorseStats.pluginalerts")) {
 			if (main.outofdateConfig) {
 				p.sendMessage(tl.n + tl.playerJoinLeave("config"));
@@ -65,7 +66,6 @@ public class PlayerJoinLeaveListener extends ListenerBase {
 		
 		if (main.friendHelper.readFriendListFromIndex(p.getUniqueId()) != null) {
 			main.friendHelper.setPermissionStatus(p.getUniqueId(), p.hasPermission("HorseStats.friend"));
-
 			main.friendHelper.saveFriendLists();
 		}
 	}
@@ -76,7 +76,6 @@ public class PlayerJoinLeaveListener extends ListenerBase {
 		
 		if (main.friendHelper.readFriendListFromIndex(event.getPlayer().getUniqueId()) != null) {
 			main.friendHelper.setPermissionStatus(event.getPlayer().getUniqueId(), event.getPlayer().hasPermission("HorseStats.friend"));
-
 			main.friendHelper.saveFriendLists();
 		}
 		
