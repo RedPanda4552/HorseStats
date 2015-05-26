@@ -14,7 +14,7 @@ config-version: 3.32
 
 options:
     #If you are using your translation file, set this to true. If you are not, leave
-    #this false. If this is false, the plugin will automagically update the translate
+    #this false. If this is false, the plugin will automatically update the translate
     #file for you. Otherwise, you will need to manually update the translate file by
     #backing it up to another folder, deleting it out of the server, restarting your
     #server, and putting old lines that are still applicable back in.
