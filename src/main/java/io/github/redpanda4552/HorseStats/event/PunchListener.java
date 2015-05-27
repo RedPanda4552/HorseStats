@@ -54,12 +54,15 @@ public class PunchListener extends ListenerBase {
 		//A horse is hit
 		if (event.getEntity() instanceof Horse) {
 			Horse h = (Horse) event.getEntity();
+			
 			//A player hit it
 			if (event.getDamager() instanceof Player) {
 				Player p = (Player) event.getDamager();
+				
 				//They held the stat display item
 				if (p.getItemInHand().getType() == main.pMat) {
 					event.setCancelled(true);
+					
 					if (!canAccess(h, p) && main.configBoolean("block-stats")) {
 						blockStats(p, h);
 					} else {
@@ -83,8 +86,10 @@ public class PunchListener extends ListenerBase {
 			else if (event.getDamager() instanceof Arrow) { 
 				if (main.configBoolean("anti-grief")) {
 					Arrow a = (Arrow) event.getDamager();
+					
 					if (a.getShooter() instanceof Player) {
 						Player p = (Player) a.getShooter();
+						
 						if (!this.canAccess(h, p)) {
 							event.setCancelled(true);
 							p.sendMessage(tl.e + tl.generic("attack"));
@@ -96,7 +101,7 @@ public class PunchListener extends ListenerBase {
 	}
 	
 	public void blockStats(Player p, Horse horse) {
-		//Because its still an issue, ownership correction is back.
+		//In case there are any horses marked as tame but missing an owner
 		if (horse.getOwner() == null && horse.isTamed() == true) {
 			horse.setTamed(false);
 			p.sendMessage(tl.n + tl.event("owner-fix"));
@@ -106,6 +111,7 @@ public class PunchListener extends ListenerBase {
 		
 		//Owner name
 		String owner = tl.event("none");
+		
 		if (tamer != null) {
 			owner = tamer.getName();
 		}
@@ -119,13 +125,13 @@ public class PunchListener extends ListenerBase {
 	 * @param horse - The horse who's stats are to be fetched.
 	 */
 	public void displayStats(Player p, Horse horse) {
-		//Because its still an issue, ownership correction is back.
+		//In case there are any horses marked as tame but missing an owner
 		if (horse.getOwner() == null && horse.isTamed() == true) {
 			horse.setTamed(false);
 			p.sendMessage(tl.n + tl.event("owner-fix"));
 		}
 		
-		//RAW data (heh)
+		//Raw data
 		double healthMax = horse.getMaxHealth();
 		double heartMax = healthMax / 2;
 		double health = horse.getHealth();
@@ -138,24 +144,28 @@ public class PunchListener extends ListenerBase {
 		
 		//Horse name
 		String name = tl.event("horse");
+		
 		if (horse.getCustomName() != null) {
 			name = horse.getCustomName() + tl.event("posessive");
 		}
 		
 		//Teleport status
 		boolean tpStatus = false;
+		
 		if (main.teleportQueue.containsValue(horse)) {
 			tpStatus = true;
 		}
 		
 		//Age status
 		String ageTime = "";
+		
 		if (adult == false) {
 			ageTime = " (" + tl.event("adult-minutes") + age/-1200 + ")";
 		}
 		
 		//Owner name
 		String owner = tl.event("none");
+		
 		if (tamer != null) {
 			owner = tamer.getName();
 		}
@@ -164,7 +174,6 @@ public class PunchListener extends ListenerBase {
 		p.sendMessage(tl.s + "========================");
 		p.sendMessage(tl.s + name + " " + tl.event("stats"));
 		p.sendMessage(tl.s + "========================");
-		//Using floats to reduce the number of extraneous decimals
 		p.sendMessage(tl.s + tl.event("max-health") + " " + (float) healthMax + " (" + (int) heartMax + " " + tl.event("hearts") + ")");
 		p.sendMessage(tl.s + tl.event("health") + " " + (float) health + " (" + (int) heart + " " + tl.event("hearts") + ")");
 		p.sendMessage(tl.s + tl.event("jump") + " " + (float) jump);
@@ -205,17 +214,21 @@ public class PunchListener extends ListenerBase {
 	 */
 	public double getSpeed(Horse horse) {
 		double speed = -1;
+		
 		if (main.noSpeedMode) {
 			return speed;
 		}
+		
 		org.bukkit.craftbukkit.v1_8_R2.entity.CraftHorse cHorse = (org.bukkit.craftbukkit.v1_8_R2.entity.CraftHorse) horse;
 		net.minecraft.server.v1_8_R2.NBTTagCompound compound = new net.minecraft.server.v1_8_R2.NBTTagCompound();
 		cHorse.getHandle().b(compound);
 		net.minecraft.server.v1_8_R2.NBTTagList list = (net.minecraft.server.v1_8_R2.NBTTagList) compound.get("Attributes");
 		for(int i = 0; i < list.size() ; i++) {
 			net.minecraft.server.v1_8_R2.NBTTagCompound base = list.get(i);
+			
 			if (base.getTypeId() == 10) {
 				net.minecraft.server.v1_8_R2.NBTTagCompound attrCompound = (net.minecraft.server.v1_8_R2.NBTTagCompound)base;
+				
 				if (base.toString().contains("generic.movementSpeed")) {
 					speed = attrCompound.getDouble("Base");
 				}
