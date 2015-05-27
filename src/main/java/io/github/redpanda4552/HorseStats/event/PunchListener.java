@@ -223,6 +223,7 @@ public class PunchListener extends ListenerBase {
 		net.minecraft.server.v1_8_R2.NBTTagCompound compound = new net.minecraft.server.v1_8_R2.NBTTagCompound();
 		cHorse.getHandle().b(compound);
 		net.minecraft.server.v1_8_R2.NBTTagList list = (net.minecraft.server.v1_8_R2.NBTTagList) compound.get("Attributes");
+		
 		for(int i = 0; i < list.size() ; i++) {
 			net.minecraft.server.v1_8_R2.NBTTagCompound base = list.get(i);
 			
