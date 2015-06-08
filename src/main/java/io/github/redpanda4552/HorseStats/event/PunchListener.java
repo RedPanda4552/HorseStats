@@ -207,8 +207,8 @@ public class PunchListener extends ListenerBase {
 	
 	/**
 	 * The 'fragile' code used to retrieve horse speed. NBT stuff.
-	 * Needs namespace updates when NBT code changes, or build number changes (e.g. CB 1.7.2-R0.1 to CB 1.7.2-R0.2)
-	 * Using full namespaces so that I can just return before exceptions start flying, instead of making a whole new class.
+	 * Needs package name updates when NBT code changes, or build number changes (e.g. CB 1.7.2-R0.1 to CB 1.7.2-R0.2)
+	 * Using full package names so that I can just return before exceptions start flying, instead of making a whole new class.
 	 * @param horse - The horse that was hit with a lead.
 	 * @return Double that represents horse speed.
 	 */
