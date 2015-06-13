@@ -67,7 +67,7 @@ public abstract class ListenerBase implements Listener {
 					}
 				}
 			}
-		} else if (main.friendHelper.readFriendListFromFile(horse.getOwner().getUniqueId())) { //TODO I smell a NPE in the line below...
+		} else if (main.friendHelper.readFriendListFromFile(horse.getOwner().getUniqueId())) {
 			if (main.friendHelper.yc.getConfigurationSection("offline-permissions").getBoolean(horse.getOwner().getUniqueId().toString())) {
 				ArrayList<UUID> friends = main.friendHelper.readFriendListFromIndex(horse.getOwner().getUniqueId());
 				
