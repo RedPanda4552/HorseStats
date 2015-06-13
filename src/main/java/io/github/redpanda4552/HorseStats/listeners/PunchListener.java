@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.github.redpanda4552.HorseStats.event;
+package io.github.redpanda4552.HorseStats.listeners;
 
 import io.github.redpanda4552.HorseStats.HorseStatsMain;
 import io.github.redpanda4552.HorseStats.translate.Translate;

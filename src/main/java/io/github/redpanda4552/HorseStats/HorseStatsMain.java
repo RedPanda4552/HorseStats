@@ -24,8 +24,8 @@
 package io.github.redpanda4552.HorseStats;
 
 import io.github.redpanda4552.HorseStats.commands.*;
-import io.github.redpanda4552.HorseStats.event.*;
 import io.github.redpanda4552.HorseStats.friend.FriendHelper;
+import io.github.redpanda4552.HorseStats.listeners.*;
 import io.github.redpanda4552.HorseStats.translate.Translate;
 
 import java.io.File;
