@@ -48,7 +48,7 @@ public abstract class ListenerBase implements Listener {
 	 * Check if a player owns or has access rights to a horse.
 	 * @param horse - The Horse to check
 	 * @param player - The Player to check.
-	 * @return True if access is allowed for any reason, false if no owner or no conditions are met.
+	 * @return True if access is allowed for any reason, false if no conditions are met.
 	 */
 	protected boolean canAccess(Horse horse, Player player) {
 		if (horse.getOwner() == null) {
