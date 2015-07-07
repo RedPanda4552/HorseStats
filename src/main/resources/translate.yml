@@ -99,7 +99,7 @@ HorseStats:
      anti-grief-2: "When enabled, the system will monitor all attempts to melee or shoot a horse. If a player does not have access to the horse, then the system will cancel the damage attempt, and it will be like nothing ever happened."
      
      friend-title: "Friends"
-     friend-1: "If you have permission (stated above), you can add players to your friend list using the command"
+     friend-1: "If you have permission, you can add players to your friend list using the command"
      friend-2: "If Anti-Interact or Anti-Grief are enabled, friends can bypass these settings and be treated as the owner."
      friend-3: "Do note that the"
      and: "and"
