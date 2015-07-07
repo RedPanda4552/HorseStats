@@ -76,7 +76,7 @@ public class HorseStatsMain extends JavaPlugin {
 	/**
 	 * If HorseStats cannot retrieve speed due to mismatched Bukkit versions, this will be true.
 	 */
-	public boolean noSpeedMode = false;
+	public int noSpeedMode;
 	
 	public boolean outOfDateConfig = false;
 	public boolean outOfDateTranslate = false;
@@ -159,16 +159,20 @@ public class HorseStatsMain extends JavaPlugin {
 	 * If not, no speed mode is activated.
 	 * @return Boolean value indicating whether noSpeedMode should or should not be active.
 	 */
-	public boolean testNoSpeedMode() {
-		try {
-			Class.forName("org.bukkit.craftbukkit.v1_8_R2.entity.CraftHorse");
-			return false;
+	public int testNoSpeedMode() {
+		try { //Primary Version
+			Class.forName("org.bukkit.craftbukkit.v1_8_R3.entity.CraftHorse");
+			return 0;
 		} catch (ClassNotFoundException e) {
-			noSpeedMode = true;			
-			log.warning("The version of CraftBukkit/Spigot on this server does not match that of HorseStats.");
-			log.warning("To avoid full plugin failure, the speed value in the stat display will be disabled.");
-			log.warning("To fix this issue, get a HorseStats build that is made for your version of CraftBukkit/Spigot.");
-			return true;
+			try { //Secondary Version
+				Class.forName("org.bukkit.craftbukkit.v1_8_R2.entity.CraftHorse");
+				return 1;
+			} catch (ClassNotFoundException e2) {
+				log.warning("Your server does not appear to be running Spigot 1.8.3 or 1.8.7.");
+				log.warning("To avoid full plugin failure, the speed value in the stat display will be disabled.");
+				log.warning("To fix this issue, get a HorseStats build that is made for your version of CraftBukkit/Spigot.");
+				return -1;
+			}
 		}
 	}
 	
