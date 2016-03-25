@@ -42,18 +42,10 @@ public class HFriend extends HorseStatsCommand {
 		super(main, tl);
 	}
 
-	@Override
+	@SuppressWarnings("deprecation")
+    @Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-		if (args.length == 1 && args[0].equalsIgnoreCase("debug")) {
-			sender.sendMessage("Memory index:");
-			for (UUID uuid : main.friendHelper.index.keySet()) {
-				sender.sendMessage("Key: " + uuid);
-				sender.sendMessage("Value: " + main.friendHelper.index.get(uuid));
-			}
-			return true;
-		}
-		
 		if (!(sender instanceof Player)) {
 			sender.sendMessage(tl.generic("console"));
 			return true;

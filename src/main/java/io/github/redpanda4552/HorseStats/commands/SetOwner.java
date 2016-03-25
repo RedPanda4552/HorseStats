@@ -57,16 +57,19 @@ public class SetOwner extends HorseStatsCommand {
 	}
 	
 	/**
-	 * Since we just need to get the player at that moment in time, we can safely use their username
+	 * The player name itself is never saved anywhere;
+	 * we grab a Player instance from a name, and then
+	 * let the API handle saving when given the Player.
 	 */
-	public void run(Player p, Horse h, String[] args) {
+	@SuppressWarnings("deprecation")
+    public void run(Player p, Horse h, String[] args) {
 		if (h != null) {
 			if (this.isOwner(h, p)) {
 				if (args.length == 1) {					
-					if (Bukkit.getServer().getPlayerExact(args[0]) != null) {
+					if (Bukkit.getServer().getPlayer(args[0]) != null) {
 						h.eject();
 						p.sendMessage(tl.n + tl.setOwner("set-owner"));
-						h.setOwner(p.getServer().getPlayerExact(args[0]));
+						h.setOwner(p.getServer().getPlayer(args[0]));
 					} else {
 						p.sendMessage(tl.e + tl.generic("player-not-found"));
 					}

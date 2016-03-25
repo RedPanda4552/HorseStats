@@ -31,7 +31,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
-//NEXTBUILD Add support for multiple horse teleporting.
 public class Htp extends HorseStatsCommand {
 	
 	public Htp(HorseStatsMain main, Translate tl) {

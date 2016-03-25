@@ -67,7 +67,7 @@ public class HorseStatsMain extends JavaPlugin {
 	public String updateName;
 	
 	/**
-	 * Whether or not an update is available. Used by AdminNotificationListener. 
+	 * Whether or not an update is available. Used by PlayerJoinLeaveListener. 
 	 * Don't delete this on accident again thinking it does nothing.
 	 * <b>Seriously, you almost did it a second time. This is important.</b>
 	 */
@@ -161,14 +161,15 @@ public class HorseStatsMain extends JavaPlugin {
 	 */
 	public int testNoSpeedMode() {
 		try { //Primary Version
-			Class.forName("org.bukkit.craftbukkit.v1_8_R3.entity.CraftHorse");
+			Class.forName("org.bukkit.craftbukkit.v1_9_R1.entity.CraftHorse");
 			return 0;
 		} catch (ClassNotFoundException e) {
 			try { //Secondary Version
-				Class.forName("org.bukkit.craftbukkit.v1_8_R2.entity.CraftHorse");
+				Class.forName("org.bukkit.craftbukkit.v1_8_R3.entity.CraftHorse");
 				return 1;
 			} catch (ClassNotFoundException e2) {
-				log.warning("Your server does not appear to be running Spigot 1.8.3 or 1.8.7.");
+				log.warning("Your server does not appear to be running a supported Spigot build.");
+				log.warning("The currently supported builds are v1.9-R1 (Minecraft 1.9) and v1.8-R3 (Minecraft 1.8.7).");
 				log.warning("To avoid full plugin failure, the speed value in the stat display will be disabled.");
 				log.warning("To fix this issue, get a HorseStats build that is made for your version of CraftBukkit/Spigot.");
 				return -1;

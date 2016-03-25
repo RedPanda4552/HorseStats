@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.redpanda4552</groupId>
   <artifactId>HorseStats</artifactId>
-  <version>3.3.2</version>
+  <version>3.4</version>
   <packaging>jar</packaging>
   
   <build>
@@ -12,8 +12,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.4</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
     </plugins>
@@ -27,16 +27,11 @@
   </repositories>
   
   <dependencies>
-    <dependency>
-      <groupId>org.spigotmc</groupId>
-      <artifactId>spigot-api</artifactId>
-      <version>1.8.7-R0.1-SNAPSHOT</version>
-	</dependency>
-	<dependency>
+	  <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.8.7-R0.1-SNAPSHOT</version>
-	</dependency>
+      <version>1.9-R0.1-SNAPSHOT</version>
+	  </dependency>
   </dependencies>
   
 </project>
