@@ -44,7 +44,10 @@ public class PunchListener extends ListenerBase {
 	@EventHandler
 	public void onHorseSpawn(CreatureSpawnEvent event) {
 	    if (event.getEntity() instanceof Horse) {
-	        main.getLogger().info("Horse spawned with reason: " + event.getSpawnReason().toString());
+	        main.getLogger().info("Horse spawned with reason: " + event.getSpawnReason().toString() + " at location (x y z): " +
+	                                                              event.getEntity().getLocation().getBlockX() + " " +
+	                                                              event.getEntity().getLocation().getBlockY() + " " +
+	                                                              event.getEntity().getLocation().getBlockZ());
 	    }
 	}
 
