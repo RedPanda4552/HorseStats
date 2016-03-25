@@ -31,17 +31,21 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class PunchListener extends ListenerBase {
 	
-	
-	/**
-	 * @param main - HorseStatsMain
-	 * @param tl - Translate
-	 */
 	public PunchListener(HorseStatsMain main, Translate tl) {
 		super (main, tl);
+	}
+	
+	// TODO Remove when dupe testing is over
+	@EventHandler
+	public void onHorseSpawn(CreatureSpawnEvent event) {
+	    if (event.getEntity() instanceof Horse) {
+	        main.getLogger().info("Horse spawned with reason: " + event.getSpawnReason().toString());
+	    }
 	}
 
 	/**
