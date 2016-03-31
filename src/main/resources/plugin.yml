@@ -1,6 +1,6 @@
 main: io.github.redpanda4552.HorseStats.HorseStatsMain
 name: HorseStats
-version: 3.4
+version: 3.4.1
 author: bdubz4552
 description: Displays stats of a horse.
 

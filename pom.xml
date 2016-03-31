@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.redpanda4552</groupId>
   <artifactId>HorseStats</artifactId>
-  <version>3.4</version>
+  <version>3.4.1</version>
   <packaging>jar</packaging>
   
   <build>
