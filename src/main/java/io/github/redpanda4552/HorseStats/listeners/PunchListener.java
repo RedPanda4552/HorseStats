@@ -31,7 +31,6 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class PunchListener extends ListenerBase {
@@ -40,17 +39,6 @@ public class PunchListener extends ListenerBase {
 		super (main, tl);
 	}
 	
-	// TODO Remove when dupe testing is over
-	@EventHandler
-	public void onHorseSpawn(CreatureSpawnEvent event) {
-	    if (event.getEntity() instanceof Horse) {
-	        main.getLogger().info("Horse spawned with reason: " + event.getSpawnReason().toString() + " at location (x y z): " +
-	                                                              event.getEntity().getLocation().getBlockX() + " " +
-	                                                              event.getEntity().getLocation().getBlockY() + " " +
-	                                                              event.getEntity().getLocation().getBlockZ());
-	    }
-	}
-
 	/**
 	 * This event is called whenever an entity is hurt by another entity.
 	 * The first if statement quickly drops this if it is not a player and horse.
