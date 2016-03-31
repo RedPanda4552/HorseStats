@@ -35,7 +35,6 @@ import org.bukkit.entity.Player;
 
 /**
  * An abstract class for commands to extend.
- * Sets up message routines so each command doesn't have to.
  */
 public abstract class HorseStatsCommand implements CommandExecutor {
 	

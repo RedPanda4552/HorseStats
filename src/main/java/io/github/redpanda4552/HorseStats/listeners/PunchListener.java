@@ -29,6 +29,7 @@ import io.github.redpanda4552.HorseStats.translate.Translate;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Horse;
+import org.bukkit.entity.Horse.Variant;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -96,11 +97,7 @@ public class PunchListener extends ListenerBase {
 	}
 	
 	public void blockStats(Player p, Horse horse) {
-		//In case there are any horses marked as tame but missing an owner
-		if (horse.getOwner() == null && horse.isTamed() == true) {
-			horse.setTamed(false);
-			p.sendMessage(tl.n + tl.event("owner-fix"));
-		}
+		fixOwner(p, horse);
 		
 		AnimalTamer tamer = horse.getOwner();
 		
@@ -120,11 +117,7 @@ public class PunchListener extends ListenerBase {
 	 * @param horse - The horse who's stats are to be fetched.
 	 */
 	public void displayStats(Player p, Horse horse) {
-		//In case there are any horses marked as tame but missing an owner
-		if (horse.getOwner() == null && horse.isTamed() == true) {
-			horse.setTamed(false);
-			p.sendMessage(tl.n + tl.event("owner-fix"));
-		}
+	    fixOwner(p, horse);
 		
 		//Raw data
 		double healthMax = horse.getMaxHealth();
@@ -210,7 +203,7 @@ public class PunchListener extends ListenerBase {
 	public double getSpeed(Horse horse) {
 		double speed = -1; //In case of bad Spigot version
 		
-		if (main.noSpeedMode == 0) { //Primary Version (Spigot 1.8.7)
+		if (main.noSpeedMode == 0) { //Primary Version (1.9_R1)
 			org.bukkit.craftbukkit.v1_9_R1.entity.CraftHorse cHorse = (org.bukkit.craftbukkit.v1_9_R1.entity.CraftHorse) horse;
 			net.minecraft.server.v1_9_R1.NBTTagCompound compound = new net.minecraft.server.v1_9_R1.NBTTagCompound();
 			cHorse.getHandle().b(compound);
@@ -227,7 +220,7 @@ public class PunchListener extends ListenerBase {
 					}
 				}
 			}
-		} else if (main.noSpeedMode == 1) { //Secondary Version (Spigot 1.8.3)
+		} else if (main.noSpeedMode == 1) { //Secondary Version (1.8_R3)
 			org.bukkit.craftbukkit.v1_9_R1.entity.CraftHorse cHorse = (org.bukkit.craftbukkit.v1_9_R1.entity.CraftHorse) horse;
 			net.minecraft.server.v1_9_R1.NBTTagCompound compound = new net.minecraft.server.v1_9_R1.NBTTagCompound();
 			cHorse.getHandle().b(compound);
@@ -247,7 +240,18 @@ public class PunchListener extends ListenerBase {
 		}
 		
 		return speed;
-	}		
+	}
+	
+	private void fixOwner(Player p, Horse horse) {
+	    if (horse.getOwner() == null && horse.isTamed() == true) {
+	        if (horse.getVariant() == Variant.SKELETON_HORSE) {
+	            horse.setOwner(p);
+	        } else {
+	            horse.setTamed(false);
+	            p.sendMessage(tl.n + tl.event("owner-fix"));
+	        }
+        }
+	}
 }
 
 
