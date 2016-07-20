@@ -36,44 +36,44 @@ import org.bukkit.util.Vector;
 
 
 public class Slayhorse extends HorseStatsCommand {
-	
-	public Slayhorse(HorseStatsMain main, Translate tl) {
-		super(main, tl);
-	}
-	
-	@Override
-	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
-		if (sender instanceof Player) {
-			Player p = (Player) sender;
-			Horse h = null;
-			if (p.isInsideVehicle()) {
-				if (p.getVehicle() instanceof Horse) {
-					h = (Horse) p.getVehicle();
-				}
-			}
-			this.run(p, h, args);
-		} else {
-			sender.sendMessage(tl.generic("console"));
-		}
-		return true;
-	}
-	
-	public void run(Player p, Horse h, String[] args) {
-		if (h != null) {
-			h.eject();
-			if (args.length == 1) {
-				if (args[0].equalsIgnoreCase("launch") && p.hasPermission("HorseStats.slayhorse.launch")) {
-					Vector vec = new Vector(0, 6, 0);
-					h.setVelocity(vec);
-					p.chat(tl.slayhorse("launch"));
-					Location loc = new Location(h.getWorld(), h.getLocation().getX(), 256, h.getLocation().getZ());
-					h.getWorld().strikeLightning(loc);
-				}		
-			}
-			h.setHealth(0);
-			p.sendMessage(tl.n + tl.slayhorse("slain"));
-		} else {
-			p.sendMessage(tl.e + tl.generic("riding"));
-		}
-	}
+    
+    public Slayhorse(HorseStatsMain main, Translate tl) {
+        super(main, tl);
+    }
+    
+    @Override
+    public boolean onCommand(CommandSender sender, Command command,    String label, String[] args) {
+        if (sender instanceof Player) {
+            Player p = (Player) sender;
+            Horse h = null;
+            if (p.isInsideVehicle()) {
+                if (p.getVehicle() instanceof Horse) {
+                    h = (Horse) p.getVehicle();
+                }
+            }
+            this.run(p, h, args);
+        } else {
+            sender.sendMessage(tl.generic("console"));
+        }
+        return true;
+    }
+    
+    public void run(Player p, Horse h, String[] args) {
+        if (h != null) {
+            h.eject();
+            if (args.length == 1) {
+                if (args[0].equalsIgnoreCase("launch") && p.hasPermission("HorseStats.slayhorse.launch")) {
+                    Vector vec = new Vector(0, 6, 0);
+                    h.setVelocity(vec);
+                    p.chat(tl.slayhorse("launch"));
+                    Location loc = new Location(h.getWorld(), h.getLocation().getX(), 256, h.getLocation().getZ());
+                    h.getWorld().strikeLightning(loc);
+                }        
+            }
+            h.setHealth(0);
+            p.sendMessage(tl.n + tl.slayhorse("slain"));
+        } else {
+            p.sendMessage(tl.e + tl.generic("riding"));
+        }
+    }
 }

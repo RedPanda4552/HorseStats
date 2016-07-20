@@ -35,49 +35,49 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 public abstract class ListenerBase implements Listener {
-	
-	protected HorseStatsMain main;
-	protected Translate tl;
-	
-	public ListenerBase(HorseStatsMain main, Translate tl) {
-		this.main = main;
-		this.tl = tl;
-	}
-	
-	/**
-	 * Check if a player owns or has access rights to a horse.
-	 * @param horse - The Horse to check
-	 * @param player - The Player to check.
-	 * @return True if access is allowed for any reason, false if no conditions are met.
-	 */
-	protected boolean canAccess(Horse horse, Player player) {
-		if (horse.getOwner() == null) {
-			return true;
-		} else if (player.hasPermission("HorseStats.global-override")) {
-			return true;
-		} else if (horse.getOwner() == player) {
-			return true;
-		} else if (Bukkit.getPlayer(horse.getOwner().getUniqueId()) != null) {
-			if (Bukkit.getPlayer(horse.getOwner().getUniqueId()).hasPermission("HorseStats.friend")) {
-				ArrayList<UUID> friends = main.friendHelper.readFriendListFromIndex(horse.getOwner().getUniqueId());
-				
-				if (friends != null) {
-					if (friends.contains(player.getUniqueId())) {
-						return true;
-					}
-				}
-			}
-		} else if (main.friendHelper.readFriendListFromFile(horse.getOwner().getUniqueId())) {
-			if (main.friendHelper.yc.getConfigurationSection("offline-permissions").getBoolean(horse.getOwner().getUniqueId().toString())) {
-				ArrayList<UUID> friends = main.friendHelper.readFriendListFromIndex(horse.getOwner().getUniqueId());
-				
-				if (friends != null) {
-					if (friends.contains(player.getUniqueId())) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
+    
+    protected HorseStatsMain main;
+    protected Translate tl;
+    
+    public ListenerBase(HorseStatsMain main, Translate tl) {
+        this.main = main;
+        this.tl = tl;
+    }
+    
+    /**
+     * Check if a player owns or has access rights to a horse.
+     * @param horse - The Horse to check
+     * @param player - The Player to check.
+     * @return True if access is allowed for any reason, false if no conditions are met.
+     */
+    protected boolean canAccess(Horse horse, Player player) {
+        if (horse.getOwner() == null) {
+            return true;
+        } else if (player.hasPermission("HorseStats.global-override")) {
+            return true;
+        } else if (horse.getOwner() == player) {
+            return true;
+        } else if (Bukkit.getPlayer(horse.getOwner().getUniqueId()) != null) {
+            if (Bukkit.getPlayer(horse.getOwner().getUniqueId()).hasPermission("HorseStats.friend")) {
+                ArrayList<UUID> friends = main.friendHelper.readFriendListFromIndex(horse.getOwner().getUniqueId());
+                
+                if (friends != null) {
+                    if (friends.contains(player.getUniqueId())) {
+                        return true;
+                    }
+                }
+            }
+        } else if (main.friendHelper.readFriendListFromFile(horse.getOwner().getUniqueId())) {
+            if (main.friendHelper.yc.getConfigurationSection("offline-permissions").getBoolean(horse.getOwner().getUniqueId().toString())) {
+                ArrayList<UUID> friends = main.friendHelper.readFriendListFromIndex(horse.getOwner().getUniqueId());
+                
+                if (friends != null) {
+                    if (friends.contains(player.getUniqueId())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }

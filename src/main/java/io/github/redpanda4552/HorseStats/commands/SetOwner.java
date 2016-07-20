@@ -34,53 +34,53 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
 public class SetOwner extends HorseStatsCommand {
-	
-	public SetOwner(HorseStatsMain main, Translate tl) {
-		super(main, tl);
-	}
+    
+    public SetOwner(HorseStatsMain main, Translate tl) {
+        super(main, tl);
+    }
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
-		if (sender instanceof Player) {
-			Player p = (Player) sender;
-			Horse h = null;
-			if (p.isInsideVehicle()) {
-				if (p.getVehicle() instanceof Horse) {
-					h = (Horse) p.getVehicle();
-				}
-			}
-			this.run(p, h, args);
-		} else {
-			sender.sendMessage(tl.generic("console"));
-		}
-		return true;
-	}
-	
-	/**
-	 * The player name itself is never saved anywhere;
-	 * we grab a Player instance from a name, and then
-	 * let the API handle saving when given the Player.
-	 */
-	@SuppressWarnings("deprecation")
+    @Override
+    public boolean onCommand(CommandSender sender, Command command,    String label, String[] args) {
+        if (sender instanceof Player) {
+            Player p = (Player) sender;
+            Horse h = null;
+            if (p.isInsideVehicle()) {
+                if (p.getVehicle() instanceof Horse) {
+                    h = (Horse) p.getVehicle();
+                }
+            }
+            this.run(p, h, args);
+        } else {
+            sender.sendMessage(tl.generic("console"));
+        }
+        return true;
+    }
+    
+    /**
+     * The player name itself is never saved anywhere;
+     * we grab a Player instance from a name, and then
+     * let the API handle saving when given the Player.
+     */
+    @SuppressWarnings("deprecation")
     public void run(Player p, Horse h, String[] args) {
-		if (h != null) {
-			if (this.isOwner(h, p)) {
-				if (args.length == 1) {					
-					if (Bukkit.getServer().getPlayer(args[0]) != null) {
-						h.eject();
-						p.sendMessage(tl.n + tl.setOwner("set-owner"));
-						h.setOwner(p.getServer().getPlayer(args[0]));
-					} else {
-						p.sendMessage(tl.e + tl.generic("player-not-found"));
-					}
-				} else {
-					p.sendMessage(tl.n + tl.setOwner("usage"));
-				}
-			} else {
-				p.sendMessage(tl.e + tl.generic("owner"));
-			}
-		} else {
-			p.sendMessage(tl.e + tl.generic("riding"));
-		}
-	}
+        if (h != null) {
+            if (this.isOwner(h, p)) {
+                if (args.length == 1) {                    
+                    if (Bukkit.getServer().getPlayer(args[0]) != null) {
+                        h.eject();
+                        p.sendMessage(tl.n + tl.setOwner("set-owner"));
+                        h.setOwner(p.getServer().getPlayer(args[0]));
+                    } else {
+                        p.sendMessage(tl.e + tl.generic("player-not-found"));
+                    }
+                } else {
+                    p.sendMessage(tl.n + tl.setOwner("usage"));
+                }
+            } else {
+                p.sendMessage(tl.e + tl.generic("owner"));
+            }
+        } else {
+            p.sendMessage(tl.e + tl.generic("riding"));
+        }
+    }
 }

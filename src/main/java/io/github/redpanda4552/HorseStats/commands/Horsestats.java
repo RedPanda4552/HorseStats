@@ -32,98 +32,98 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 public class Horsestats extends HorseStatsCommand { 
-	
-	public Horsestats(HorseStatsMain main, Translate tl) {
-		super(main, tl);
-	}
-	
-	private String[] genHelp =
-	{ " "
-	, YELLOW + "== HorseStats v" + main.getDescription().getVersion() + " " + tl.horsestats("by") + " 'bdubz4552' =="
-	, YELLOW + tl.horsestats("choose")
-	, GREEN  + "/hs stats"
-	, GREEN  + "/hs teleport"
-	, GREEN  + "/hs protect <grief | interact | friends>"
-	, GREEN  + tl.horsestats("command")
-	, YELLOW + "/help horsestats" + GREEN + "."
-	};
-	
-	private String[] statHelp = 
-	{ " "
-	, YELLOW + tl.horsestats("stat-title")
-	, GREEN  + tl.horsestats("instruction-1") + " " + YELLOW + main.pMatName + GREEN + ". "
-	, GREEN  + tl.horsestats("instruction-2")
-	, GREEN  + tl.horsestats("stat-1")
-	, GREEN  + tl.horsestats("stat-2")
-	, GREEN  + tl.horsestats("note-1")
-	, GREEN  + tl.horsestats("note-2")
-	};
-	
-	private String[] antiGriefHelp = 
-	{ " "
-	, YELLOW + tl.horsestats("anti-grief-title")
-	, GREEN  + tl.horsestats("anti-grief-1")
-	, GREEN  + tl.horsestats("anti-grief-2")
-	, GREEN  + tl.horsestats("access-reasons")
-	, GREEN  + tl.horsestats("reason-1")
-	, GREEN  + tl.horsestats("reason-2")
-	, GREEN  + tl.horsestats("reason-3")
-	};
-	
-	private String[] antiInteractHelp = 
-	{ " "
-	, YELLOW + tl.horsestats("anti-interact-title")
-	, GREEN  + tl.horsestats("anti-interact-1")
-	, GREEN  + tl.horsestats("anti-interact-2")
-	, GREEN  + tl.horsestats("access-reasons")
-	, GREEN  + tl.horsestats("reason-1")
-	, GREEN  + tl.horsestats("reason-2")
-	, GREEN  + tl.horsestats("reason-3")
-	};
-	
-	private String[] friendHelp = 
-	{ " "
-	, YELLOW + tl.horsestats("friend-title")
-	, GREEN  + tl.horsestats("friend-1") + YELLOW + " /hfriend" + GREEN + "."
-	, GREEN  + tl.horsestats("friend-2")
-	, GREEN  + tl.horsestats("friend-3")+ YELLOW + " /untame " + GREEN + tl.horsestats("and") + YELLOW + " /setowner " + GREEN + tl.horsestats("friend-4")
-	, GREEN  + tl.horsestats("friend-5")
-	};
-	
-	private String[] teleportHelp = 
-	{ " "
-	, YELLOW + tl.horsestats("teleport-title")
-	, GREEN  + tl.horsestats("teleport-1") + " " + YELLOW + main.tMatName + GREEN + "."
-	, GREEN  + tl.horsestats("teleport-2")
-	, GREEN  + tl.horsestats("teleport-3") + YELLOW + " /htp " + GREEN + tl.horsestats("teleport-4")
-	, GREEN  + tl.horsestats("teleport-5")
-	};
-	
-	@Override
-	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
-		if (args.length >= 1) {
-			if (args[0].equalsIgnoreCase("stats")) {
-				sender.sendMessage(statHelp);
-				return true;
-			} else if (args[0].equalsIgnoreCase("teleport")) {
-				sender.sendMessage(teleportHelp);
-				return true;
-			} else if (args[0].equalsIgnoreCase("protect")) {
-				if (args.length >= 2) {
-					if (args[1].equalsIgnoreCase("grief")) {
-						sender.sendMessage(antiGriefHelp);
-						return true;
-					} else if (args[1].equalsIgnoreCase("interact")) {
-						sender.sendMessage(antiInteractHelp);
-						return true;
-					} else if (args[1].equalsIgnoreCase("friends")) {
-						sender.sendMessage(friendHelp);
-						return true;
-					}
-				}
-			}
-		}
-		sender.sendMessage(genHelp);
-		return true;
-	}
+    
+    public Horsestats(HorseStatsMain main, Translate tl) {
+        super(main, tl);
+    }
+    
+    private String[] genHelp =
+    { " "
+    , YELLOW + "== HorseStats v" + main.getDescription().getVersion() + " " + tl.horsestats("by") + " 'bdubz4552' =="
+    , YELLOW + tl.horsestats("choose")
+    , GREEN  + "/hs stats"
+    , GREEN  + "/hs teleport"
+    , GREEN  + "/hs protect <grief | interact | friends>"
+    , GREEN  + tl.horsestats("command")
+    , YELLOW + "/help horsestats" + GREEN + "."
+    };
+    
+    private String[] statHelp = 
+    { " "
+    , YELLOW + tl.horsestats("stat-title")
+    , GREEN  + tl.horsestats("instruction-1") + " " + YELLOW + main.pMatName + GREEN + ". "
+    , GREEN  + tl.horsestats("instruction-2")
+    , GREEN  + tl.horsestats("stat-1")
+    , GREEN  + tl.horsestats("stat-2")
+    , GREEN  + tl.horsestats("note-1")
+    , GREEN  + tl.horsestats("note-2")
+    };
+    
+    private String[] antiGriefHelp = 
+    { " "
+    , YELLOW + tl.horsestats("anti-grief-title")
+    , GREEN  + tl.horsestats("anti-grief-1")
+    , GREEN  + tl.horsestats("anti-grief-2")
+    , GREEN  + tl.horsestats("access-reasons")
+    , GREEN  + tl.horsestats("reason-1")
+    , GREEN  + tl.horsestats("reason-2")
+    , GREEN  + tl.horsestats("reason-3")
+    };
+    
+    private String[] antiInteractHelp = 
+    { " "
+    , YELLOW + tl.horsestats("anti-interact-title")
+    , GREEN  + tl.horsestats("anti-interact-1")
+    , GREEN  + tl.horsestats("anti-interact-2")
+    , GREEN  + tl.horsestats("access-reasons")
+    , GREEN  + tl.horsestats("reason-1")
+    , GREEN  + tl.horsestats("reason-2")
+    , GREEN  + tl.horsestats("reason-3")
+    };
+    
+    private String[] friendHelp = 
+    { " "
+    , YELLOW + tl.horsestats("friend-title")
+    , GREEN  + tl.horsestats("friend-1") + YELLOW + " /hfriend" + GREEN + "."
+    , GREEN  + tl.horsestats("friend-2")
+    , GREEN  + tl.horsestats("friend-3")+ YELLOW + " /untame " + GREEN + tl.horsestats("and") + YELLOW + " /setowner " + GREEN + tl.horsestats("friend-4")
+    , GREEN  + tl.horsestats("friend-5")
+    };
+    
+    private String[] teleportHelp = 
+    { " "
+    , YELLOW + tl.horsestats("teleport-title")
+    , GREEN  + tl.horsestats("teleport-1") + " " + YELLOW + main.tMatName + GREEN + "."
+    , GREEN  + tl.horsestats("teleport-2")
+    , GREEN  + tl.horsestats("teleport-3") + YELLOW + " /htp " + GREEN + tl.horsestats("teleport-4")
+    , GREEN  + tl.horsestats("teleport-5")
+    };
+    
+    @Override
+    public boolean onCommand(CommandSender sender, Command command,    String label, String[] args) {
+        if (args.length >= 1) {
+            if (args[0].equalsIgnoreCase("stats")) {
+                sender.sendMessage(statHelp);
+                return true;
+            } else if (args[0].equalsIgnoreCase("teleport")) {
+                sender.sendMessage(teleportHelp);
+                return true;
+            } else if (args[0].equalsIgnoreCase("protect")) {
+                if (args.length >= 2) {
+                    if (args[1].equalsIgnoreCase("grief")) {
+                        sender.sendMessage(antiGriefHelp);
+                        return true;
+                    } else if (args[1].equalsIgnoreCase("interact")) {
+                        sender.sendMessage(antiInteractHelp);
+                        return true;
+                    } else if (args[1].equalsIgnoreCase("friends")) {
+                        sender.sendMessage(friendHelp);
+                        return true;
+                    }
+                }
+            }
+        }
+        sender.sendMessage(genHelp);
+        return true;
+    }
 }

@@ -36,55 +36,55 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerJoinLeaveListener extends ListenerBase {
 
-	public PlayerJoinLeaveListener(HorseStatsMain main, Translate tl) {
-		super (main, tl);
-	}
+    public PlayerJoinLeaveListener(HorseStatsMain main, Translate tl) {
+        super (main, tl);
+    }
 
-	@EventHandler
-	public void playerJoin(PlayerJoinEvent event) {
-		Player p = event.getPlayer();
-		
-		if (p.hasPermission("HorseStats.pluginalerts")) {
-			if (main.outOfDateConfig) {
-				p.sendMessage(tl.n + tl.playerJoinLeave("config"));
-			}
-			
-			if (main.noSpeedMode == -1) {
-				p.sendMessage(tl.n + tl.playerJoinLeave("no-speed"));
-			}
-			
-			if (main.updateAvailable) {
-				p.sendMessage(tl.n + tl.playerJoinLeave("new-build") + " " + main.updateName + " " + tl.playerJoinLeave("at"));
-				//Sent as stat to avoid second [HorseStats] header. Want this to look like one message, but separated lines.
-				p.sendMessage(tl.s + "https://dev.bukkit.org/bukkit-plugins/horsestats");
-			}
-		}
+    @EventHandler
+    public void playerJoin(PlayerJoinEvent event) {
+        Player p = event.getPlayer();
+        
+        if (p.hasPermission("HorseStats.pluginalerts")) {
+            if (main.outOfDateConfig) {
+                p.sendMessage(tl.n + tl.playerJoinLeave("config"));
+            }
+            
+            if (main.noSpeedMode == -1) {
+                p.sendMessage(tl.n + tl.playerJoinLeave("no-speed"));
+            }
+            
+            if (main.updateAvailable) {
+                p.sendMessage(tl.n + tl.playerJoinLeave("new-build") + " " + main.updateName + " " + tl.playerJoinLeave("at"));
+                //Sent as stat to avoid second [HorseStats] header. Want this to look like one message, but separated lines.
+                p.sendMessage(tl.s + "https://dev.bukkit.org/bukkit-plugins/horsestats");
+            }
+        }
 
-		if (p.hasPermission("HorseStats.friend")) {
-			main.friendHelper.readFriendListFromFile(p.getUniqueId());
-		}
-		
-		if (main.friendHelper.readFriendListFromIndex(p.getUniqueId()) != null) {
-			main.friendHelper.setPermissionStatus(p.getUniqueId(), p.hasPermission("HorseStats.friend"));
-			main.friendHelper.saveFriendLists();
-		}
-	}
-	
-	@EventHandler
-	public void playerLeave(PlayerQuitEvent event) {
-		ArrayList<UUID> friends = main.friendHelper.readFriendListFromIndex(event.getPlayer().getUniqueId());
-		
-		if (main.friendHelper.readFriendListFromIndex(event.getPlayer().getUniqueId()) != null) {
-			main.friendHelper.setPermissionStatus(event.getPlayer().getUniqueId(), event.getPlayer().hasPermission("HorseStats.friend"));
-			main.friendHelper.saveFriendLists();
-		}
-		
-		if (friends != null) {
-			main.friendHelper.removeFriendList(event.getPlayer().getUniqueId());
-		}
-		
-		if (main.teleportQueue.containsKey(event.getPlayer().getUniqueId())) {
-			main.teleportQueue.remove(event.getPlayer().getUniqueId());
-		}
-	}
+        if (p.hasPermission("HorseStats.friend")) {
+            main.friendHelper.readFriendListFromFile(p.getUniqueId());
+        }
+        
+        if (main.friendHelper.readFriendListFromIndex(p.getUniqueId()) != null) {
+            main.friendHelper.setPermissionStatus(p.getUniqueId(), p.hasPermission("HorseStats.friend"));
+            main.friendHelper.saveFriendLists();
+        }
+    }
+    
+    @EventHandler
+    public void playerLeave(PlayerQuitEvent event) {
+        ArrayList<UUID> friends = main.friendHelper.readFriendListFromIndex(event.getPlayer().getUniqueId());
+        
+        if (main.friendHelper.readFriendListFromIndex(event.getPlayer().getUniqueId()) != null) {
+            main.friendHelper.setPermissionStatus(event.getPlayer().getUniqueId(), event.getPlayer().hasPermission("HorseStats.friend"));
+            main.friendHelper.saveFriendLists();
+        }
+        
+        if (friends != null) {
+            main.friendHelper.removeFriendList(event.getPlayer().getUniqueId());
+        }
+        
+        if (main.teleportQueue.containsKey(event.getPlayer().getUniqueId())) {
+            main.teleportQueue.remove(event.getPlayer().getUniqueId());
+        }
+    }
 }

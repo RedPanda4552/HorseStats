@@ -34,45 +34,45 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class Untame extends HorseStatsCommand {
-	
-	public Untame(HorseStatsMain main, Translate tl) {
-		super(main, tl);	
-	}
-	
-	@Override
-	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
-		if (sender instanceof Player) {
-			Player p = (Player) sender;
-			Horse h = null;
-			if (p.isInsideVehicle()) {
-				if (p.getVehicle() instanceof Horse) {
-					h = (Horse) p.getVehicle();
-				}
-			}
-			this.run(p, h);
-		} else {
-			sender.sendMessage(tl.generic("console"));
-		}
-		return true;
-	}
-	
-	public void run(Player p, Horse h) {
-		if (h != null) {
-			if (this.isOwner(h, p)) {
-				h.eject();
-				h.setOwner(null);
-				h.setTamed(false);
-				if (h.getInventory().getSaddle() != null) {
-					ItemStack stack = h.getInventory().getSaddle();
-					h.getInventory().setSaddle(null);
-					h.getWorld().dropItemNaturally(h.getLocation(), stack);
-				}
-				p.sendMessage(tl.n + tl.untame("untame"));
-			} else {
-				p.sendMessage(tl.e + tl.generic("owner"));
-			}
-		} else {
-			p.sendMessage(tl.e + tl.generic("riding"));
-		}
-	}
+    
+    public Untame(HorseStatsMain main, Translate tl) {
+        super(main, tl);    
+    }
+    
+    @Override
+    public boolean onCommand(CommandSender sender, Command command,    String label, String[] args) {
+        if (sender instanceof Player) {
+            Player p = (Player) sender;
+            Horse h = null;
+            if (p.isInsideVehicle()) {
+                if (p.getVehicle() instanceof Horse) {
+                    h = (Horse) p.getVehicle();
+                }
+            }
+            this.run(p, h);
+        } else {
+            sender.sendMessage(tl.generic("console"));
+        }
+        return true;
+    }
+    
+    public void run(Player p, Horse h) {
+        if (h != null) {
+            if (this.isOwner(h, p)) {
+                h.eject();
+                h.setOwner(null);
+                h.setTamed(false);
+                if (h.getInventory().getSaddle() != null) {
+                    ItemStack stack = h.getInventory().getSaddle();
+                    h.getInventory().setSaddle(null);
+                    h.getWorld().dropItemNaturally(h.getLocation(), stack);
+                }
+                p.sendMessage(tl.n + tl.untame("untame"));
+            } else {
+                p.sendMessage(tl.e + tl.generic("owner"));
+            }
+        } else {
+            p.sendMessage(tl.e + tl.generic("riding"));
+        }
+    }
 }

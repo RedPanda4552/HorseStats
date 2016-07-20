@@ -34,40 +34,40 @@ import org.bukkit.entity.Player;
 
 
 public class Tame extends HorseStatsCommand {
-	
-	public Tame(HorseStatsMain main, Translate tl) {
-		super(main, tl);
-	}
-	
-	@Override
-	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
-		if (sender instanceof Player) {
-			Player p = (Player) sender;
-			Horse h = null;
-			if (p.isInsideVehicle()) {
-				if (p.getVehicle() instanceof Horse) {
-					h = (Horse) p.getVehicle();
-				}
-			}
-			this.run(p, h);
-		} else {
-			sender.sendMessage(tl.generic("console"));
-		}
-		return true;
-	}
-	
-	public void run(Player p, Horse h) {
-		if (h != null) {
-			if (h.getOwner() == null) {
-				h.setOwner(p);
-				p.sendMessage(tl.n + tl.tame("now-own"));
-			} else if (h.getOwner() == p) {
-				p.sendMessage(tl.n + tl.tame("already-own"));
-			} else {
-				p.sendMessage(tl.e + tl.generic("owner"));
-			}
-		} else {
-			p.sendMessage(tl.e + tl.generic("riding"));
-		}
-	}
+    
+    public Tame(HorseStatsMain main, Translate tl) {
+        super(main, tl);
+    }
+    
+    @Override
+    public boolean onCommand(CommandSender sender, Command command,    String label, String[] args) {
+        if (sender instanceof Player) {
+            Player p = (Player) sender;
+            Horse h = null;
+            if (p.isInsideVehicle()) {
+                if (p.getVehicle() instanceof Horse) {
+                    h = (Horse) p.getVehicle();
+                }
+            }
+            this.run(p, h);
+        } else {
+            sender.sendMessage(tl.generic("console"));
+        }
+        return true;
+    }
+    
+    public void run(Player p, Horse h) {
+        if (h != null) {
+            if (h.getOwner() == null) {
+                h.setOwner(p);
+                p.sendMessage(tl.n + tl.tame("now-own"));
+            } else if (h.getOwner() == p) {
+                p.sendMessage(tl.n + tl.tame("already-own"));
+            } else {
+                p.sendMessage(tl.e + tl.generic("owner"));
+            }
+        } else {
+            p.sendMessage(tl.e + tl.generic("riding"));
+        }
+    }
 }

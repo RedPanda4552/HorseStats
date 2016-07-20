@@ -33,25 +33,25 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 public class HorseInteractListener extends ListenerBase {
 
-	public HorseInteractListener(HorseStatsMain main, Translate tl) {
-		super(main, tl);
-	}
+    public HorseInteractListener(HorseStatsMain main, Translate tl) {
+        super(main, tl);
+    }
 
-	/**
-	 * Event listener for Anti-Interact config setting.
-	 */
-	@EventHandler
-	public void onPlayerInteractHorse(PlayerInteractEntityEvent event) {
-		if (event.getRightClicked() instanceof Horse) {
-			if (main.configBoolean("anti-interact")) {
-				Horse h = (Horse) event.getRightClicked();
-				Player p = event.getPlayer();
-				
-				if (!this.canAccess(h, p)) {
-					event.setCancelled(true);
-					p.sendMessage(tl.e + tl.generic("owner"));
-				}
-			}
-		}	
-	}
+    /**
+     * Event listener for Anti-Interact config setting.
+     */
+    @EventHandler
+    public void onPlayerInteractHorse(PlayerInteractEntityEvent event) {
+        if (event.getRightClicked() instanceof Horse) {
+            if (main.configBoolean("anti-interact")) {
+                Horse h = (Horse) event.getRightClicked();
+                Player p = event.getPlayer();
+                
+                if (!this.canAccess(h, p)) {
+                    event.setCancelled(true);
+                    p.sendMessage(tl.e + tl.generic("owner"));
+                }
+            }
+        }    
+    }
 }

@@ -33,64 +33,64 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
 public class SetStat extends HorseStatsCommand {
-	
-	public SetStat(HorseStatsMain main, Translate tl) {
-		super(main, tl);
-	}
+    
+    public SetStat(HorseStatsMain main, Translate tl) {
+        super(main, tl);
+    }
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
-		if (sender instanceof Player) {
-			Player p = (Player) sender;
-			Horse h = null;
-			if (p.isInsideVehicle()) {
-				if (p.getVehicle() instanceof Horse) {
-					h = (Horse) p.getVehicle();
-				}
-			}
-			
-			this.run(p, h, args);
-		} else {
-			sender.sendMessage(tl.generic("console"));
-		}
-		return true;
-	}
-	
-	public void run(Player p, Horse h, String args[]) {
-		if (h != null) {
-			if (this.canAccess(h, p)) {
-				if (args.length == 2) {			
-					if (args[0].equalsIgnoreCase("health")) {
-						double health = Double.parseDouble(args[1]);
-						if (health > 1024) {
-							health = 1024;
-							p.sendMessage(tl.e + tl.setStat("health-limit"));
-							return;
-						}
-						h.setMaxHealth(2 * health);
-						h.setHealth(2 * health);
-						p.sendMessage(tl.n + tl.setStat("health-set-to") + " " + health + " " + tl.setStat("hearts"));
-					} else if (args[0].equalsIgnoreCase("jump")) {
-						double jump = Double.parseDouble(args[1]);
-						if (jump > 22) {
-							jump = 22;
-							p.sendMessage(tl.e + tl.setStat("jump-limit"));
-							return;
-						}
-						
-						h.setJumpStrength(Math.sqrt(jump / 5.5));
-						p.sendMessage(tl.n + tl.setStat("jump-set-to") + " " + jump + " " + tl.setStat("blocks"));
-					} else {
-						p.sendMessage(tl.n + tl.setStat("usage"));
-					}
-				} else {
-					p.sendMessage(tl.n + tl.setStat("usage"));
-				}
-			} else {
-				p.sendMessage(tl.e + tl.generic("owner"));
-			}
-		} else {
-			p.sendMessage(tl.e + tl.generic("riding"));
-		}
-	}
+    @Override
+    public boolean onCommand(CommandSender sender, Command command,    String label, String[] args) {
+        if (sender instanceof Player) {
+            Player p = (Player) sender;
+            Horse h = null;
+            if (p.isInsideVehicle()) {
+                if (p.getVehicle() instanceof Horse) {
+                    h = (Horse) p.getVehicle();
+                }
+            }
+            
+            this.run(p, h, args);
+        } else {
+            sender.sendMessage(tl.generic("console"));
+        }
+        return true;
+    }
+    
+    public void run(Player p, Horse h, String args[]) {
+        if (h != null) {
+            if (this.canAccess(h, p)) {
+                if (args.length == 2) {            
+                    if (args[0].equalsIgnoreCase("health")) {
+                        double health = Double.parseDouble(args[1]);
+                        if (health > 1024) {
+                            health = 1024;
+                            p.sendMessage(tl.e + tl.setStat("health-limit"));
+                            return;
+                        }
+                        h.setMaxHealth(2 * health);
+                        h.setHealth(2 * health);
+                        p.sendMessage(tl.n + tl.setStat("health-set-to") + " " + health + " " + tl.setStat("hearts"));
+                    } else if (args[0].equalsIgnoreCase("jump")) {
+                        double jump = Double.parseDouble(args[1]);
+                        if (jump > 22) {
+                            jump = 22;
+                            p.sendMessage(tl.e + tl.setStat("jump-limit"));
+                            return;
+                        }
+                        
+                        h.setJumpStrength(Math.sqrt(jump / 5.5));
+                        p.sendMessage(tl.n + tl.setStat("jump-set-to") + " " + jump + " " + tl.setStat("blocks"));
+                    } else {
+                        p.sendMessage(tl.n + tl.setStat("usage"));
+                    }
+                } else {
+                    p.sendMessage(tl.n + tl.setStat("usage"));
+                }
+            } else {
+                p.sendMessage(tl.e + tl.generic("owner"));
+            }
+        } else {
+            p.sendMessage(tl.e + tl.generic("riding"));
+        }
+    }
 }

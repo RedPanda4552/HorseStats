@@ -35,54 +35,54 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Horse.Variant;
 
 public class Hspawn extends HorseStatsCommand {
-	
-	public Hspawn(HorseStatsMain main, Translate tl) {
-		super(main, tl);
-	}
-	
-	@Override
-	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
-		if (sender instanceof Player) {
-			Player p = (Player) sender;
-			Horse h = null;
-			if (p.isInsideVehicle()) {
-				if (p.getVehicle() instanceof Horse) {
-					h = (Horse) p.getVehicle();
-				}
-			}
-			this.run(p, h, args);
-		} else {
-			sender.sendMessage(tl.generic("console"));
-		}
-		return true;
-	}
-	
-	public void run(Player p, Horse h, String[] args) {
-		if (h == null) {						
-			Variant v = null;
-			if (args.length >= 1) {
-				if (args[0].equalsIgnoreCase("donkey")) {
-					v = Variant.DONKEY;
-					p.sendMessage(tl.n + tl.hspawn("donkey-spawn"));
-				} else if (args[0].equalsIgnoreCase("mule")) {
-					v = Variant.MULE;
-					p.sendMessage(tl.n + tl.hspawn("mule-spawn"));
-				} else {
-					p.sendMessage(tl.n + tl.hspawn("usage"));
-					return;
-				}
-			} else{
-				v = Variant.HORSE;
-			}
-			h = (Horse) p.getWorld().spawnEntity(p.getLocation(), EntityType.HORSE);
-			h.setAdult();
-			h.setVariant(v);
-			if (v == Variant.HORSE) {
-				
-				p.sendMessage(tl.n + tl.hspawn("horse-spawn"));
-			}
-		} else {
-			p.sendMessage(tl.e + tl.generic("cannot-ride"));
-		}
-	}
+    
+    public Hspawn(HorseStatsMain main, Translate tl) {
+        super(main, tl);
+    }
+    
+    @Override
+    public boolean onCommand(CommandSender sender, Command command,    String label, String[] args) {
+        if (sender instanceof Player) {
+            Player p = (Player) sender;
+            Horse h = null;
+            if (p.isInsideVehicle()) {
+                if (p.getVehicle() instanceof Horse) {
+                    h = (Horse) p.getVehicle();
+                }
+            }
+            this.run(p, h, args);
+        } else {
+            sender.sendMessage(tl.generic("console"));
+        }
+        return true;
+    }
+    
+    public void run(Player p, Horse h, String[] args) {
+        if (h == null) {                        
+            Variant v = null;
+            if (args.length >= 1) {
+                if (args[0].equalsIgnoreCase("donkey")) {
+                    v = Variant.DONKEY;
+                    p.sendMessage(tl.n + tl.hspawn("donkey-spawn"));
+                } else if (args[0].equalsIgnoreCase("mule")) {
+                    v = Variant.MULE;
+                    p.sendMessage(tl.n + tl.hspawn("mule-spawn"));
+                } else {
+                    p.sendMessage(tl.n + tl.hspawn("usage"));
+                    return;
+                }
+            } else{
+                v = Variant.HORSE;
+            }
+            h = (Horse) p.getWorld().spawnEntity(p.getLocation(), EntityType.HORSE);
+            h.setAdult();
+            h.setVariant(v);
+            if (v == Variant.HORSE) {
+                
+                p.sendMessage(tl.n + tl.hspawn("horse-spawn"));
+            }
+        } else {
+            p.sendMessage(tl.e + tl.generic("cannot-ride"));
+        }
+    }
 }

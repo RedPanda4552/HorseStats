@@ -32,43 +32,43 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
 public class Htp extends HorseStatsCommand {
-	
-	public Htp(HorseStatsMain main, Translate tl) {
-		super(main, tl);
-	}
-	
-	@Override
-	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
-		if (sender instanceof Player) {
-			Player p = (Player) sender;
-			this.run(p);
-		} else {
-			sender.sendMessage(tl.generic("console"));
-		}
-		return true;
-	}
-	
-	/**
-	 * Does not work if chunks are not loaded.
-	 * @param p - The player who initiated the teleport.
-	 */
-	public void run(Player p) {
-		if (main.teleportQueue.get(p.getUniqueId()) == null) {
-			p.sendMessage(tl.e + tl.htp("none-selected"));
-		} else {
-			Horse h = main.teleportQueue.get(p.getUniqueId());			
-			if (main.configBoolean("multi-world-teleport") == false) {
-				if (p.getWorld() != h.getWorld()) {
-					p.sendMessage(tl.e + tl.htp("world-teleport"));
-					return;
-				}
-			}
-			
-			if (h.teleport(p) == true) {
-				p.sendMessage(tl.n + tl.htp("teleporting"));
-			} else {
-				p.sendMessage(tl.e + tl.htp("teleport-fail")); //Don't know what would cause teleport fail but just in case
-			}
-		}
-	}
+    
+    public Htp(HorseStatsMain main, Translate tl) {
+        super(main, tl);
+    }
+    
+    @Override
+    public boolean onCommand(CommandSender sender, Command command,    String label, String[] args) {
+        if (sender instanceof Player) {
+            Player p = (Player) sender;
+            this.run(p);
+        } else {
+            sender.sendMessage(tl.generic("console"));
+        }
+        return true;
+    }
+    
+    /**
+     * Does not work if chunks are not loaded.
+     * @param p - The player who initiated the teleport.
+     */
+    public void run(Player p) {
+        if (main.teleportQueue.get(p.getUniqueId()) == null) {
+            p.sendMessage(tl.e + tl.htp("none-selected"));
+        } else {
+            Horse h = main.teleportQueue.get(p.getUniqueId());            
+            if (main.configBoolean("multi-world-teleport") == false) {
+                if (p.getWorld() != h.getWorld()) {
+                    p.sendMessage(tl.e + tl.htp("world-teleport"));
+                    return;
+                }
+            }
+            
+            if (h.teleport(p) == true) {
+                p.sendMessage(tl.n + tl.htp("teleporting"));
+            } else {
+                p.sendMessage(tl.e + tl.htp("teleport-fail")); //Don't know what would cause teleport fail but just in case
+            }
+        }
+    }
 }

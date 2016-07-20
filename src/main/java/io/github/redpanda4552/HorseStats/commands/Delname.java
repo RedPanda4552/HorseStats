@@ -33,38 +33,38 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
 public class Delname extends HorseStatsCommand {
-	
-	public Delname(HorseStatsMain main, Translate tl) {
-		super(main, tl);
-	}
-	
-	@Override
-	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
-		if (sender instanceof Player) {
-			Player p = (Player) sender;
-			Horse h = null;
-			if (p.isInsideVehicle()) {
-				if (p.getVehicle() instanceof Horse) {
-					h = (Horse) p.getVehicle();
-				}
-			}
-			this.run(p, h);
-		} else {
-			sender.sendMessage(tl.generic("console"));
-		}
-		return true;
-	}
-	
-	public void run(Player p, Horse h) {
-		if (h != null) {
-			if (this.canAccess(h, p)) {
-				h.setCustomName(null);
-				p.sendMessage(tl.n + tl.delname("name-delete"));
-			} else {
-				p.sendMessage(tl.e + tl.generic("owner"));
-			}
-		} else {
-			p.sendMessage(tl.e + tl.generic("riding"));
-		}
-	}
+    
+    public Delname(HorseStatsMain main, Translate tl) {
+        super(main, tl);
+    }
+    
+    @Override
+    public boolean onCommand(CommandSender sender, Command command,    String label, String[] args) {
+        if (sender instanceof Player) {
+            Player p = (Player) sender;
+            Horse h = null;
+            if (p.isInsideVehicle()) {
+                if (p.getVehicle() instanceof Horse) {
+                    h = (Horse) p.getVehicle();
+                }
+            }
+            this.run(p, h);
+        } else {
+            sender.sendMessage(tl.generic("console"));
+        }
+        return true;
+    }
+    
+    public void run(Player p, Horse h) {
+        if (h != null) {
+            if (this.canAccess(h, p)) {
+                h.setCustomName(null);
+                p.sendMessage(tl.n + tl.delname("name-delete"));
+            } else {
+                p.sendMessage(tl.e + tl.generic("owner"));
+            }
+        } else {
+            p.sendMessage(tl.e + tl.generic("riding"));
+        }
+    }
 }
