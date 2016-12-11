@@ -40,6 +40,7 @@ import net.gravitydevelopment.updater.Updater.UpdateResult;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -55,7 +56,7 @@ public class HorseStats extends JavaPlugin {
     
     // Universally accessed fields (Not necessarily pulled from config)
     public boolean noSpeedMode;
-    public HashMap<UUID, Horse> teleportQueue;
+    public HashMap<UUID, AbstractHorse> teleportQueue;
     
     // Configuration fields
     public Material statDisplayMaterial, teleportSelectorMaterial;
@@ -195,7 +196,7 @@ public class HorseStats extends JavaPlugin {
             teleportSelectorMaterialFriendlyName = "Ender Pearl";
         }
         
-        teleportQueue = new HashMap<UUID, Horse>();
+        teleportQueue = new HashMap<UUID, AbstractHorse>();
         
         getServer().getPluginManager().registerEvents(new DamageListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinLeaveListener(this), this);        
