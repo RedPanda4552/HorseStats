@@ -3,16 +3,21 @@
 
 # Do not modify the config version. this is used by HorseStats internally, and
 # if altered, may cause false warning messages.
-config-version: 3.32
+config-version: 4.0
 
 options:
-  # If you are using your translation file, set this to true. If you are not,
-  # leave this false. If this is false, the plugin will automatically update
-  # the translate file for you. Otherwise, you will need to manually update
-  # the translate file by backing it up to another folder, deleting it out of
-  # the server, restarting your server, and putting old lines that are still
-  # applicable back in.
-  use-translation: false
+  # The name of the language file to be used. If you name an invalid file,
+  # HorseStats will automatically unpack and default to en-us.yml.
+  language-pack: en-us.yml
+  
+  # If set to false, the [HorseStats] tag will not display on any HorseStats
+  # messages.
+  show-tag: true
+  
+  # To disable all owner checking, set this to true. All horses will be at the
+  # mercy of the players. Setting this to true will also disable the HorseStats
+  # internal permission system and its SQL connection.
+  anarchy-mode: false
   
   # If you need to look up the name of a Bukkit Material type, here is a list
   # maintained by Spigot:
@@ -24,8 +29,8 @@ options:
   stat-item: LEASH
   
   # This is the user-friendly name of the above Material type. This is what
-  # will be shown in /horsestats as the item to use for stat display. This
-  # should be surrounded in quotation marks.
+  # will be shown in /horsestats as the item to use for stat display. It is a
+  # good idea to keep this surrounded in quotes.
   stat-item-name: "Lead"
   
   # This is the item used to toggle horse teleport. Note that this MUST be a
@@ -34,8 +39,8 @@ options:
   teleport-item: ENDER_PEARL
   
   # This is the user-friendly name of the above Material type. This is what
-  # will be shown in /horsestats as the item to use for teleporting. This
-  # should be surrounded in quotation marks.
+  # will be shown in /horsestats as the item to use for teleporting. It is a
+  # good idea to keep this surrounded in quotes.
   teleport-item-name: "Ender Pearl"
   
   # Allow the plugin to check for updates at startup? If an update is
@@ -44,30 +49,39 @@ options:
   # get this message when they join the server as well.
   update-checks: true
   
-  # Note about "Access Rights"
-  # It should be mentioned here that "Access Rights" mentioned below refers to
-  # a few people. First, the legitimate owner of the horse. Second, any server
-  # staff with the "HorseStats.global-override" permission. Third, any friends
-  # on the legitimate owner's friend list.
-  
-  # Should horses be protected from damage by players who do not have
-  # "access rights"? If this is true, any left clicks or arrow strikes from
-  # players without "access rights" will be cancelled. Since small projectiles
-  # do no damage, those are not blocked.
-  anti-grief: true
-  
-  # Should players without "access rights" be blocked from right clicking
-  # horses? If true, this will cancel any attempts by players without
-  # "access rights" to right click horses, no matter what reason.
-  anti-interact: true
-  
   # Should horses be able to teleport to other worlds? IMPORTANT: Initial
   # testing showed that horse data for the entire server could be lost if this
   # is allowed. However, this result has not been successfully reproduced
   # since MC 1.6.
   multi-world-teleport: false
+
+# Settings for SQL database. You can safely leave this alone and HorseStats will
+# work fine. If you know what you are doing, you can modify the below to meet
+# the needs of your server environment.
+sql:
+  # The SQL driver to use. HorseStats supports SQLite and MySQL. This field
+  # ignores capitals.
+  driver: sqlite
   
-  # Should the stats of an owned horse be blocked when a player without
-  # "access rights" tries to view its stats?
-  block-stats: false
+  # The path to your SQLite database. This must end with '.db'. This is only
+  # used for SQLite.
+  sqlite-database-path: plugins/HorseStats/horsestats.db
   
+  # The address of your MySQL server. This is only used for MySQL.
+  mysql-host-name: localhost
+  
+  # The port your MySQL server uses. The default port for MySQL is usually 3306.
+  # This is only used for MySQL.
+  mysql-port: 3306
+  
+  # The database in your MySQL server to save protections to. This is only used
+  # for MySQL.
+  mysql-database: horsestats
+  
+  # The username that HorseStats will use to connect to your MySQL server. This
+  # is only used for MySQL.
+  mysql-username: username
+
+  # The password that HorseStats will use to connect to your MySQL server. This
+  # is only used for MySQL.
+  mysql-password: password

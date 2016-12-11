@@ -23,60 +23,38 @@
  */
 package io.github.redpanda4552.HorseStats.listeners;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import io.github.redpanda4552.HorseStats.HorseStats;
+import io.github.redpanda4552.HorseStats.friend.InteractionType;
+import io.github.redpanda4552.HorseStats.lang.Lang;
 
-import io.github.redpanda4552.HorseStats.HorseStatsMain;
-import io.github.redpanda4552.HorseStats.translate.Translate;
-
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 public abstract class ListenerBase implements Listener {
     
-    protected HorseStatsMain main;
-    protected Translate tl;
+    protected HorseStats main;
+    protected Lang lang;
     
-    public ListenerBase(HorseStatsMain main, Translate tl) {
+    public ListenerBase(HorseStats main) {
         this.main = main;
-        this.tl = tl;
+        lang = main.lang;
     }
     
     /**
-     * Check if a player owns or has access rights to a horse.
-     * @param horse - The Horse to check
-     * @param player - The Player to check.
-     * @return True if access is allowed for any reason, false if no conditions are met.
+     * Check if a player owns or has been given permission for a horse.
      */
-    protected boolean canAccess(Horse horse, Player player) {
+    protected boolean hasPermission(Player player, Horse horse, InteractionType interactionType) {
         if (horse.getOwner() == null) {
+            return true;
+        } else if (main.anarchyMode) {
             return true;
         } else if (player.hasPermission("HorseStats.global-override")) {
             return true;
         } else if (horse.getOwner() == player) {
             return true;
-        } else if (Bukkit.getPlayer(horse.getOwner().getUniqueId()) != null) {
-            if (Bukkit.getPlayer(horse.getOwner().getUniqueId()).hasPermission("HorseStats.friend")) {
-                ArrayList<UUID> friends = main.friendHelper.readFriendListFromIndex(horse.getOwner().getUniqueId());
-                
-                if (friends != null) {
-                    if (friends.contains(player.getUniqueId())) {
-                        return true;
-                    }
-                }
-            }
-        } else if (main.friendHelper.readFriendListFromFile(horse.getOwner().getUniqueId())) {
-            if (main.friendHelper.yc.getConfigurationSection("offline-permissions").getBoolean(horse.getOwner().getUniqueId().toString())) {
-                ArrayList<UUID> friends = main.friendHelper.readFriendListFromIndex(horse.getOwner().getUniqueId());
-                
-                if (friends != null) {
-                    if (friends.contains(player.getUniqueId())) {
-                        return true;
-                    }
-                }
-            }
+        } else if (main.permissionHelper.playerHasPermission(player.getUniqueId(), horse.getOwner().getUniqueId(), interactionType)) {
+            return true;
         }
         return false;
     }

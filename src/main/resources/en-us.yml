@@ -1,0 +1,130 @@
+# This is the US English Language Pack for HorseStats. If you wish to translate
+# this to a different language, copy and paste this file, rename it, and modify
+# the new copy. HorseStats will automatically update this file, so it is
+# important that you make your own copy!
+
+# Don't change this! This is how HorseStats knows if your language pack is old!
+version: 4.0
+
+playerJoinLeaveListener:
+  config: "The HorseStats config is out of date. Details can be found in the console when the plugin started."
+  no-speed: "HorseStats is running in 'no speed mode'. Details can be found in the console when the plugin started."
+  new-build: "A new build of HorseStats is available! You can find"
+  at: "at:"
+damageListener:
+  owner-fix: "This horse was flagged as tamed, but the owner returned 'none'. It is now fully untamed."
+  stats: "Stats"
+  max-health: "Max Health:"
+  horse: "Horse"
+  health: "Health:"
+  hearts: "hearts"
+  jump: "Jump Height (Blocks):"
+  # This is what appears after a horse's name in the stat display. If your
+  # language has a possessive suffix (English is 's), change it here. If not,
+  # delete it, and replace it with a space. If you completely empty this, it
+  # may cause errors while trying to display.
+  posessive: "'s"
+  no-speed: "Speed could not be loaded."
+  speed: "Speed (Blocks per Second):"
+  breed: "Can Breed:"
+  teleport-status: "Is Selected For Teleport:"
+  owner: "Owner:"
+  none: "None"
+  is-adult: "Is Adult:"
+  adult-minutes: "Minutes Until Adult:"
+  teleport-selected: "Horse selected for teleport."
+  teleport-deselected: "Horse deselected for teleport."
+  teleport-untame: "You cannot select an untamed horse for teleporting."
+horseStats:
+  anarchy-mode: "Anarchy mode is currently enabled, so the HorseStats internal permissions system is disabled."
+  
+  by: "by"
+  choose: "Available subcommands:"
+  command: "To see HorseStats commands that you have permission for, use"
+  
+  stat-title: "Stat Display"
+  instruction-1: "This server has the stat display item set to"
+  instruction-2: "Equip one, and punch a horse to get a list of stats:"
+  stat-1: "-MaxHealth -Health -Jump Height -Speed (Blocks per Second)"
+  stat-2: "-Can Breed -Is Adult -Owner"
+  note-1: "1) Horses will not take damage from the punch"
+  note-2: "2) Speed and jump values are not infinitely precise"
+  
+  permission-title: "Permissions"
+  permission-1: "The HorseStats internal permissions system is detached from the server's permission system! They are not the same thing!"
+  permission-2: "You can assign players permissions to your horses with the command"
+  permission-3: "Do note that the"
+  and: "and"
+  permission-4: "commands do not respect permissions; only the owner should be able to change the owner."
+  
+  teleport-title: "Horse Teleporting"
+  teleport-1: "This server has the teleport select item set to"
+  teleport-2: "Equip one, and punch a horse to select it for teleporting. The horse will not take damage."
+  teleport-3: "To teleport the horse, use"
+  teleport-4: "at the desired destination and the horse will teleport to you."
+  teleport-5: "Teleporting long distances is a two person job. If the chunk containing the horse you are trying to teleport unloads because you are too far away, you will need someone to stay by the horse so the chunk stays loaded."
+generic:
+  riding: "You must be riding the horse you want to use this on."
+  attack: "You cannot hurt another player's horse."
+  owner: "You must be the owner, or given permission by the owner of the horse to do this."
+  player-not-found: "The specified player was not found."
+  console: "This command cannot be used in console."
+  cannot-ride: "You cannot be riding a horse while you use this command."
+delchest:
+  chest-delete: "Chest Deleted."
+delname:
+  name-delete: "Custom name erased."
+hperm:
+  the: "The"
+  anarchy-mode: "command is not usable while anarchy mode is enabled."
+  usage-1: "/hperm <give | take | view> <player> <damage | use>"
+  usage-2: "When using a player's name, they must be online. If you know the player's UUID, this can be used regardless of online status."
+  offline: "Could not find player by name"
+  uuid: "Could not find player by uuid"
+  perm-1: "Bad permission option"
+  perm-2: "Available permissions are"
+  and: "and"
+  subcommand-1: "Bad subcommand; choices are"
+  subcommand-2: "Available subcommands are"
+  success-1: "Successfuly updated permission"
+  success-2: "for player"
+  viewall: "Something went wrong trying to look up your permissions. Consider telling an administrator to check server logs for errors."
+  view: "Fetcing permissions you've given out. This may take a moment..."
+hspawn:
+  usage: "/hspawn <donkey | mule> -- To spawn a horse, just use '/hspawn'."
+  horse-spawn: "Horse spawned successfully."
+  donkey-spawn: "Donkey spawned successfully."
+  mule-spawn: "Mule spawned successfully."
+htp:
+  world-teleport: "Teleporting between worlds is disabled."
+  none-selected: "No horse has been selected."
+  teleporting: "Teleporting..."
+  teleport-fail: "Teleport failed."
+  despawned: "The horse you targeted is either dead or not in a loaded chunk. If it is not in a loaded chunk, reselect it and make sure its containing chunk stays loaded."
+setOwner:
+  set-owner: "Owner changed successfully."
+  usage: "/setowner <player>"
+setStat:
+  usage: "/setstat <jump | health> <value> -- Health is measured in hearts. Jump is measured in blocks."
+  health-set-to: "Horse's health has been set to"
+  hearts: "hearts."
+  jump-set-to: "Horse's jump height has been set to"
+  blocks: "blocks."
+  jump-limit: "Horses cannot jump higher than 22 blocks."
+  health-limit: "Horse health is limited to 1024 hearts."
+setStyle:
+  color-change: "Color changed to"
+  style-change: "Style changed to"
+  only-horse: "Only horses can be modified."
+  style-params: "Bad arguments; use '/setstyle ?' to see arguments and usage."
+slayhorse:
+  # "\u266B" is a UTF-8 code for a music eighth note sign. If you delete it
+  # and want to add it back, then you can copy it out of this note. "&o" is
+  # the Bukkit chat formatting code for italics.  
+  launch: "\u266B He's a magical pony, flying through the sky--shoot it down. &oboom"
+  slain: "Horse slain."
+tame:
+  now-own: "You now own this horse."
+  already-own: "You already own this horse."
+untame:
+  untame: "This horse is no longer tamed."
