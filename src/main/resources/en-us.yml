@@ -97,7 +97,7 @@ hspawn:
   mule-spawn: "Mule spawned successfully."
 htp:
   world-teleport: "Teleporting between worlds is disabled."
-  none-selected: "No horse has been selected."
+  none-selected: "No AbstractHorse has been selected."
   teleporting: "Teleporting..."
   teleport-fail: "Teleport failed."
   despawned: "The horse you targeted is either dead or not in a loaded chunk. If it is not in a loaded chunk, reselect it and make sure its containing chunk stays loaded."
@@ -111,7 +111,7 @@ setStat:
   jump-set-to: "Horse's jump height has been set to"
   blocks: "blocks."
   jump-limit: "Horses cannot jump higher than 22 blocks."
-  health-limit: "Horse health is limited to 1024 hearts."
+  health-limit: "AbstractHorse health is limited to 1024 hearts."
 setStyle:
   color-change: "Color changed to"
   style-change: "Style changed to"

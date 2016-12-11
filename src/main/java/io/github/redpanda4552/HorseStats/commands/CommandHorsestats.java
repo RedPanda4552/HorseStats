@@ -74,7 +74,7 @@ public class CommandHorsestats extends AbstractCommand {
     };
     
     @Override
-    public boolean onCommand(CommandSender sender, Command command,    String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length >= 1) {
             if (args[0].equalsIgnoreCase("stats")) {
                 sender.sendMessage(statHelp);

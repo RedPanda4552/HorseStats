@@ -26,6 +26,7 @@ package io.github.redpanda4552.HorseStats.listeners;
 import io.github.redpanda4552.HorseStats.HorseStats;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,7 +41,7 @@ public class InteractListener extends ListenerBase {
     @EventHandler
     public void onPlayerInteractHorse(PlayerInteractEntityEvent event) {
         if (event.getRightClicked() instanceof Horse) {
-            Horse h = (Horse) event.getRightClicked();
+            AbstractHorse h = (Horse) event.getRightClicked();
             Player p = event.getPlayer();
             
             if (!hasPermission(p, h, InteractionType.USE)) {

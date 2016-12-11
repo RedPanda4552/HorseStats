@@ -28,6 +28,7 @@ import io.github.redpanda4552.HorseStats.friend.InteractionType;
 import io.github.redpanda4552.HorseStats.lang.Lang;
 
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
@@ -47,7 +48,7 @@ public abstract class AbstractCommand implements CommandExecutor {
     /**
      * Used by SetOwner and Untame commands, as it is more absolute and ignores the permission system.
      */
-    protected boolean isOwner(Horse horse, Player player) {
+    protected boolean isOwner(AbstractHorse horse, Player player) {
         if (horse.getOwner() == player) {
             return true;
         } else if (player.hasPermission("HorseStats.global-override")) {
@@ -59,7 +60,7 @@ public abstract class AbstractCommand implements CommandExecutor {
     /**
      * Check if a player owns or has been given permission for a horse.
      */
-    protected boolean hasPermission(Player player, Horse horse, InteractionType interactionType) {
+    protected boolean hasPermission(Player player, AbstractHorse horse, InteractionType interactionType) {
         if (horse.getOwner() == null) {
             return true;
         } else if (main.anarchyMode) {

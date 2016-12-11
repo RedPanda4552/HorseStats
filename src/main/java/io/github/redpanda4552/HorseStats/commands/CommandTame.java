@@ -27,6 +27,7 @@ import io.github.redpanda4552.HorseStats.HorseStats;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
@@ -38,10 +39,10 @@ public class CommandTame extends AbstractCommand {
     }
     
     @Override
-    public boolean onCommand(CommandSender sender, Command command,    String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            Horse h = null;
+            AbstractHorse h = null;
             if (p.isInsideVehicle()) {
                 if (p.getVehicle() instanceof Horse) {
                     h = (Horse) p.getVehicle();
@@ -54,7 +55,7 @@ public class CommandTame extends AbstractCommand {
         return true;
     }
     
-    public void run(Player p, Horse h) {
+    public void run(Player p, AbstractHorse h) {
         if (h != null) {
             if (h.getOwner() == null) {
                 h.setOwner(p);

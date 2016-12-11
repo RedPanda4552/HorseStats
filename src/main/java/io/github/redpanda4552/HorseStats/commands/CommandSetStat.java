@@ -28,6 +28,7 @@ import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
@@ -38,10 +39,10 @@ public class CommandSetStat extends AbstractCommand {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command,    String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            Horse h = null;
+            AbstractHorse h = null;
             
             if (p.isInsideVehicle()) {
                 if (p.getVehicle() instanceof Horse) {
@@ -56,7 +57,7 @@ public class CommandSetStat extends AbstractCommand {
         return true;
     }
     
-    public void run(Player p, Horse h, String args[]) {
+    public void run(Player p, AbstractHorse h, String args[]) {
         if (h != null) {
             if (hasPermission(p, h, InteractionType.USE)) {
                 if (args.length == 2) {            

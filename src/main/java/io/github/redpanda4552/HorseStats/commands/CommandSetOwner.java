@@ -28,6 +28,7 @@ import io.github.redpanda4552.HorseStats.HorseStats;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
@@ -38,10 +39,10 @@ public class CommandSetOwner extends AbstractCommand {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command,    String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            Horse h = null;
+            AbstractHorse h = null;
             if (p.isInsideVehicle()) {
                 if (p.getVehicle() instanceof Horse) {
                     h = (Horse) p.getVehicle();
@@ -60,7 +61,7 @@ public class CommandSetOwner extends AbstractCommand {
      * let the API handle saving when given the Player.
      */
     @SuppressWarnings("deprecation")
-    public void run(Player p, Horse h, String[] args) {
+    public void run(Player p, AbstractHorse h, String[] args) {
         if (h != null) {
             if (this.isOwner(h, p)) {
                 if (args.length == 1) {                    

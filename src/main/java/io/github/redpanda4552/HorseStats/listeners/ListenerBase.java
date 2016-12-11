@@ -27,6 +27,7 @@ import io.github.redpanda4552.HorseStats.HorseStats;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 import io.github.redpanda4552.HorseStats.lang.Lang;
 
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -44,7 +45,7 @@ public abstract class ListenerBase implements Listener {
     /**
      * Check if a player owns or has been given permission for a horse.
      */
-    protected boolean hasPermission(Player player, Horse horse, InteractionType interactionType) {
+    protected boolean hasPermission(Player player, AbstractHorse horse, InteractionType interactionType) {
         if (horse.getOwner() == null) {
             return true;
         } else if (main.anarchyMode) {

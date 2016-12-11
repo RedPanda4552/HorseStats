@@ -26,6 +26,7 @@ package io.github.redpanda4552.HorseStats.listeners;
 import io.github.redpanda4552.HorseStats.HorseStats;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Horse.Variant;
@@ -48,7 +49,7 @@ public class DamageListener extends ListenerBase {
     public void onHorseHit(EntityDamageByEntityEvent event) {
         //A horse is hit
         if (event.getEntity() instanceof Horse) {
-            Horse h = (Horse) event.getEntity();
+            AbstractHorse h = (Horse) event.getEntity();
             
             //A player hit it
             if (event.getDamager() instanceof Player) {
@@ -87,7 +88,7 @@ public class DamageListener extends ListenerBase {
     /**
      * Display the stats of a horse to a player.
      */
-    public void displayStats(Player p, Horse horse) {
+    public void displayStats(Player p, AbstractHorse horse) {
         fixOwner(p, horse);
         
         //Raw data
@@ -146,7 +147,7 @@ public class DamageListener extends ListenerBase {
     /**
      * Toggles teleport selection for a horse.
      */
-    public void teleportToggle(Player p, Horse horse) {
+    public void teleportToggle(Player p, AbstractHorse horse) {
         if (horse.getOwner() == null) {
             p.sendMessage(lang.tag + lang.r + lang.get("damageListener.teleport-untame"));
         } else if (this.hasPermission(p, horse, InteractionType.USE)) {
@@ -167,7 +168,7 @@ public class DamageListener extends ListenerBase {
      * Needs package name updates when NBT code changes, or build number changes (e.g. CB 1.7.2-R1 to CB 1.7.2-R2)
      * Using full package names instead of imports so that I can just return before exceptions start flying, instead of making a whole new class.
      */
-    public double getSpeed(Horse horse) {
+    public double getSpeed(AbstractHorse horse) {
         double speed = -1; //In case of bad Spigot version
         
         if (!main.noSpeedMode) {
@@ -192,7 +193,7 @@ public class DamageListener extends ListenerBase {
         return speed;
     }
     
-    private void fixOwner(Player p, Horse horse) {
+    private void fixOwner(Player p, AbstractHorse horse) {
         if (horse.getOwner() == null && horse.isTamed() == true) {
             if (horse.getVariant() == Variant.SKELETON_HORSE) {
                 horse.setOwner(p);

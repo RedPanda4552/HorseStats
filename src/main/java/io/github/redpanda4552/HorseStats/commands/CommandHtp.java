@@ -27,6 +27,7 @@ import io.github.redpanda4552.HorseStats.*;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
@@ -37,7 +38,7 @@ public class CommandHtp extends AbstractCommand {
     }
     
     @Override
-    public boolean onCommand(CommandSender sender, Command command,    String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             this.run(p);
@@ -56,7 +57,7 @@ public class CommandHtp extends AbstractCommand {
         if (main.teleportQueue.get(p.getUniqueId()) == null) {
             p.sendMessage(lang.tag + lang.r + lang.get("htp.none-selected"));
         } else {
-            Horse h = main.teleportQueue.get(p.getUniqueId());            
+            AbstractHorse h = main.teleportQueue.get(p.getUniqueId());            
             
             if (main.getConfig().getBoolean("options.multi-world-teleport") == false) {
                 if (p.getWorld() != h.getWorld()) {
