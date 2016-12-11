@@ -41,7 +41,7 @@ public class InteractListener extends ListenerBase {
     @EventHandler
     public void onPlayerInteractHorse(PlayerInteractEntityEvent event) {
         if (event.getRightClicked() instanceof Horse) {
-            AbstractHorse h = (Horse) event.getRightClicked();
+            AbstractHorse h = (AbstractHorse) event.getRightClicked();
             Player p = event.getPlayer();
             
             if (!hasPermission(p, h, InteractionType.USE)) {

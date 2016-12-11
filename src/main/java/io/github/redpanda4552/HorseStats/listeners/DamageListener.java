@@ -49,7 +49,7 @@ public class DamageListener extends ListenerBase {
     public void onHorseHit(EntityDamageByEntityEvent event) {
         //A horse is hit
         if (event.getEntity() instanceof Horse) {
-            AbstractHorse h = (Horse) event.getEntity();
+            AbstractHorse h = (AbstractHorse) event.getEntity();
             
             //A player hit it
             if (event.getDamager() instanceof Player) {
@@ -112,7 +112,7 @@ public class DamageListener extends ListenerBase {
         //Teleport status
         boolean tpStatus = false;
         
-        if (main.teleportQueue.containsValue(horse)) {
+        if (main.teleportQueue.containsValue(AbstractHorse)) {
             tpStatus = true;
         }
         
@@ -137,7 +137,7 @@ public class DamageListener extends ListenerBase {
         p.sendMessage(lang.g + lang.get("damageListener.max-health") + " " + (float) healthMax + " (" + (int) heartMax + " " + lang.get("damageListener.hearts") + ")");
         p.sendMessage(lang.g + lang.get("damageListener.health") + " " + (float) health + " (" + (int) heart + " " + lang.get("damageListener.hearts") + ")");
         p.sendMessage(lang.g + lang.get("damageListener.jump") + " " + (float) jump);
-        p.sendMessage(lang.g + lang.get("damageListener.speed") + " " + (float) getSpeed(horse) * 43);
+        p.sendMessage(lang.g + lang.get("damageListener.speed") + " " + (float) getSpeed(AbstractHorse) * 43);
         p.sendMessage(lang.g + lang.get("damageListener.breed") + " " + breed);
         p.sendMessage(lang.g + lang.get("damageListener.teleport-status") + " " + tpStatus);
         p.sendMessage(lang.g + lang.get("damageListener.is-adult") + " " + adult + ageTime);

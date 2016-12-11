@@ -46,7 +46,7 @@ public class CommandHspawn extends AbstractCommand {
             AbstractHorse h = null;
             if (p.isInsideVehicle()) {
                 if (p.getVehicle() instanceof Horse) {
-                    h = (Horse) p.getVehicle();
+                    h = (AbstractHorse) p.getVehicle();
                 }
             }
             this.run(p, h, args);
@@ -73,7 +73,7 @@ public class CommandHspawn extends AbstractCommand {
             } else{
                 v = Variant.HORSE;
             }
-            h = (Horse) p.getWorld().spawnEntity(p.getLocation(), EntityType.HORSE);
+            h = (AbstractHorse) p.getWorld().spawnEntity(p.getLocation(), EntityType.HORSE);
             h.setAdult();
             h.setVariant(v);
             if (v == Variant.HORSE) {

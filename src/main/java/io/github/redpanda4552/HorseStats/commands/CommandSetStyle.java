@@ -51,7 +51,7 @@ public class CommandSetStyle extends AbstractCommand {
             AbstractHorse h = null;
             if (p.isInsideVehicle()) {
                 if (p.getVehicle() instanceof Horse) {
-                    h = (Horse) p.getVehicle();
+                    h = (AbstractHorse) p.getVehicle();
                 }
             }
             this.run(p, h, args);
