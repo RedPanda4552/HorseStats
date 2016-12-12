@@ -31,8 +31,8 @@ import io.github.redpanda4552.HorseStats.friend.InteractionType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.ChestedHorse;
 import org.bukkit.entity.Horse;
-import org.bukkit.entity.Horse.Variant;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Horse.Color;
 import org.bukkit.entity.Horse.Style;
@@ -64,55 +64,47 @@ public class CommandSetStyle extends AbstractCommand {
     public void run(Player p, AbstractHorse h, String[] args) {
         if (h != null) {
             if (hasPermission(p, h, InteractionType.USE)) {
-                if (h.getVariant() == Variant.HORSE) {
+                // We are making a huge assumption here that the composition of these
+                // interfaces is no different other than the presence of a chest.
+                // Below we will type cast h to Horse, regardless of the true type.
+                if (h instanceof Horse || h instanceof ChestedHorse) {
                     if (args.length >= 2) {
                         if (args[0].equalsIgnoreCase("color")) {
                             if (args[1].equalsIgnoreCase("black")) {
-                                h.setColor(Color.BLACK);
-                            }
-                            else if (args[1].equalsIgnoreCase("brown")) {
-                                h.setColor(Color.BROWN);
-                            }
-                            else if (args[1].equalsIgnoreCase("chestnut")) {
-                                h.setColor(Color.CHESTNUT);
-                            }
-                            else if (args[1].equalsIgnoreCase("creamy")) {
-                                h.setColor(Color.CREAMY);
-                            }
-
-                            else if (args[1].equalsIgnoreCase("darkbrown")) {
-                                h.setColor(Color.DARK_BROWN);
-                            }
-                            else if (args[1].equalsIgnoreCase("gray")) {
-                                h.setColor(Color.GRAY);
-                            }
-                            else if (args[1].equalsIgnoreCase("white")) {
-                                h.setColor(Color.WHITE);
+                                ((Horse) h).setColor(Color.BLACK);
+                            } else if (args[1].equalsIgnoreCase("brown")) {
+                                ((Horse) h).setColor(Color.BROWN);
+                            } else if (args[1].equalsIgnoreCase("chestnut")) {
+                                ((Horse) h).setColor(Color.CHESTNUT);
+                            } else if (args[1].equalsIgnoreCase("creamy")) {
+                                ((Horse) h).setColor(Color.CREAMY);
+                            } else if (args[1].equalsIgnoreCase("darkbrown")) {
+                                ((Horse) h).setColor(Color.DARK_BROWN);
+                            } else if (args[1].equalsIgnoreCase("gray")) {
+                                ((Horse) h).setColor(Color.GRAY);
+                            } else if (args[1].equalsIgnoreCase("white")) {
+                                ((Horse) h).setColor(Color.WHITE);
                             } else {
                                 p.sendMessage(lang.tag + lang.r + lang.get("setStyle.style-params"));
                                 return;
                             }
-                            p.sendMessage(lang.tag + lang.get("setStyle.color-change") + " " + YELLOW + h.getColor());
+                            p.sendMessage(lang.tag + lang.get("setStyle.color-change") + " " + YELLOW + ((Horse) h).getColor());
                         } else if (args[0].equalsIgnoreCase("style")) {
                             if (args[1].equalsIgnoreCase("blackdots")) {
-                                h.setStyle(Style.BLACK_DOTS);
-                            }
-                            else if (args[1].equalsIgnoreCase("none")) {
-                                h.setStyle(Style.NONE);
-                            }
-                            else if (args[1].equalsIgnoreCase("white")) {
-                                h.setStyle(Style.WHITE);
-                            }
-                            else if (args[1].equalsIgnoreCase("whitedots")) {
-                                h.setStyle(Style.WHITE_DOTS);
-                            }
-                            else if (args[1].equalsIgnoreCase("whitefield")) {
-                                h.setStyle(Style.WHITEFIELD);
+                                ((Horse) h).setStyle(Style.BLACK_DOTS);
+                            } else if (args[1].equalsIgnoreCase("none")) {
+                                ((Horse) h).setStyle(Style.NONE);
+                            } else if (args[1].equalsIgnoreCase("white")) {
+                                ((Horse) h).setStyle(Style.WHITE);
+                            } else if (args[1].equalsIgnoreCase("whitedots")) {
+                                ((Horse) h).setStyle(Style.WHITE_DOTS);
+                            } else if (args[1].equalsIgnoreCase("whitefield")) {
+                                ((Horse) h).setStyle(Style.WHITEFIELD);
                             } else {
                                 p.sendMessage(lang.tag + lang.r + lang.get("setStyle.style-params"));
                                 return;
                             }
-                            p.sendMessage(lang.tag + lang.get("setStyle.style-change") + " " + YELLOW + h.getStyle());
+                            p.sendMessage(lang.tag + lang.get("setStyle.style-change") + " " + YELLOW + ((Horse) h).getStyle());
                         } else {
                             p.sendMessage(lang.tag + lang.get("setStyle.style-params"));
                         }
@@ -126,7 +118,8 @@ public class CommandSetStyle extends AbstractCommand {
                         p.sendMessage(lang.tag + lang.get("setStyle.style-params"));
                     }
                 } else {
-                    p.sendMessage(lang.tag + lang.r + lang.get("setStyle.only-horse"));
+                    p.sendMessage(lang.tag + lang.r + lang.get("setStyle.bad-type"));
+                    return;
                 }
             } else {
                 p.sendMessage(lang.tag + lang.r + lang.get("generic.owner"));
