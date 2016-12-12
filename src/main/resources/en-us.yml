@@ -113,9 +113,9 @@ setStat:
   jump-limit: "Horses cannot jump higher than 22 blocks."
   health-limit: "Horse health is limited to 1024 hearts."
 setStyle:
+  bad-type: "Cannot use setstyle on this type of entity"
   color-change: "Color changed to"
   style-change: "Style changed to"
-  only-horse: "Only horses can be modified."
   style-params: "Bad arguments; use '/setstyle ?' to see arguments and usage."
 slayhorse:
   # "\u266B" is a UTF-8 code for a music eighth note sign. If you delete it
