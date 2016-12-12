@@ -37,7 +37,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Horse.Color;
 import org.bukkit.entity.Horse.Style;
 
-
 public class CommandSetStyle extends AbstractCommand {
     
     public CommandSetStyle(HorseStats main) {
@@ -49,11 +48,13 @@ public class CommandSetStyle extends AbstractCommand {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             AbstractHorse h = null;
+            
             if (p.isInsideVehicle()) {
                 if (p.getVehicle() instanceof Horse) {
                     h = (AbstractHorse) p.getVehicle();
                 }
             }
+            
             this.run(p, h, args);
         } else {
             sender.sendMessage(lang.get("generic.console"));
@@ -88,6 +89,7 @@ public class CommandSetStyle extends AbstractCommand {
                                 p.sendMessage(lang.tag + lang.r + lang.get("setStyle.style-params"));
                                 return;
                             }
+                            
                             p.sendMessage(lang.tag + lang.get("setStyle.color-change") + " " + YELLOW + ((Horse) h).getColor());
                         } else if (args[0].equalsIgnoreCase("style")) {
                             if (args[1].equalsIgnoreCase("blackdots")) {
@@ -104,6 +106,7 @@ public class CommandSetStyle extends AbstractCommand {
                                 p.sendMessage(lang.tag + lang.r + lang.get("setStyle.style-params"));
                                 return;
                             }
+                            
                             p.sendMessage(lang.tag + lang.get("setStyle.style-change") + " " + YELLOW + ((Horse) h).getStyle());
                         } else {
                             p.sendMessage(lang.tag + lang.get("setStyle.style-params"));
