@@ -28,6 +28,7 @@ import io.github.redpanda4552.HorseStats.HorseStats;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.ChestedHorse;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -57,15 +58,19 @@ public class CommandUntame extends AbstractCommand {
     
     public void run(Player p, AbstractHorse h) {
         if (h != null) {
-            if (this.isOwner(h, p)) {
+            if (isOwner(h, p)) {
                 h.eject();
                 h.setOwner(null);
                 h.setTamed(false);
-                if (h.getInventory().getSaddle() != null) {
-                    ItemStack stack = h.getInventory().getSaddle();
-                    h.getInventory().setSaddle(null);
-                    h.getWorld().dropItemNaturally(h.getLocation(), stack);
+                
+                if (h instanceof Horse || h instanceof ChestedHorse) {
+                    if (((Horse) h).getInventory().getSaddle() != null) {
+                        ItemStack stack = ((Horse) h).getInventory().getSaddle();
+                        ((Horse) h).getInventory().setSaddle(null);
+                        h.getWorld().dropItemNaturally(h.getLocation(), stack);
+                    }
                 }
+                
                 p.sendMessage(lang.tag + lang.get("untame.untame"));
             } else {
                 p.sendMessage(lang.tag + lang.r + lang.get("generic.owner"));
