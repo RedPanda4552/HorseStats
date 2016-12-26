@@ -255,9 +255,9 @@ public class PermissionHelper {
     }
     
     /**
-     * Find all people that a player has given permissions to.
-     * This method is going to be resource demanding! It will pull ALL data from SQL!
-     * Do not run this outside of async!
+     * Find all people that a player has given permissions to.<br><b>
+     * This method is going to be resource demanding! It will pull ALL data from SQL!<br>
+     * Do not run this synchronously!</b>
      */
     public HashMap<UUID, PermissionSet> viewAllPermissions(UUID toCheck) {
         HashMap<UUID, PermissionSet> ret = new HashMap<UUID, PermissionSet>();
