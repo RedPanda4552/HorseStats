@@ -238,15 +238,14 @@ public class PermissionHelper {
                 unloadPlayerPermissions(toUpdate);
                 loadPlayerPermissions(toUpdate);
             }
-            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
             // If the player is offline, unload their permissions now that we're done
             if (Bukkit.getPlayer(toUpdate) == null) {
                 unloadPlayerPermissions(toUpdate);
             }
             
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
             try {
                 ps.close();
             } catch (SQLException e) {
