@@ -114,9 +114,7 @@ public class HorseStats extends JavaPlugin {
         langFileName = getConfig().getString("options.language-pack");
         lang = new Lang(this);
         
-        if (anarchyMode) {
-            
-        } else {
+        if (!anarchyMode) {
             permissionHelper = new PermissionHelper(this);
             
             // Start SQL Setup
