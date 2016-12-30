@@ -72,6 +72,7 @@ generic:
   cannot-ride: "You cannot be riding a horse while you use this command."
 delchest:
   chest-delete: "Chest Deleted."
+  not-chested: "You must be riding a chested donkey, mule or llama to use this command."
 delname:
   name-delete: "Custom name erased."
 hperm:
@@ -91,10 +92,9 @@ hperm:
   viewall: "Something went wrong trying to look up your permissions. Consider telling an administrator to check server logs for errors."
   view: "Fetcing permissions you've given out. This may take a moment..."
 hspawn:
-  usage: "/hspawn <donkey | mule> -- To spawn a horse, just use '/hspawn'."
-  horse-spawn: "Horse spawned successfully."
-  donkey-spawn: "Donkey spawned successfully."
-  mule-spawn: "Mule spawned successfully."
+  usage: "/hspawn <horse | donkey | mule | llama | skeleton | zombie>"
+  spawn: "Successfully spawned "
+  fail: "Failed to spawn horse of type "
 htp:
   world-teleport: "Teleporting between worlds is disabled."
   none-selected: "No Horse has been selected."
@@ -113,7 +113,7 @@ setStat:
   jump-limit: "Horses cannot jump higher than 22 blocks."
   health-limit: "Horse health is limited to 1024 hearts."
 setStyle:
-  bad-type: "Cannot use setstyle on this type of entity"
+  bad-type: "You must be riding a normal horse to use this setstyle"
   color-change: "Color changed to"
   style-change: "Style changed to"
   style-params: "Bad arguments; use '/setstyle ?' to see arguments and usage."
@@ -124,7 +124,7 @@ slayhorse:
   launch: "\u266B He's a magical pony, flying through the sky--shoot it down. &oboom"
   slain: "Horse slain."
 tame:
-  now-own: "You now own this horse."
-  already-own: "You already own this horse."
+  now-own: "You now own this"
+  already-own: "You already own this"
 untame:
   untame: "This horse is no longer tamed."
