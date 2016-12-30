@@ -28,10 +28,14 @@ import io.github.redpanda4552.HorseStats.HorseStats;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.Donkey;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Horse.Variant;
+import org.bukkit.entity.SkeletonHorse;
+import org.bukkit.entity.ZombieHorse;
+import org.bukkit.entity.Llama;
+import org.bukkit.entity.Mule;
 
 public class CommandHspawn extends AbstractCommand {
     
@@ -44,12 +48,14 @@ public class CommandHspawn extends AbstractCommand {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             AbstractHorse h = null;
+            
             if (p.isInsideVehicle()) {
-                if (p.getVehicle() instanceof Horse) {
+                if (p.getVehicle() instanceof AbstractHorse) {
                     h = (AbstractHorse) p.getVehicle();
                 }
             }
-            this.run(p, h, args);
+            
+            run(p, h, args);
         } else {
             sender.sendMessage(lang.get("generic.console"));
         }
@@ -57,31 +63,45 @@ public class CommandHspawn extends AbstractCommand {
     }
     
     public void run(Player p, AbstractHorse h, String[] args) {
-        if (h == null) {                        
-            Variant v = null;
-            if (args.length >= 1) {
-                if (args[0].equalsIgnoreCase("donkey")) {
-                    v = Variant.DONKEY;
-                    p.sendMessage(lang.tag + lang.get("hspawn.donkey-spawn"));
-                } else if (args[0].equalsIgnoreCase("mule")) {
-                    v = Variant.MULE;
-                    p.sendMessage(lang.tag + lang.get("hspawn.mule-spawn"));
-                } else {
-                    p.sendMessage(lang.tag + lang.get("hspawn.usage"));
-                    return;
-                }
-            } else{
-                v = Variant.HORSE;
-            }
-            h = (AbstractHorse) p.getWorld().spawnEntity(p.getLocation(), EntityType.HORSE);
-            h.setAdult();
-            h.setVariant(v);
-            if (v == Variant.HORSE) {
-                
-                p.sendMessage(lang.tag + lang.get("hspawn.horse-spawn"));
-            }
-        } else {
+        if (h != null) {
             p.sendMessage(lang.tag + lang.r + lang.get("generic.cannot-ride"));
+            return;
+        }
+        
+        if (args.length >= 1) {
+            switch (args[0].toLowerCase()) {
+            case "horse":
+                h = (Horse) p.getWorld().spawnEntity(p.getLocation(), EntityType.HORSE);
+                break;
+            case "donkey":
+                h = (Donkey) p.getWorld().spawnEntity(p.getLocation(), EntityType.DONKEY);
+                break;
+            case "mule":
+                h = (Mule) p.getWorld().spawnEntity(p.getLocation(), EntityType.MULE);
+                break;
+            case "llama":
+                h = (Llama) p.getWorld().spawnEntity(p.getLocation(), EntityType.LLAMA);
+                break;
+            case "skeleton":
+                h = (SkeletonHorse) p.getWorld().spawnEntity(p.getLocation(), EntityType.SKELETON_HORSE);
+                break;
+            case "zombie":
+                h = (ZombieHorse) p.getWorld().spawnEntity(p.getLocation(), EntityType.ZOMBIE_HORSE);
+                break;
+            default:
+                p.sendMessage(lang.tag + lang.get("hspawn.usage"));
+                break;
+            }
+        } else{
+            // No argument specified, assume normal horse
+            h = (Horse) p.getWorld().spawnEntity(p.getLocation(), EntityType.HORSE);
+        }
+        
+        if (h != null && h.isValid()) {
+            h.setAdult();
+            p.sendMessage(lang.tag + lang.get("hspawn.spawn") + " " + friendlyName(h));
+        } else {
+            p.sendMessage(lang.tag + lang.r + lang.get("hspawn.fail") + " " + args[0]);
         }
     }
 }

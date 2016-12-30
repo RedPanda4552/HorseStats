@@ -29,7 +29,6 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.AbstractHorse;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -45,12 +44,14 @@ public class CommandSlayhorse extends AbstractCommand {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             AbstractHorse h = null;
+            
             if (p.isInsideVehicle()) {
-                if (p.getVehicle() instanceof Horse) {
+                if (p.getVehicle() instanceof AbstractHorse) {
                     h = (AbstractHorse) p.getVehicle();
                 }
             }
-            this.run(p, h, args);
+            
+            run(p, h, args);
         } else {
             sender.sendMessage(lang.get("generic.console"));
         }
@@ -58,21 +59,24 @@ public class CommandSlayhorse extends AbstractCommand {
     }
     
     public void run(Player p, AbstractHorse h, String[] args) {
-        if (h != null) {
-            h.eject();
-            if (args.length == 1) {
-                if (args[0].equalsIgnoreCase("launch") && p.hasPermission("HorseStats.slayhorse.launch")) {
-                    Vector vec = new Vector(0, 6, 0);
-                    h.setVelocity(vec);
-                    p.chat(lang.get("slayhorse.launch"));
-                    Location loc = new Location(h.getWorld(), h.getLocation().getX(), 256, h.getLocation().getZ());
-                    h.getWorld().strikeLightning(loc);
-                }        
-            }
-            h.setHealth(0);
-            p.sendMessage(lang.tag + lang.get("slayhorse.slain"));
-        } else {
+        if (h == null) {
             p.sendMessage(lang.tag + lang.r + lang.get("generic.riding"));
+            return;
         }
+        
+        h.eject();
+        
+        if (args.length >= 1) {
+            if (args[0].equalsIgnoreCase("launch") && p.hasPermission("HorseStats.slayhorse.launch")) {
+                Vector vec = new Vector(0, 6, 0);
+                h.setVelocity(vec);
+                p.chat(lang.get("slayhorse.launch"));
+                Location loc = new Location(h.getWorld(), h.getLocation().getX(), 256, h.getLocation().getZ());
+                h.getWorld().strikeLightning(loc);
+            }        
+        }
+        
+        h.setHealth(0);
+        p.sendMessage(lang.tag + lang.get("slayhorse.slain"));
     }
 }

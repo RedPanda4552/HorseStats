@@ -26,10 +26,10 @@ package io.github.redpanda4552.HorseStats.commands;
 import io.github.redpanda4552.HorseStats.HorseStats;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
+import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.AbstractHorse;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
 public class CommandSetStat extends AbstractCommand {
@@ -45,12 +45,12 @@ public class CommandSetStat extends AbstractCommand {
             AbstractHorse h = null;
             
             if (p.isInsideVehicle()) {
-                if (p.getVehicle() instanceof Horse) {
+                if (p.getVehicle() instanceof AbstractHorse) {
                     h = (AbstractHorse) p.getVehicle();
                 }
             }
             
-            this.run(p, h, args);
+            run(p, h, args);
         } else {
             sender.sendMessage(lang.get("generic.console"));
         }
@@ -58,43 +58,46 @@ public class CommandSetStat extends AbstractCommand {
     }
     
     public void run(Player p, AbstractHorse h, String args[]) {
-        if (h != null) {
-            if (hasPermission(p, h, InteractionType.USE)) {
-                if (args.length == 2) {            
-                    if (args[0].equalsIgnoreCase("health")) {
-                        double health = Double.parseDouble(args[1]);
-                        
-                        if (health > 1024) {
-                            health = 1024;
-                            p.sendMessage(lang.tag + lang.r + lang.get("setStat.health-limit"));
-                            return;
-                        }
-                        
-                        h.setMaxHealth(2 * health);
-                        h.setHealth(2 * health);
-                        p.sendMessage(lang.tag + lang.get("setStat.health-set-to") + " " + health + " " + lang.get("setStat.hearts"));
-                    } else if (args[0].equalsIgnoreCase("jump")) {
-                        double jump = Double.parseDouble(args[1]);
-                        
-                        if (jump > 22) {
-                            jump = 22;
-                            p.sendMessage(lang.tag + lang.r + lang.get("setStat.jump-limit"));
-                            return;
-                        }
-                        
-                        h.setJumpStrength(Math.sqrt(jump / 5.5));
-                        p.sendMessage(lang.tag + lang.get("setStat.jump-set-to") + " " + jump + " " + lang.get("setStat.blocks"));
-                    } else {
-                        p.sendMessage(lang.tag + lang.get("setStat.usage"));
-                    }
-                } else {
-                    p.sendMessage(lang.tag + lang.get("setStat.usage"));
+        if (h == null) {
+            p.sendMessage(lang.tag + lang.r + lang.get("generic.riding"));
+            return;
+        }
+        
+        if (!hasPermission(p, h, InteractionType.USE)) {
+            p.sendMessage(lang.tag + lang.r + lang.get("generic.owner"));
+            return;
+        }
+        
+        if (args.length >= 2) {            
+            if (args[0].equalsIgnoreCase("health")) {
+                double health = Double.parseDouble(args[1]);
+                
+                if (health > 1024) {
+                    health = 1024;
+                    p.sendMessage(lang.tag + lang.r + lang.get("setStat.health-limit"));
+                    return;
                 }
+                
+                // A bit of a roundabout compared to the old way, but I guess I could call this "more descriptive"?
+                h.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(2 * health);
+                h.setHealth(2 * health);
+                p.sendMessage(lang.tag + lang.get("setStat.health-set-to") + " " + health + " " + lang.get("setStat.hearts"));
+            } else if (args[0].equalsIgnoreCase("jump")) {
+                double jump = Double.parseDouble(args[1]);
+                
+                if (jump > 22) {
+                    jump = 22;
+                    p.sendMessage(lang.tag + lang.r + lang.get("setStat.jump-limit"));
+                    return;
+                }
+                
+                h.setJumpStrength(Math.sqrt(jump / 5.5));
+                p.sendMessage(lang.tag + lang.get("setStat.jump-set-to") + " " + jump + " " + lang.get("setStat.blocks"));
             } else {
-                p.sendMessage(lang.tag + lang.r + lang.get("generic.owner"));
+                p.sendMessage(lang.tag + lang.get("setStat.usage"));
             }
         } else {
-            p.sendMessage(lang.tag + lang.r + lang.get("generic.riding"));
+            p.sendMessage(lang.tag + lang.get("setStat.usage"));
         }
     }
 }

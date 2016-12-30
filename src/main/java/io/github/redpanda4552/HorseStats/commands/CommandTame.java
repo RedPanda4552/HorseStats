@@ -28,7 +28,6 @@ import io.github.redpanda4552.HorseStats.HorseStats;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.AbstractHorse;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
 
@@ -43,12 +42,14 @@ public class CommandTame extends AbstractCommand {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             AbstractHorse h = null;
+            
             if (p.isInsideVehicle()) {
-                if (p.getVehicle() instanceof Horse) {
+                if (p.getVehicle() instanceof AbstractHorse) {
                     h = (AbstractHorse) p.getVehicle();
                 }
             }
-            this.run(p, h);
+            
+            run(p, h);
         } else {
             sender.sendMessage(lang.get("generic.console"));
         }
@@ -56,17 +57,18 @@ public class CommandTame extends AbstractCommand {
     }
     
     public void run(Player p, AbstractHorse h) {
-        if (h != null) {
-            if (h.getOwner() == null) {
-                h.setOwner(p);
-                p.sendMessage(lang.tag + lang.get("tame.now-own"));
-            } else if (h.getOwner() == p) {
-                p.sendMessage(lang.tag + lang.get("tame.already-own"));
-            } else {
-                p.sendMessage(lang.tag + lang.r + lang.get("generic.owner"));
-            }
-        } else {
+        if (h == null) {
             p.sendMessage(lang.tag + lang.r + lang.get("generic.riding"));
+            return;
+        }
+        
+        if (h.getOwner() == null) {
+            h.setOwner(p);
+            p.sendMessage(lang.tag + lang.get("tame.now-own") + " " + friendlyName(h));
+        } else if (h.getOwner() == p) {
+            p.sendMessage(lang.tag + lang.get("tame.already-own") + " " + friendlyName(h));
+        } else {
+            p.sendMessage(lang.tag + lang.r + lang.get("generic.owner"));
         }
     }
 }

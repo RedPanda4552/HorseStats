@@ -28,9 +28,8 @@ import io.github.redpanda4552.HorseStats.HorseStats;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.AbstractHorse;
-import org.bukkit.entity.ChestedHorse;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.HorseInventory;
 import org.bukkit.inventory.ItemStack;
 
 public class CommandUntame extends AbstractCommand {
@@ -44,12 +43,14 @@ public class CommandUntame extends AbstractCommand {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             AbstractHorse h = null;
+            
             if (p.isInsideVehicle()) {
-                if (p.getVehicle() instanceof Horse) {
+                if (p.getVehicle() instanceof AbstractHorse) {
                     h = (AbstractHorse) p.getVehicle();
                 }
             }
-            this.run(p, h);
+            
+            run(p, h);
         } else {
             sender.sendMessage(lang.get("generic.console"));
         }
@@ -57,26 +58,29 @@ public class CommandUntame extends AbstractCommand {
     }
     
     public void run(Player p, AbstractHorse h) {
-        if (h != null) {
-            if (isOwner(h, p)) {
-                h.eject();
-                h.setOwner(null);
-                h.setTamed(false);
-                
-                if (h instanceof Horse || h instanceof ChestedHorse) {
-                    if (((Horse) h).getInventory().getSaddle() != null) {
-                        ItemStack stack = ((Horse) h).getInventory().getSaddle();
-                        ((Horse) h).getInventory().setSaddle(null);
-                        h.getWorld().dropItemNaturally(h.getLocation(), stack);
-                    }
-                }
-                
-                p.sendMessage(lang.tag + lang.get("untame.untame"));
-            } else {
-                p.sendMessage(lang.tag + lang.r + lang.get("generic.owner"));
-            }
-        } else {
+        if (h == null) {
             p.sendMessage(lang.tag + lang.r + lang.get("generic.riding"));
+            return;
         }
+        
+        if (!isOwner(h, p)) {
+            p.sendMessage(lang.tag + lang.r + lang.get("generic.owner"));
+            return;
+        }
+        
+        h.eject();
+        h.setOwner(null);
+        // Docs say this is redundant but I don't trust Spigot anymore
+        h.setTamed(false);
+        
+        // Spigot didn't override getInventory() on any of the new horse interfaces.
+        // To get the actual HorseInventory, we will type cast and pray.
+        if (h.getInventory() instanceof HorseInventory) {
+            ItemStack stack = ((HorseInventory) h.getInventory()).getSaddle();
+            ((HorseInventory) h.getInventory()).setSaddle(null);
+            h.getWorld().dropItemNaturally(h.getLocation(), stack);
+        }
+        
+        p.sendMessage(lang.tag + lang.get("untame.untame"));
     }
 }

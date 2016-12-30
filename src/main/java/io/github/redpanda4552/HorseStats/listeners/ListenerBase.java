@@ -28,7 +28,6 @@ import io.github.redpanda4552.HorseStats.friend.InteractionType;
 import io.github.redpanda4552.HorseStats.lang.Lang;
 
 import org.bukkit.entity.AbstractHorse;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 

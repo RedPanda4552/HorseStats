@@ -28,7 +28,6 @@ import io.github.redpanda4552.HorseStats.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.AbstractHorse;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
 public class CommandHtp extends AbstractCommand {
@@ -41,7 +40,7 @@ public class CommandHtp extends AbstractCommand {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            this.run(p);
+            run(p);
         } else {
             sender.sendMessage(lang.get("generic.console"));
         }
@@ -54,29 +53,31 @@ public class CommandHtp extends AbstractCommand {
      * @param p - The player who initiated the teleport.
      */
     public void run(Player p) {
-        if (main.teleportQueue.get(p.getUniqueId()) == null) {
+        AbstractHorse h = main.teleportQueue.get(p.getUniqueId());
+        
+        if (h == null) {
             p.sendMessage(lang.tag + lang.r + lang.get("htp.none-selected"));
+            return;
+        }
+        
+        if (main.getConfig().getBoolean("options.multi-world-teleport") == false) {
+            if (p.getWorld() != h.getWorld()) {
+                p.sendMessage(lang.tag + lang.r + lang.get("htp.world-teleport"));
+                return;
+            }
+        }
+        
+        if (!h.isValid()) {
+            p.sendMessage(lang.tag + lang.r + lang.get("htp.despawned"));
+            main.teleportQueue.remove(p.getUniqueId());
+            return;
+        }
+        
+        if (h.teleport(p) == true) {
+            p.sendMessage(lang.tag + lang.get("htp.teleporting"));
         } else {
-            AbstractHorse h = main.teleportQueue.get(p.getUniqueId());            
-            
-            if (main.getConfig().getBoolean("options.multi-world-teleport") == false) {
-                if (p.getWorld() != h.getWorld()) {
-                    p.sendMessage(lang.tag + lang.r + lang.get("htp.world-teleport"));
-                    return;
-                }
-            }
-            
-            if (h.isValid()) {
-                if (h.teleport(p) == true) {
-                    p.sendMessage(lang.tag + lang.get("htp.teleporting"));
-                } else {
-                    p.sendMessage(lang.tag + lang.r + lang.get("htp.teleport-fail"));
-                    main.teleportQueue.remove(p.getUniqueId());
-                }
-            } else {
-                p.sendMessage(lang.tag + lang.r + lang.get("htp.despawned"));
-                main.teleportQueue.remove(p.getUniqueId());
-            }
+            p.sendMessage(lang.tag + lang.r + lang.get("htp.teleport-fail"));
+            main.teleportQueue.remove(p.getUniqueId());
         }
     }
 }

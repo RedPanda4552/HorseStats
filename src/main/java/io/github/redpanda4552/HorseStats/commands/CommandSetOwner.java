@@ -29,7 +29,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.AbstractHorse;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
 public class CommandSetOwner extends AbstractCommand {
@@ -43,43 +42,42 @@ public class CommandSetOwner extends AbstractCommand {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             AbstractHorse h = null;
+            
             if (p.isInsideVehicle()) {
-                if (p.getVehicle() instanceof Horse) {
+                if (p.getVehicle() instanceof AbstractHorse) {
                     h = (AbstractHorse) p.getVehicle();
                 }
             }
-            this.run(p, h, args);
+            
+            run(p, h, args);
         } else {
             sender.sendMessage(lang.get("generic.console"));
         }
         return true;
     }
     
-    /**
-     * The player name itself is never saved anywhere;
-     * we grab a Player instance from a name, and then
-     * let the API handle saving when given the Player.
-     */
     @SuppressWarnings("deprecation")
     public void run(Player p, AbstractHorse h, String[] args) {
-        if (h != null) {
-            if (this.isOwner(h, p)) {
-                if (args.length == 1) {                    
-                    if (Bukkit.getServer().getPlayer(args[0]) != null) {
-                        h.eject();
-                        p.sendMessage(lang.tag + lang.get("setOwner.set-owner"));
-                        h.setOwner(p.getServer().getPlayer(args[0]));
-                    } else {
-                        p.sendMessage(lang.tag + lang.r + lang.get("generic.player-not-found"));
-                    }
-                } else {
-                    p.sendMessage(lang.tag + lang.get("setOwner.usage"));
-                }
+        if (h == null) {
+            p.sendMessage(lang.tag + lang.r + lang.get("generic.riding"));
+            return;
+        }
+        
+        if (!isOwner(h, p)) {
+            p.sendMessage(lang.tag + lang.r + lang.get("generic.owner"));
+            return;
+        }
+        
+        if (args.length >= 1) {                    
+            if (Bukkit.getPlayer(args[0]) != null) {
+                h.eject();
+                p.sendMessage(lang.tag + lang.get("setOwner.set-owner"));
+                h.setOwner(Bukkit.getPlayer(args[0]));
             } else {
-                p.sendMessage(lang.tag + lang.r + lang.get("generic.owner"));
+                p.sendMessage(lang.tag + lang.r + lang.get("generic.player-not-found"));
             }
         } else {
-            p.sendMessage(lang.tag + lang.r + lang.get("generic.riding"));
+            p.sendMessage(lang.tag + lang.get("setOwner.usage"));
         }
     }
 }

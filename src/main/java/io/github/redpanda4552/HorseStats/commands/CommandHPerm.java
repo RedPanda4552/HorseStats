@@ -108,7 +108,7 @@ public class CommandHPerm extends AbstractCommand {
             return true;
         }
         
-        // TODO Debug code, needs removed
+        // Debug code, needs removed, but might be useful elsewhere so we'll leave it for now
 //        for (UUID uuid : main.permissionHelper.permissionMap.keySet()) {
 //            for (PermissionSet ps : main.permissionHelper.permissionMap.get(uuid)) {
 //                player.sendMessage(uuid.toString() + " = " + ps.getPlayerId() + "." + ps.hasDamagePermission() + "." + ps.hasUsePermission());

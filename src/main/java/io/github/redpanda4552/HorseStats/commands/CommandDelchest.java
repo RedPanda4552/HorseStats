@@ -28,8 +28,7 @@ import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.AbstractHorse;
-import org.bukkit.entity.Horse;
+import org.bukkit.entity.ChestedHorse;
 import org.bukkit.entity.Player;
 
 public class CommandDelchest extends AbstractCommand {
@@ -42,29 +41,35 @@ public class CommandDelchest extends AbstractCommand {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            AbstractHorse h = null;
+            ChestedHorse h = null;
+            
             if (p.isInsideVehicle()) {
-                if (p.getVehicle() instanceof Horse) {
-                    h = (AbstractHorse) p.getVehicle();
+                if (p.getVehicle() instanceof ChestedHorse) {
+                    h = (ChestedHorse) p.getVehicle();
                 }
             }
-            this.run(p, h);
+            
+            run(p, h);
         } else {
             sender.sendMessage(lang.get("generic.console"));
         }
+        
         return true;
     }
     
-    public void run(Player p, AbstractHorse h) {
-        if (h != null) {
-            if (hasPermission(p, h, InteractionType.USE)) {
-                h.setCarryingChest(false);
-                p.sendMessage(lang.tag + lang.get("delchest.chest-delete"));
-            } else {
-                p.sendMessage(lang.tag + lang.r + lang.get("generic.owner"));
-            }
-        } else {
-            p.sendMessage(lang.tag + lang.r + lang.get("generic.riding"));
+    public void run(Player p, ChestedHorse h) {
+        if (h == null) {
+            p.sendMessage(lang.tag + lang.get("delchest.not-chested"));
+            return;
         }
+        
+        if (!hasPermission(p, h, InteractionType.USE)) {
+            p.sendMessage(lang.tag + lang.r + lang.get("generic.owner"));
+            return;
+        }
+        
+        // TODO Maybe we should be nice and dump the chest contents
+        h.setCarryingChest(false);
+        p.sendMessage(lang.tag + lang.get("delchest.chest-delete"));
     }
 }

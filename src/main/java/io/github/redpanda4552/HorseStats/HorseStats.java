@@ -41,7 +41,6 @@ import net.gravitydevelopment.updater.Updater.UpdateResult;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.AbstractHorse;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -98,7 +97,8 @@ public class HorseStats extends JavaPlugin {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            log.warning("Something didn't let the SQL connection close! If you are reloading your server, things may get nasty if the GC doesn't completely clean things up...");
+            log.warning("Something didn't let the SQL connection close!");
+            log.warning("If you are reloading your server, things may get nasty if the GC doesn't completely clean things up...");
         }
         
         // This may be silly and perfectly fine at the hands of the GC.
