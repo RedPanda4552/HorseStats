@@ -82,27 +82,34 @@ public class HorseStats extends JavaPlugin {
     public boolean updateAvailable = false;
     public String updateName;
     
-    // Plugin Disable
+    /**
+     * Bukkit standard for plugin shutdown called when server stops or reloads.
+     * If Java had destructors, this would be it.
+     */
     public void onDisable() {
         Bukkit.getScheduler().cancelTasks(this);
         
-        try {
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
+        for (int i = 5; i > 0; i--) {
+            try {
+                if (connection != null && !connection.isClosed()) {
+                    // The docs say that we should be calling commit() or rollback().
+                    // But those are for when auto commit isn't enabled, which is the default behavior.
+                    // Since we don't change that, we won't call those.
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                if (i == 1) { // The last attempt
+                    e.printStackTrace();
+                    log.warning("Something didn't let the SQL connection close!");
+                    log.warning("If you are reloading your server, things may get nasty if the GC doesn't completely clean things up...");
+                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            log.warning("Something didn't let the SQL connection close!");
-            log.warning("If you are reloading your server, things may get nasty if the GC doesn't completely clean things up...");
         }
-        
-        // This may be silly and perfectly fine at the hands of the GC.
-        // But since the Javadocs on the GC's behavior are so cryptic,
-        // and it's the main user of the SQL connection, we'll null it out.
-        permissionHelper = null;
     }
     
-    // Plugin Enable
+    /** 
+     * Bukkit standard for plugin initialization called when the server starts or reloads.
+     */
     public void onEnable() {
         log = getLogger();
         saveDefaultConfig();
@@ -110,66 +117,6 @@ public class HorseStats extends JavaPlugin {
         lang = new Lang(this);
         anarchyMode = getConfig().getBoolean("options.anarchy-mode");
         noSpeedMode = testNoSpeedMode();
-        
-        if (!anarchyMode) {
-            permissionHelper = new PermissionHelper(this);
-            
-            // Start SQL Setup
-            if (getConfig().getString("sql.driver").equalsIgnoreCase("sqlite")) {
-                SQLiteDatabase = getConfig().getString("sql.sqlite-database-path");
-                sqlite = new SQLite(SQLiteDatabase);
-                
-                if (SQLiteDatabase != null && SQLiteDatabase.length() >= 4 && SQLiteDatabase.endsWith(".db")) {
-                    try {
-                        connection = sqlite.openConnection();
-                        PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS horsestats (player_id char(36), permission_list text);");
-                        ps.executeUpdate();
-                    } catch (ClassNotFoundException | SQLException e) {
-                        e.printStackTrace();
-                        log.warning("SQL database connection failed!");
-                        log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
-                        return;
-                    }
-                } else {
-                    log.warning("The SQL section of the HorseStats configuration is not properly filled out!");
-                    log.warning("To use SQLite, make sure 'sqlite-database-path' is filled out, and ends with '.db'.");
-                    log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
-                    return;
-                }
-            } else if (getConfig().getString("sql.driver").equalsIgnoreCase("mysql")) {
-                SQLDatabase = getConfig().getString("sql.database");
-                SQLHostName = getConfig().getString("sql.mysql-host-name");
-                SQLPort = getConfig().getString("sql.mysql-port");
-                SQLUsername = getConfig().getString("sql.mysql-username");
-                SQLPassword = getConfig().getString("sql.mysql-password");
-                
-                mySQL = new MySQL(SQLHostName, SQLPort, SQLDatabase, SQLUsername, SQLPassword);
-                
-                if (SQLHostName != null && SQLPort != null && SQLDatabase != null && SQLUsername != null && SQLPassword != null) {
-                    try {
-                        connection = mySQL.openConnection();
-                        PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS horsestats (player_id char(36), permission_list text);");
-                        ps.executeUpdate();
-                    } catch (ClassNotFoundException | SQLException e) {
-                        e.printStackTrace();
-                        log.warning("SQL database connection failed!");
-                        log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
-                        return;
-                    }
-                } else {
-                    log.warning("The SQL section of the HorseStats configuration is not properly filled out!");
-                    log.warning("To use MySQL, make sure 'database', 'mysql-host-name', 'mysql-port', 'mysql-username', and 'mysql-password' are all filled out.");
-                    log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
-                    return;
-                }
-            } else {
-                log.warning("The config field 'sql.driver' is invalid! Set it to either 'sqlite' or 'mysql'.");
-                log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
-                return;
-            }
-            
-            // End SQL Setup
-        }
         
         statDisplayMaterial = Material.getMaterial(getConfig().getString("options.stat-item"));
         statDisplayMaterialFriendlyName = getConfig().getString("options.stat-item-name");
@@ -191,22 +138,88 @@ public class HorseStats extends JavaPlugin {
         
         teleportQueue = new HashMap<UUID, AbstractHorse>();
         
-        getServer().getPluginManager().registerEvents(new DamageListener(this), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoinLeaveListener(this), this);        
-        getServer().getPluginManager().registerEvents(new InteractListener(this), this);
-        
-        registerCommands();
-        checkConfiguration();
-        
-        // This is a call to the PermissionHelper, which does not exist in anarchy mode
         if (!anarchyMode) {
+            permissionHelper = new PermissionHelper(this);
+            initSQL();
             checkOnlinePlayers();
         }
-
+        
+        registerListeners();
+        registerCommands();
+        checkConfiguration();
         runUpdateChecker();
     }
     
-    // Command Registers
+    /**
+     * Initializes SQL fields, opens the SQL connection and creates the database if it doesn't exist. 
+     */
+    private void initSQL() {
+        if (getConfig().getString("sql.driver").equalsIgnoreCase("sqlite")) {
+            SQLiteDatabase = getConfig().getString("sql.sqlite-database-path");
+            sqlite = new SQLite(SQLiteDatabase);
+            
+            if (SQLiteDatabase != null && SQLiteDatabase.length() >= 4 && SQLiteDatabase.endsWith(".db")) {
+                try {
+                    connection = sqlite.openConnection();
+                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS horsestats (player_id char(36), permission_list text);");
+                    ps.executeUpdate();
+                } catch (ClassNotFoundException | SQLException e) {
+                    e.printStackTrace();
+                    log.warning("SQL database connection failed!");
+                    log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
+                    return;
+                }
+            } else {
+                log.warning("The SQL section of the HorseStats configuration is not properly filled out!");
+                log.warning("To use SQLite, make sure 'sqlite-database-path' is filled out, and ends with '.db'.");
+                log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
+                return;
+            }
+        } else if (getConfig().getString("sql.driver").equalsIgnoreCase("mysql")) {
+            SQLDatabase = getConfig().getString("sql.database");
+            SQLHostName = getConfig().getString("sql.mysql-host-name");
+            SQLPort = getConfig().getString("sql.mysql-port");
+            SQLUsername = getConfig().getString("sql.mysql-username");
+            SQLPassword = getConfig().getString("sql.mysql-password");
+            
+            mySQL = new MySQL(SQLHostName, SQLPort, SQLDatabase, SQLUsername, SQLPassword);
+            
+            if (SQLHostName != null && SQLPort != null && SQLDatabase != null && SQLUsername != null && SQLPassword != null) {
+                try {
+                    connection = mySQL.openConnection();
+                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS horsestats (player_id char(36), permission_list text);");
+                    ps.executeUpdate();
+                } catch (ClassNotFoundException | SQLException e) {
+                    e.printStackTrace();
+                    log.warning("SQL database connection failed!");
+                    log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
+                    return;
+                }
+            } else {
+                log.warning("The SQL section of the HorseStats configuration is not properly filled out!");
+                log.warning("To use MySQL, make sure 'database', 'mysql-host-name', 'mysql-port', 'mysql-username', and 'mysql-password' are all filled out.");
+                log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
+                return;
+            }
+        } else {
+            log.warning("The config field 'sql.driver' is invalid! Set it to either 'sqlite' or 'mysql'.");
+            log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
+            return;
+        }
+    }
+    
+    /**
+     * Registers event listeners
+     */
+    private void registerListeners() {
+        getServer().getPluginManager().registerEvents(new DamageListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinLeaveListener(this), this);        
+        getServer().getPluginManager().registerEvents(new InteractListener(this), this);
+    }
+    
+    /**
+     * Registers commands to their executors
+     */
     private void registerCommands() {
         getCommand("horsestats").setExecutor(new CommandHorsestats(this));
         getCommand("htp").setExecutor(new CommandHtp(this));
@@ -240,6 +253,11 @@ public class HorseStats extends JavaPlugin {
      * when joining the server.
      */
     public void checkOnlinePlayers() {
+        if (permissionHelper == null) {
+            log.warning("An attempt was made to reload every player's HorseStats permission data, but the permission helper is not initiated!");
+            return;
+        }
+        
         for (Player player : Bukkit.getOnlinePlayers()) {
             permissionHelper.loadPlayerPermissions(player.getUniqueId());
         }
@@ -250,7 +268,7 @@ public class HorseStats extends JavaPlugin {
      * @return True if config is fine. False if outdated.
      */
     public boolean checkConfiguration() {
-        if (!getConfig().getString("config-version").equals(this.configVersion)) {
+        if (!getConfig().getString("config-version").equals(configVersion)) {
             outOfDateConfig = true;            
             log.warning("It appears your HorseStats configuration file is out of date. To update it, rename your current config.");
             log.warning("The next time HorseStats starts, a new config will generate and you can move your settings.");
