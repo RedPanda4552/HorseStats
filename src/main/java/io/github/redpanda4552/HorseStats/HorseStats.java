@@ -61,7 +61,7 @@ public class HorseStats extends JavaPlugin {
     public Material statDisplayMaterial, teleportSelectorMaterial;
     public String statDisplayMaterialFriendlyName, teleportSelectorMaterialFriendlyName;
     public String langFileName;
-    public final boolean anarchyMode;
+    public boolean anarchyMode;
     
     // Version information
     public final String langVersion = "4.0.1", configVersion = "4.0";
@@ -81,11 +81,6 @@ public class HorseStats extends JavaPlugin {
     // Updater Fields
     public boolean updateAvailable = false;
     public String updateName;
-    
-    // Constructor - Final fields defined in here
-    public HorseStats() {
-        anarchyMode = getConfig().getBoolean("options.anarchy-mode");
-    }
     
     // Plugin Disable
     public void onDisable() {
@@ -113,6 +108,8 @@ public class HorseStats extends JavaPlugin {
         saveDefaultConfig();
         langFileName = getConfig().getString("options.language-pack");
         lang = new Lang(this);
+        anarchyMode = getConfig().getBoolean("options.anarchy-mode");
+        noSpeedMode = testNoSpeedMode();
         
         if (!anarchyMode) {
             permissionHelper = new PermissionHelper(this);
@@ -174,8 +171,6 @@ public class HorseStats extends JavaPlugin {
             // End SQL Setup
         }
         
-        noSpeedMode = testNoSpeedMode();
-        
         statDisplayMaterial = Material.getMaterial(getConfig().getString("options.stat-item"));
         statDisplayMaterialFriendlyName = getConfig().getString("options.stat-item-name");
         
@@ -232,7 +227,7 @@ public class HorseStats extends JavaPlugin {
      */
     public boolean testNoSpeedMode() {
         try {
-            Class.forName("org.bukkit.craftbukkit.v1_10_R1.entity.CraftHorse");
+            Class.forName("org.bukkit.craftbukkit.v1_11_R1.entity.CraftHorse");
             return false;
         } catch (ClassNotFoundException e) {
             return true;
@@ -240,7 +235,9 @@ public class HorseStats extends JavaPlugin {
     }
     
     /**
-     * If the server reloaded, we will need to run through online players and re-add their info to memory.
+     * Run through all online players and load their permissions info into memory.
+     * Used after a plugin reload to restore user data that otherwise only loads
+     * when joining the server.
      */
     public void checkOnlinePlayers() {
         for (Player player : Bukkit.getOnlinePlayers()) {
@@ -264,6 +261,7 @@ public class HorseStats extends JavaPlugin {
     
     /**
      * Update notifier; only notifies, does not download.
+     * Utilizes Gravity's Updater class.
      */
     private void runUpdateChecker() {
         new BukkitRunnable() {

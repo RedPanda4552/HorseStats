@@ -34,6 +34,11 @@ import org.bukkit.Bukkit;
 
 import io.github.redpanda4552.HorseStats.HorseStats;
 
+/**
+ * Class that handles all internal permissions related functions.
+ * Care should be taken when calling methods from this class,
+ * as it is not instantiated at all if anarchy mode is enabled.
+ */
 public class PermissionHelper {
     
     private enum UpdateMode {
