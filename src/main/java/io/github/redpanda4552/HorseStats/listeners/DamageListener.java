@@ -181,9 +181,9 @@ public class DamageListener extends ListenerBase {
      */
     public double getSpeed(AbstractHorse horse) {
         if (!main.noSpeedMode) {
-            org.bukkit.craftbukkit.v1_11_R1.entity.CraftHorse cHorse = (org.bukkit.craftbukkit.v1_11_R1.entity.CraftHorse) horse;
+            org.bukkit.craftbukkit.v1_11_R1.entity.CraftAbstractHorse cAbstractHorse = (org.bukkit.craftbukkit.v1_11_R1.entity.CraftAbstractHorse) horse;
             net.minecraft.server.v1_11_R1.NBTTagCompound compound = new net.minecraft.server.v1_11_R1.NBTTagCompound();
-            cHorse.getHandle().b(compound);
+            cAbstractHorse.getHandle().b(compound);
             net.minecraft.server.v1_11_R1.NBTTagList list = (net.minecraft.server.v1_11_R1.NBTTagList) compound.get("Attributes");
             
             for (int i = 0; i < list.size() ; i++) {

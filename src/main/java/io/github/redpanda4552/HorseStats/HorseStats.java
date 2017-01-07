@@ -240,7 +240,7 @@ public class HorseStats extends JavaPlugin {
      */
     public boolean testNoSpeedMode() {
         try {
-            Class.forName("org.bukkit.craftbukkit.v1_11_R1.entity.CraftHorse");
+            Class.forName("org.bukkit.craftbukkit.v1_11_R1.entity.CraftAbstractHorse");
             return false;
         } catch (ClassNotFoundException e) {
             return true;
