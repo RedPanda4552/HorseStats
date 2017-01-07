@@ -26,12 +26,17 @@ package io.github.redpanda4552.HorseStats.listeners;
 import io.github.redpanda4552.HorseStats.HorseStats;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Horse.Variant;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.SkeletonHorse;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
@@ -90,13 +95,21 @@ public class DamageListener extends ListenerBase {
      */
     public void displayStats(Player p, AbstractHorse horse) {
         fixOwner(p, horse);
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.HALF_EVEN);
         
         //Raw data
-        double healthMax = horse.getMaxHealth();
-        double heartMax = healthMax / 2;
-        double health = horse.getHealth();
-        double heart = health / 2;
-        double jump = 5.5 * (Math.pow(horse.getJumpStrength(), 2));
+        double dHealthMax = horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+        String sHealthMax = df.format(sHealthMax);
+        double dHeartMax = dHealthMax / 2;
+        String sHeartMax = df.format(dHeartMax);
+        double dHealth = horse.getHealth();
+        String sHealth = df.format(dHealth);
+        double dHeart = dHealth / 2;
+        String sHeart = df.format(dHeart);
+        String jump = df.format(5.5 * (Math.pow(horse.getJumpStrength(), 2)));
+        double dSpeed = (float) getSpeed(horse) * 43;
+        String sSpeed = (dSpeed == -1) ? lang.get("damageListener.no-speed") : df.format(dSpeed);
         boolean adult = horse.isAdult();
         boolean breed = horse.canBreed();
         float age = horse.getAge();
@@ -110,17 +123,13 @@ public class DamageListener extends ListenerBase {
         }
         
         //Teleport status
-        boolean tpStatus = false;
-        
-        if (main.teleportQueue.containsValue(horse)) {
-            tpStatus = true;
-        }
+        boolean tpStatus = main.teleportQueue.containsValue(horse);
         
         //Age status
         String ageTime = "";
         
         if (adult == false) {
-            ageTime = " (" + lang.get("damageListener.adult-minutes") + age/-1200 + ")";
+            ageTime = " (" + lang.get("damageListener.adult-minutes") + df.format(age/-1200) + ")";
         }
         
         //Owner name
@@ -134,10 +143,10 @@ public class DamageListener extends ListenerBase {
         p.sendMessage(lang.g + "========================");
         p.sendMessage(lang.g + name + " " + lang.get("damageListener.stats"));
         p.sendMessage(lang.g + "========================");
-        p.sendMessage(lang.g + lang.get("damageListener.max-health") + " " + (float) healthMax + " (" + (int) heartMax + " " + lang.get("damageListener.hearts") + ")");
-        p.sendMessage(lang.g + lang.get("damageListener.health") + " " + (float) health + " (" + (int) heart + " " + lang.get("damageListener.hearts") + ")");
-        p.sendMessage(lang.g + lang.get("damageListener.jump") + " " + (float) jump);
-        p.sendMessage(lang.g + lang.get("damageListener.speed") + " " + (float) getSpeed(horse) * 43);
+        p.sendMessage(lang.g + lang.get("damageListener.max-health") + " " + sHealthMax + " (" + sHeartMax + " " + lang.get("damageListener.hearts") + ")");
+        p.sendMessage(lang.g + lang.get("damageListener.health") + " " + sHealth + " (" + sHeart + " " + lang.get("damageListener.hearts") + ")");
+        p.sendMessage(lang.g + lang.get("damageListener.jump") + " " + jump);
+        p.sendMessage(lang.g + lang.get("damageListener.speed") + " " + sSpeed);
         p.sendMessage(lang.g + lang.get("damageListener.breed") + " " + breed);
         p.sendMessage(lang.g + lang.get("damageListener.teleport-status") + " " + tpStatus);
         p.sendMessage(lang.g + lang.get("damageListener.is-adult") + " " + adult + ageTime);
@@ -150,16 +159,20 @@ public class DamageListener extends ListenerBase {
     public void teleportToggle(Player p, AbstractHorse horse) {
         if (horse.getOwner() == null) {
             p.sendMessage(lang.tag + lang.r + lang.get("damageListener.teleport-untame"));
-        } else if (this.hasPermission(p, horse, InteractionType.USE)) {
-            if (main.teleportQueue.containsKey(p.getUniqueId())) {
-                main.teleportQueue.remove(p.getUniqueId());
-                p.sendMessage(lang.tag + lang.get("damageListener.teleport-deselected"));
-            } else {
-                main.teleportQueue.put(p.getUniqueId(), horse);
-                p.sendMessage(lang.tag + lang.get("damageListener.teleport-selected"));
-            }
-        } else {
+            return;
+        }
+        
+        if (!hasPermission(p, horse, InteractionType.USE)) {
             p.sendMessage(lang.tag + lang.r + lang.get("generic.owner"));
+            return;   
+        }
+        
+        if (main.teleportQueue.containsKey(p.getUniqueId())) {
+            main.teleportQueue.remove(p.getUniqueId());
+            p.sendMessage(lang.tag + lang.get("damageListener.teleport-deselected"));
+        } else {
+            main.teleportQueue.put(p.getUniqueId(), horse);
+            p.sendMessage(lang.tag + lang.get("damageListener.teleport-selected"));
         }
     }
     
@@ -169,33 +182,31 @@ public class DamageListener extends ListenerBase {
      * Using full package names instead of imports so that I can just return before exceptions start flying, instead of making a whole new class.
      */
     public double getSpeed(AbstractHorse horse) {
-        double speed = -1; //In case of bad Spigot version
-        
         if (!main.noSpeedMode) {
             org.bukkit.craftbukkit.v1_11_R1.entity.CraftHorse cHorse = (org.bukkit.craftbukkit.v1_11_R1.entity.CraftHorse) horse;
             net.minecraft.server.v1_11_R1.NBTTagCompound compound = new net.minecraft.server.v1_11_R1.NBTTagCompound();
             cHorse.getHandle().b(compound);
             net.minecraft.server.v1_11_R1.NBTTagList list = (net.minecraft.server.v1_11_R1.NBTTagList) compound.get("Attributes");
             
-            for(int i = 0; i < list.size() ; i++) {
+            for (int i = 0; i < list.size() ; i++) {
                 net.minecraft.server.v1_11_R1.NBTTagCompound base = list.get(i);
                 
                 if (base.getTypeId() == 10) {
-                    net.minecraft.server.v1_11_R1.NBTTagCompound attrCompound = (net.minecraft.server.v1_11_R1.NBTTagCompound)base;
+                    net.minecraft.server.v1_11_R1.NBTTagCompound attrCompound = (net.minecraft.server.v1_11_R1.NBTTagCompound) base;
                     
                     if (base.toString().contains("generic.movementSpeed")) {
-                        speed = attrCompound.getDouble("Base");
+                        return attrCompound.getDouble("Base");
                     }
                 }
             }
         }
         
-        return speed;
+        return -1;
     }
     
     private void fixOwner(Player p, AbstractHorse horse) {
         if (horse.getOwner() == null && horse.isTamed() == true) {
-            if (horse.getVariant() == Variant.SKELETON_HORSE) {
+            if (horse instanceof SkeletonHorse) {
                 horse.setOwner(p);
             } else {
                 horse.setTamed(false);
