@@ -32,8 +32,6 @@ import java.text.DecimalFormat;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.AnimalTamer;
-import org.bukkit.entity.Horse;
-import org.bukkit.entity.Horse.Variant;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.SkeletonHorse;
@@ -53,7 +51,7 @@ public class DamageListener extends ListenerBase {
     @EventHandler
     public void onHorseHit(EntityDamageByEntityEvent event) {
         //A horse is hit
-        if (event.getEntity() instanceof Horse) {
+        if (event.getEntity() instanceof AbstractHorse) {
             AbstractHorse h = (AbstractHorse) event.getEntity();
             
             //A player hit it
