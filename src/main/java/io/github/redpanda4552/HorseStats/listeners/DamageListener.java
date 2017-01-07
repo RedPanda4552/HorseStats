@@ -100,7 +100,7 @@ public class DamageListener extends ListenerBase {
         
         //Raw data
         double dHealthMax = horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
-        String sHealthMax = df.format(sHealthMax);
+        String sHealthMax = df.format(dHealthMax);
         double dHeartMax = dHealthMax / 2;
         String sHeartMax = df.format(dHeartMax);
         double dHealth = horse.getHealth();
