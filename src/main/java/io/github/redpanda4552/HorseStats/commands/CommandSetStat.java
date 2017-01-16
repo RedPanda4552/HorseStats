@@ -70,7 +70,13 @@ public class CommandSetStat extends AbstractCommand {
         
         if (args.length >= 2) {            
             if (args[0].equalsIgnoreCase("health")) {
-                double health = Double.parseDouble(args[1]);
+                double health = 0;
+                
+                try {
+                    health = Double.parseDouble(args[1]);
+                } catch (NumberFormatException e) {
+                    p.sendMessage(lang.tag + lang.r + args[1] + " " + lang.get("setStat.nan"));
+                }
                 
                 if (health > 1024) {
                     health = 1024;
@@ -83,7 +89,13 @@ public class CommandSetStat extends AbstractCommand {
                 h.setHealth(2 * health);
                 p.sendMessage(lang.tag + lang.get("setStat.health-set-to") + " " + health + " " + lang.get("setStat.hearts"));
             } else if (args[0].equalsIgnoreCase("jump")) {
-                double jump = Double.parseDouble(args[1]);
+                double jump = 0;
+                
+                try {
+                    jump = Double.parseDouble(args[1]);
+                } catch (NumberFormatException e) {
+                    p.sendMessage(lang.tag + lang.r + args[1] + " " + lang.get("setStat.nan"));
+                }
                 
                 // This magic number is the absolute highest a horse can jump (the limit on the internal value is 2; this is the height in blocks)
                 if (jump > 16.4544254158757) {
@@ -93,10 +105,16 @@ public class CommandSetStat extends AbstractCommand {
                 }
                 
                 // These magic numbers were derived from a bunch of data collection. Maybe I'll throw the spreadsheet in the git repo.
-                h.setJumpStrength(0 - ( 0.000002 * Math.pow(jump, 6) ) + ( 0.00009 * Math.pow(jump, 5) ) - ( 0.002 * Math.pow(jump, 4) ) + ( 0.021 * Math.pow(jump, 3) ) - ( 0.1159 * Math.pow(jump, 2) ) + ( 0.4343 * jump ) + 0.0444);
+                h.setJumpStrength(0.3846 * Math.pow(jump, 0.5821));
                 p.sendMessage(lang.tag + lang.get("setStat.jump-set-to") + " " + jump + " " + lang.get("setStat.blocks"));
             } else if (args[0].equalsIgnoreCase("speed")) {
-                double speed = Double.parseDouble(args[1]);
+                double speed = 0;
+                
+                try {
+                    speed = Double.parseDouble(args[1]);
+                } catch (NumberFormatException e) {
+                    p.sendMessage(lang.tag + lang.r + args[1] + " " + lang.get("setStat.nan"));
+                }
                 
                 if (main.noSpeedMode) {
                     p.sendMessage(lang.tag + lang.get("setStat.nospeed"));
