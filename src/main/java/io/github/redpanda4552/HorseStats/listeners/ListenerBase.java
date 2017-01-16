@@ -27,6 +27,7 @@ import io.github.redpanda4552.HorseStats.HorseStats;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 import io.github.redpanda4552.HorseStats.lang.Lang;
 
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -70,6 +71,8 @@ public abstract class ListenerBase implements Listener {
         if (entity == null) {
             throw new IllegalArgumentException("Entity argument for friendlyName(Entity) was null!");
         }
-        return entity.getType().toString().toLowerCase().replace("_", " ");
+        
+        // Almost forgot Spigot bundles a bunch of Apache stuff with the API. 
+        return WordUtils.capitalize(entity.getType().toString().toLowerCase().replace("_", " "));
     }
 }
