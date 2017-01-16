@@ -96,7 +96,7 @@ public class CommandSetStat extends AbstractCommand {
                 h.setJumpStrength(0 - ( 0.000002 * Math.pow(jump, 6) ) + ( 0.00009 * Math.pow(jump, 5) ) - ( 0.002 * Math.pow(jump, 4) ) + ( 0.021 * Math.pow(jump, 3) ) - ( 0.1159 * Math.pow(jump, 2) ) + ( 0.4343 * jump ) + 0.0444);
                 p.sendMessage(lang.tag + lang.get("setStat.jump-set-to") + " " + jump + " " + lang.get("setStat.blocks"));
             } else if (args[0].equalsIgnoreCase("speed")) {
-                double speed = Double.parseDouble("speed");
+                double speed = Double.parseDouble(args[1]);
                 
                 if (main.noSpeedMode) {
                     p.sendMessage(lang.tag + lang.get("setStat.nospeed"));
@@ -104,7 +104,7 @@ public class CommandSetStat extends AbstractCommand {
                 }
                 
                 setSpeed(h, speed);
-                p.sendMessage(lang.tag + lang.get("setStat.speed-set-to") + " " + lang.get("setStat.blocks-per-second"));
+                p.sendMessage(lang.tag + lang.get("setStat.speed-set-to") + " " + speed + " " + lang.get("setStat.blocks-per-second"));
             } else {
                 p.sendMessage(lang.tag + lang.get("setStat.usage"));
             }
