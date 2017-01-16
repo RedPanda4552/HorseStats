@@ -113,7 +113,7 @@ public class DamageListener extends ListenerBase {
         AnimalTamer tamer = horse.getOwner();
         
         //Horse name
-        String name = lang.get("damageListener.horse");
+        String name = friendlyName(horse);
         
         if (horse.getCustomName() != null) {
             name = horse.getCustomName() + lang.get("damageListener.posessive");
