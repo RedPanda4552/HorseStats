@@ -96,7 +96,6 @@ public class DamageListener extends ListenerBase {
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.HALF_EVEN);
         
-        //Raw data
         double dHealthMax = horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
         String sHealthMax = df.format(dHealthMax);
         double dHeartMax = dHealthMax / 2;
@@ -105,8 +104,10 @@ public class DamageListener extends ListenerBase {
         String sHealth = df.format(dHealth);
         double dHeart = dHealth / 2;
         String sHeart = df.format(dHeart);
-        String jump = df.format(5.5 * (Math.pow(horse.getJumpStrength(), 2)));
-        double dSpeed = (float) getSpeed(horse) * 43;
+        // Magic numbers! Who likes statistics and 6th order polynomials?
+        String jump = df.format((-0.2277 * (Math.pow(horse.getJumpStrength(), 6))) + (1.2944 * (Math.pow(horse.getJumpStrength(), 5))) - (2.501 * (Math.pow(horse.getJumpStrength(), 4))) + (0.9603 * (Math.pow(horse.getJumpStrength(), 3))) + (5.2218 * (Math.pow(horse.getJumpStrength(), 2))) + (0.5299 * horse.getJumpStrength()) - 0.0021);
+        // Same with this (remarkably simpler) one
+        double dSpeed = (float) getSpeed(horse) * 42.18;
         String sSpeed = (dSpeed == -1) ? lang.get("damageListener.no-speed") : df.format(dSpeed);
         boolean adult = horse.isAdult();
         boolean breed = horse.canBreed();

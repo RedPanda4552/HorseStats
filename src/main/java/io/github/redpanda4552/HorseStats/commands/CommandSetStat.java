@@ -85,19 +85,52 @@ public class CommandSetStat extends AbstractCommand {
             } else if (args[0].equalsIgnoreCase("jump")) {
                 double jump = Double.parseDouble(args[1]);
                 
-                if (jump > 22) {
-                    jump = 22;
+                // This magic number is the absolute highest a horse can jump (the limit on the internal value is 2; this is the height in blocks)
+                if (jump > 16.4544254158757) {
+                    jump = 16.4544254158757;
                     p.sendMessage(lang.tag + lang.r + lang.get("setStat.jump-limit"));
                     return;
                 }
                 
-                h.setJumpStrength(Math.sqrt(jump / 5.5));
+                // These magic numbers were derived from a bunch of data collection. Maybe I'll throw the spreadsheet in the git repo.
+                h.setJumpStrength(0 - ( 0.000002 * Math.pow(jump, 6) ) + ( 0.00009 * Math.pow(jump, 5) ) - ( 0.002 * Math.pow(jump, 4) ) + ( 0.021 * Math.pow(jump, 3) ) - ( 0.1159 * Math.pow(jump, 2) ) + ( 0.4343 * jump ) + 0.0444);
                 p.sendMessage(lang.tag + lang.get("setStat.jump-set-to") + " " + jump + " " + lang.get("setStat.blocks"));
+            } else if (args[0].equalsIgnoreCase("speed")) {
+                double speed = Double.parseDouble("speed");
+                
+                if (main.noSpeedMode) {
+                    p.sendMessage(lang.tag + lang.get("setStat.nospeed"));
+                    return;
+                }
+                
+                setSpeed(h, speed);
+                p.sendMessage(lang.tag + lang.get("setStat.speed-set-to") + " " + lang.get("setStat.blocks-per-second"));
             } else {
                 p.sendMessage(lang.tag + lang.get("setStat.usage"));
             }
         } else {
             p.sendMessage(lang.tag + lang.get("setStat.usage"));
+        }
+    }
+    
+    private void setSpeed(AbstractHorse horse, double d) {
+        org.bukkit.craftbukkit.v1_11_R1.entity.CraftAbstractHorse cAbstractHorse = (org.bukkit.craftbukkit.v1_11_R1.entity.CraftAbstractHorse) horse;
+        net.minecraft.server.v1_11_R1.NBTTagCompound compound = new net.minecraft.server.v1_11_R1.NBTTagCompound();
+        cAbstractHorse.getHandle().c(compound);
+        net.minecraft.server.v1_11_R1.NBTTagList list = (net.minecraft.server.v1_11_R1.NBTTagList) compound.get("Attributes");
+        
+        for (int i = 0; i < list.size() ; i++) {
+            net.minecraft.server.v1_11_R1.NBTTagCompound base = list.get(i);
+            
+            if (base.getTypeId() == 10) {
+                net.minecraft.server.v1_11_R1.NBTTagCompound attrCompound = (net.minecraft.server.v1_11_R1.NBTTagCompound) base;
+                
+                if (base.toString().contains("generic.movementSpeed")) {
+                    // Magic number; derived from calibration sheet
+                    attrCompound.setDouble("Base", d / 42.18);
+                    cAbstractHorse.getHandle().a(compound);
+                }
+            }
         }
     }
 }

@@ -4,7 +4,7 @@
 # important that you make your own copy!
 
 # Don't change this! This is how HorseStats knows if your language pack is old!
-version: 4.0.1
+version: 4.1
 
 playerJoinLeaveListener:
   config: "The HorseStats config is out of date. Details can be found in the console when the plugin started."
@@ -93,8 +93,8 @@ hperm:
   view: "Fetcing permissions you've given out. This may take a moment..."
 hspawn:
   usage: "/hspawn <horse | donkey | mule | llama | skeleton | zombie>"
-  spawn: "Successfully spawned "
-  fail: "Failed to spawn horse of type "
+  spawn: "Successfully spawned"
+  fail: "Failed to spawn horse of type"
 htp:
   world-teleport: "Teleporting between worlds is disabled."
   none-selected: "No Horse has been selected."
@@ -110,8 +110,11 @@ setStat:
   hearts: "hearts."
   jump-set-to: "Horse's jump height has been set to"
   blocks: "blocks."
-  jump-limit: "Horses cannot jump higher than 22 blocks."
+  jump-limit: "Horses cannot jump higher than 16.45 blocks."
   health-limit: "Horse health is limited to 1024 hearts."
+  nospeed: "Speed cannot be set because HorseStats is running in No Speed Mode."
+  speed-set-to: "Horse's speed has been set to"
+  blocks-per-second: "blocks per second."
 setStyle:
   bad-type: "You must be riding a normal horse to use this setstyle"
   color-change: "Color changed to"
