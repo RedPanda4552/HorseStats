@@ -205,9 +205,9 @@ public class Main extends JavaPlugin {
      * Registers event listeners
      */
     private void registerListeners() {
-        getServer().getPluginManager().registerEvents(new DamageListener(this), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoinLeaveListener(this), this);        
-        getServer().getPluginManager().registerEvents(new InteractListener(this), this);
+        getServer().getPluginManager().registerEvents(new ListenerDamage(this), this);
+        getServer().getPluginManager().registerEvents(new ListenerPlayerJoinLeave(this), this);        
+        getServer().getPluginManager().registerEvents(new ListenerInteract(this), this);
     }
     
     /**

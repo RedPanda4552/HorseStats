@@ -38,9 +38,9 @@ import org.bukkit.entity.SkeletonHorse;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class DamageListener extends ListenerBase {
+public class ListenerDamage extends AbstractListener {
     
-    public DamageListener(Main main) {
+    public ListenerDamage(Main main) {
         super (main);
     }
     

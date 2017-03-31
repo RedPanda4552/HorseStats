@@ -31,9 +31,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-public class InteractListener extends ListenerBase {
+public class ListenerInteract extends AbstractListener {
 
-    public InteractListener(Main main) {
+    public ListenerInteract(Main main) {
         super(main);
     }
 
