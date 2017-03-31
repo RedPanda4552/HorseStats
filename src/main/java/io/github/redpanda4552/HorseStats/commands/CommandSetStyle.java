@@ -71,6 +71,7 @@ public class CommandSetStyle extends AbstractCommand {
             return;
         }
         
+        // TODO Llama color
         if (args.length >= 2) {
             if (args[0].equalsIgnoreCase("color")) {
                 if (args[1].equalsIgnoreCase("black")) {
