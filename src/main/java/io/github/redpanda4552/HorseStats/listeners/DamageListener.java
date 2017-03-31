@@ -96,20 +96,37 @@ public class DamageListener extends ListenerBase {
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.HALF_EVEN);
         
+        // Max Health/Hearts
         double dHealthMax = horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
         String sHealthMax = df.format(dHealthMax);
         double dHeartMax = dHealthMax / 2;
         String sHeartMax = df.format(dHeartMax);
+        
+        // Health/Hearts
         double dHealth = horse.getHealth();
         String sHealth = df.format(dHealth);
         double dHeart = dHealth / 2;
         String sHeart = df.format(dHeart);
+        
+        // Jump Height
         String jump = df.format(5.162 * Math.pow(horse.getJumpStrength(), 1.7175));
-        double dSpeed = (float) getSpeed(horse) * 42.18;
-        String sSpeed = (dSpeed == -1) ? lang.get("damageListener.no-speed") : df.format(dSpeed);
+        
+        // Speed
+        double dSpeed = horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() * 42.18;
+        String sSpeed = df.format(dSpeed);
+        
+        // Adult status
         boolean adult = horse.isAdult();
+        
+        // Ready to breed
         boolean breed = horse.canBreed();
+        
+        // Age
         float age = horse.getAge();
+        
+        // TODO LLama strength
+        
+        // Owner
         AnimalTamer tamer = horse.getOwner();
         
         //Horse name
@@ -171,34 +188,6 @@ public class DamageListener extends ListenerBase {
             main.teleportQueue.put(p.getUniqueId(), horse);
             p.sendMessage(lang.tag + lang.get("damageListener.teleport-selected"));
         }
-    }
-    
-    /**
-     * The 'fragile' code used to retrieve horse speed. NBT stuff.
-     * Needs package name updates when NBT code changes, or build number changes (e.g. CB 1.7.2-R1 to CB 1.7.2-R2)
-     * Using full package names instead of imports so that I can just return before exceptions start flying, instead of making a whole new class.
-     */
-    public double getSpeed(AbstractHorse horse) {
-        if (!main.noSpeedMode) {
-            org.bukkit.craftbukkit.v1_11_R1.entity.CraftAbstractHorse cAbstractHorse = (org.bukkit.craftbukkit.v1_11_R1.entity.CraftAbstractHorse) horse;
-            net.minecraft.server.v1_11_R1.NBTTagCompound compound = new net.minecraft.server.v1_11_R1.NBTTagCompound();
-            cAbstractHorse.getHandle().b(compound);
-            net.minecraft.server.v1_11_R1.NBTTagList list = (net.minecraft.server.v1_11_R1.NBTTagList) compound.get("Attributes");
-            
-            for (int i = 0; i < list.size() ; i++) {
-                net.minecraft.server.v1_11_R1.NBTTagCompound base = list.get(i);
-                
-                if (base.getTypeId() == 10) {
-                    net.minecraft.server.v1_11_R1.NBTTagCompound attrCompound = (net.minecraft.server.v1_11_R1.NBTTagCompound) base;
-                    
-                    if (base.toString().contains("generic.movementSpeed")) {
-                        return attrCompound.getDouble("Base");
-                    }
-                }
-            }
-        }
-        
-        return -1;
     }
     
     private void fixOwner(Player p, AbstractHorse horse) {

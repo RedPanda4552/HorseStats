@@ -50,10 +50,6 @@ public class PlayerJoinLeaveListener extends ListenerBase {
                 p.sendMessage(lang.tag + lang.get("playerJoinLeaveListener.config"));
             }
             
-            if (main.noSpeedMode) {
-                p.sendMessage(lang.tag + lang.get("playerJoinLeaveListener.no-speed"));
-            }
-            
             if (main.updateAvailable) {
                 p.sendMessage(lang.tag + lang.get("playerJoinLeaveListener.new-build") + " "  + lang.y + main.updateName + lang.g + " " + lang.get("playerJoinLeaveListener.at"));
                 p.sendMessage(lang.g + "https://dev.bukkit.org/bukkit-plugins/horsestats");

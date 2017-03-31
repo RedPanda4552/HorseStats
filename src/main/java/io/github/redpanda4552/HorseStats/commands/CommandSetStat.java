@@ -116,39 +116,13 @@ public class CommandSetStat extends AbstractCommand {
                     p.sendMessage(lang.tag + lang.r + args[1] + " " + lang.get("setStat.nan"));
                 }
                 
-                if (main.noSpeedMode) {
-                    p.sendMessage(lang.tag + lang.get("setStat.nospeed"));
-                    return;
-                }
-                
-                setSpeed(h, speed);
+                h.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed / 42.18);
                 p.sendMessage(lang.tag + lang.get("setStat.speed-set-to") + " " + speed + " " + lang.get("setStat.blocks-per-second"));
             } else {
                 p.sendMessage(lang.tag + lang.get("setStat.usage"));
             }
         } else {
             p.sendMessage(lang.tag + lang.get("setStat.usage"));
-        }
-    }
-    
-    private void setSpeed(AbstractHorse horse, double d) {
-        org.bukkit.craftbukkit.v1_11_R1.entity.CraftAbstractHorse cAbstractHorse = (org.bukkit.craftbukkit.v1_11_R1.entity.CraftAbstractHorse) horse;
-        net.minecraft.server.v1_11_R1.NBTTagCompound compound = new net.minecraft.server.v1_11_R1.NBTTagCompound();
-        cAbstractHorse.getHandle().c(compound);
-        net.minecraft.server.v1_11_R1.NBTTagList list = (net.minecraft.server.v1_11_R1.NBTTagList) compound.get("Attributes");
-        
-        for (int i = 0; i < list.size() ; i++) {
-            net.minecraft.server.v1_11_R1.NBTTagCompound base = list.get(i);
-            
-            if (base.getTypeId() == 10) {
-                net.minecraft.server.v1_11_R1.NBTTagCompound attrCompound = (net.minecraft.server.v1_11_R1.NBTTagCompound) base;
-                
-                if (base.toString().contains("generic.movementSpeed")) {
-                    // Magic number; derived from calibration sheet
-                    attrCompound.setDouble("Base", d / 42.18);
-                    cAbstractHorse.getHandle().a(compound);
-                }
-            }
         }
     }
 }

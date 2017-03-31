@@ -8,7 +8,6 @@ version: 4.1
 
 playerJoinLeaveListener:
   config: "The HorseStats config is out of date. Details can be found in the console when the plugin started."
-  no-speed: "HorseStats is running in 'no speed mode'. Details can be found in the console when the plugin started."
   new-build: "A new build of HorseStats is available! You can find"
   at: "at:"
 damageListener:
