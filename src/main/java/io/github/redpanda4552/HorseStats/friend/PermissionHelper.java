@@ -32,7 +32,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 
-import io.github.redpanda4552.HorseStats.HorseStats;
+import io.github.redpanda4552.HorseStats.Main;
 
 /**
  * Class that handles all internal permissions related functions.
@@ -47,10 +47,10 @@ public class PermissionHelper {
         NEW;
     }
 
-    private HorseStats main;
+    private Main main;
     public HashMap<UUID, ArrayList<PermissionSet>> permissionMap;
     
-    public PermissionHelper(HorseStats main) {
+    public PermissionHelper(Main main) {
         this.main = main;
         permissionMap = new HashMap<UUID, ArrayList<PermissionSet>>();
     }

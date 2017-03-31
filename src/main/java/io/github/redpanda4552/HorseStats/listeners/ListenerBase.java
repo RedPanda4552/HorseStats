@@ -23,9 +23,9 @@
  */
 package io.github.redpanda4552.HorseStats.listeners;
 
-import io.github.redpanda4552.HorseStats.HorseStats;
+import io.github.redpanda4552.HorseStats.Lang;
+import io.github.redpanda4552.HorseStats.Main;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
-import io.github.redpanda4552.HorseStats.lang.Lang;
 
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.entity.AbstractHorse;
@@ -35,10 +35,10 @@ import org.bukkit.event.Listener;
 
 public abstract class ListenerBase implements Listener {
     
-    protected HorseStats main;
+    protected Main main;
     protected Lang lang;
     
-    public ListenerBase(HorseStats main) {
+    public ListenerBase(Main main) {
         this.main = main;
         lang = main.lang;
     }

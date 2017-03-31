@@ -7,14 +7,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import io.github.redpanda4552.HorseStats.HorseStats;
+import io.github.redpanda4552.HorseStats.Main;
 
 public class ViewPermissionsTask extends BukkitRunnable {
 
-    private final HorseStats main;
+    private final Main main;
     private final Player player;
     
-    public ViewPermissionsTask(HorseStats main, Player player) {
+    public ViewPermissionsTask(Main main, Player player) {
         this.main = main;
         this.player = player;
     }

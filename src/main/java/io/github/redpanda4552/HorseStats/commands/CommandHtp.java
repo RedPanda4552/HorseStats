@@ -32,7 +32,7 @@ import org.bukkit.entity.Player;
 
 public class CommandHtp extends AbstractCommand {
     
-    public CommandHtp(HorseStats main) {
+    public CommandHtp(Main main) {
         super(main);
     }
     

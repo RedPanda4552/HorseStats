@@ -23,7 +23,7 @@
  */
 package io.github.redpanda4552.HorseStats.commands;
 
-import io.github.redpanda4552.HorseStats.HorseStats;
+import io.github.redpanda4552.HorseStats.Main;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
 import org.bukkit.attribute.Attribute;
@@ -34,7 +34,7 @@ import org.bukkit.entity.Player;
 
 public class CommandSetStat extends AbstractCommand {
     
-    public CommandSetStat(HorseStats main) {
+    public CommandSetStat(Main main) {
         super(main);
     }
 

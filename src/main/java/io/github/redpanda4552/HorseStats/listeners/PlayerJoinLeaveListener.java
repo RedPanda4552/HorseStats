@@ -23,7 +23,7 @@
  */
 package io.github.redpanda4552.HorseStats.listeners;
 
-import io.github.redpanda4552.HorseStats.HorseStats;
+import io.github.redpanda4552.HorseStats.Main;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,7 +33,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerJoinLeaveListener extends ListenerBase {
 
-    public PlayerJoinLeaveListener(HorseStats main) {
+    public PlayerJoinLeaveListener(Main main) {
         super (main);
     }
 

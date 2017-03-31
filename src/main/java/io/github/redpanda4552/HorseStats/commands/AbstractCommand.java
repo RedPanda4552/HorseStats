@@ -23,9 +23,9 @@
  */
 package io.github.redpanda4552.HorseStats.commands;
 
-import io.github.redpanda4552.HorseStats.HorseStats;
+import io.github.redpanda4552.HorseStats.Lang;
+import io.github.redpanda4552.HorseStats.Main;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
-import io.github.redpanda4552.HorseStats.lang.Lang;
 
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.AbstractHorse;
@@ -37,10 +37,10 @@ import org.bukkit.entity.Player;
  */
 public abstract class AbstractCommand implements CommandExecutor {
     
-    protected HorseStats main;
+    protected Main main;
     protected Lang lang;
     
-    public AbstractCommand(HorseStats main) {
+    public AbstractCommand(Main main) {
         this.main = main;
         lang = main.lang;
     }

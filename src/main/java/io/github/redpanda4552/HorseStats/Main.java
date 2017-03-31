@@ -23,10 +23,12 @@
  */
 package io.github.redpanda4552.HorseStats;
 
+import io.github.redpanda4552.HorseStats.Updater.UpdateResult;
 import io.github.redpanda4552.HorseStats.commands.*;
 import io.github.redpanda4552.HorseStats.friend.PermissionHelper;
-import io.github.redpanda4552.HorseStats.lang.Lang;
 import io.github.redpanda4552.HorseStats.listeners.*;
+import io.github.redpanda4552.sql.MySQL;
+import io.github.redpanda4552.sql.SQLite;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,9 +37,6 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import net.gravitydevelopment.updater.HorseStatsUpdater;
-import net.gravitydevelopment.updater.HorseStatsUpdater.UpdateResult;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.AbstractHorse;
@@ -45,10 +44,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.huskehhh.mysql.MySQL;
-import com.huskehhh.mysql.SQLite;
-
-public class HorseStats extends JavaPlugin {
+public class Main extends JavaPlugin {
     
     // Convenience field for logger in main class
     protected Logger log;
@@ -67,7 +63,7 @@ public class HorseStats extends JavaPlugin {
     public boolean outOfDateConfig = false;
     
     // Support Classes
-    private final HorseStats main = this; //Only because of the update checker.
+    private final Main main = this; //Only because of the update checker.
     public Lang lang;
     public PermissionHelper permissionHelper;
     
@@ -271,7 +267,7 @@ public class HorseStats extends JavaPlugin {
             @Override
             public void run() {
                 if (getConfig().getBoolean("options.update-checks") == true) {
-                    HorseStatsUpdater updater = new HorseStatsUpdater(main, 62378, main.getFile(), HorseStatsUpdater.UpdateType.NO_DOWNLOAD, false);
+                    Updater updater = new Updater(main, 62378, main.getFile(), Updater.UpdateType.NO_DOWNLOAD, false);
                     
                     if (updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
                         updateName = updater.getLatestName();

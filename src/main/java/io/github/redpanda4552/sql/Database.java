@@ -1,4 +1,4 @@
-package com.huskehhh.mysql;
+package io.github.redpanda4552.sql;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

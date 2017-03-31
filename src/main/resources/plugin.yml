@@ -1,4 +1,4 @@
-main: io.github.redpanda4552.HorseStats.HorseStats
+main: io.github.redpanda4552.HorseStats.Main
 name: HorseStats
 version: 4.2
 author: pandubz

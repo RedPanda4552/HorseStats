@@ -21,9 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.github.redpanda4552.HorseStats.lang;
-
-import io.github.redpanda4552.HorseStats.HorseStats;
+package io.github.redpanda4552.HorseStats;
 
 import java.io.File;
 
@@ -38,7 +36,7 @@ public class Lang {
     // Faster ways to utilize chat colors
     public final String y = ChatColor.YELLOW + "", g = ChatColor.GREEN + "", r = ChatColor.RED + "", tag;
     
-    public Lang(HorseStats main) {
+    public Lang(Main main) {
         file = new File("plugins/HorseStats/" + main.langFileName);
         
         if (main.getConfig().getBoolean("options.show-tag")) {

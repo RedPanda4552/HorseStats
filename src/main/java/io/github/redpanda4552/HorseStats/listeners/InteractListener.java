@@ -23,7 +23,7 @@
  */
 package io.github.redpanda4552.HorseStats.listeners;
 
-import io.github.redpanda4552.HorseStats.HorseStats;
+import io.github.redpanda4552.HorseStats.Main;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
 import org.bukkit.entity.AbstractHorse;
@@ -33,7 +33,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 public class InteractListener extends ListenerBase {
 
-    public InteractListener(HorseStats main) {
+    public InteractListener(Main main) {
         super(main);
     }
 

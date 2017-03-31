@@ -25,7 +25,7 @@ package io.github.redpanda4552.HorseStats.commands;
 
 import static org.bukkit.ChatColor.*;
 
-import io.github.redpanda4552.HorseStats.HorseStats;
+import io.github.redpanda4552.HorseStats.Main;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
 import org.bukkit.command.Command;
@@ -37,7 +37,7 @@ import org.bukkit.entity.Horse.Style;
 
 public class CommandSetStyle extends AbstractCommand {
     
-    public CommandSetStyle(HorseStats main) {
+    public CommandSetStyle(Main main) {
         super(main);
     }
 

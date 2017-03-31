@@ -23,7 +23,7 @@
  */
 package io.github.redpanda4552.HorseStats.listeners;
 
-import io.github.redpanda4552.HorseStats.HorseStats;
+import io.github.redpanda4552.HorseStats.Main;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
 import java.math.RoundingMode;
@@ -40,7 +40,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class DamageListener extends ListenerBase {
     
-    public DamageListener(HorseStats main) {
+    public DamageListener(Main main) {
         super (main);
     }
     

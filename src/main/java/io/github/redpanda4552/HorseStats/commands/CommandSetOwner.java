@@ -23,7 +23,7 @@
  */
 package io.github.redpanda4552.HorseStats.commands;
 
-import io.github.redpanda4552.HorseStats.HorseStats;
+import io.github.redpanda4552.HorseStats.Main;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -33,7 +33,7 @@ import org.bukkit.entity.Player;
 
 public class CommandSetOwner extends AbstractCommand {
     
-    public CommandSetOwner(HorseStats main) {
+    public CommandSetOwner(Main main) {
         super(main);
     }
 

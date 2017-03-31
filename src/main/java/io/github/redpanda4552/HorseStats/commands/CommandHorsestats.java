@@ -23,14 +23,14 @@
  */
 package io.github.redpanda4552.HorseStats.commands;
 
-import io.github.redpanda4552.HorseStats.HorseStats;
+import io.github.redpanda4552.HorseStats.Main;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 public class CommandHorsestats extends AbstractCommand { 
     
-    public CommandHorsestats(HorseStats main) {
+    public CommandHorsestats(Main main) {
         super(main);
     }
     

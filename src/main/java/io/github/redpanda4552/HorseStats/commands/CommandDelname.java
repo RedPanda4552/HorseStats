@@ -23,7 +23,7 @@
  */
 package io.github.redpanda4552.HorseStats.commands;
 
-import io.github.redpanda4552.HorseStats.HorseStats;
+import io.github.redpanda4552.HorseStats.Main;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
 import org.bukkit.command.Command;
@@ -33,7 +33,7 @@ import org.bukkit.entity.Player;
 
 public class CommandDelname extends AbstractCommand {
     
-    public CommandDelname(HorseStats main) {
+    public CommandDelname(Main main) {
         super(main);
     }
     

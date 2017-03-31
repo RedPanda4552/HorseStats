@@ -31,13 +31,13 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import io.github.redpanda4552.HorseStats.HorseStats;
+import io.github.redpanda4552.HorseStats.Main;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 import io.github.redpanda4552.HorseStats.friend.ViewPermissionsTask;
 
 public class CommandHPerm extends AbstractCommand {
 
-    public CommandHPerm(HorseStats main) {
+    public CommandHPerm(Main main) {
         super(main);
     }
 
