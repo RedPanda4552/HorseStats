@@ -35,8 +35,8 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import net.gravitydevelopment.updater.Updater;
-import net.gravitydevelopment.updater.Updater.UpdateResult;
+import net.gravitydevelopment.updater.HorseStatsUpdater;
+import net.gravitydevelopment.updater.HorseStatsUpdater.UpdateResult;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -54,7 +54,6 @@ public class HorseStats extends JavaPlugin {
     protected Logger log;
     
     // Universally accessed fields (Not necessarily pulled from config)
-    public boolean noSpeedMode;
     public HashMap<UUID, AbstractHorse> teleportQueue;
     
     // Configuration fields
@@ -116,8 +115,6 @@ public class HorseStats extends JavaPlugin {
         langFileName = getConfig().getString("options.language-pack");
         lang = new Lang(this);
         anarchyMode = getConfig().getBoolean("options.anarchy-mode");
-        noSpeedMode = testNoSpeedMode();
-        
         statDisplayMaterial = Material.getMaterial(getConfig().getString("options.stat-item"));
         statDisplayMaterialFriendlyName = getConfig().getString("options.stat-item-name");
         
@@ -236,18 +233,6 @@ public class HorseStats extends JavaPlugin {
     }
     
     /**
-     * Checks if server build matches HorseStats. Speed stat requires NMS.
-     */
-    public boolean testNoSpeedMode() {
-        try {
-            Class.forName("org.bukkit.craftbukkit.v1_11_R1.entity.CraftAbstractHorse");
-            return false;
-        } catch (ClassNotFoundException e) {
-            return true;
-        }
-    }
-    
-    /**
      * Run through all online players and load their permissions info into memory.
      * Used after a plugin reload to restore user data that otherwise only loads
      * when joining the server.
@@ -286,7 +271,7 @@ public class HorseStats extends JavaPlugin {
             @Override
             public void run() {
                 if (getConfig().getBoolean("options.update-checks") == true) {
-                    Updater updater = new Updater(main, 62378, main.getFile(), Updater.UpdateType.NO_DOWNLOAD, false);
+                    HorseStatsUpdater updater = new HorseStatsUpdater(main, 62378, main.getFile(), HorseStatsUpdater.UpdateType.NO_DOWNLOAD, false);
                     
                     if (updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
                         updateName = updater.getLatestName();
