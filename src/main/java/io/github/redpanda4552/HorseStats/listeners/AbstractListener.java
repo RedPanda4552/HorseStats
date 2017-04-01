@@ -27,9 +27,7 @@ import io.github.redpanda4552.HorseStats.Lang;
 import io.github.redpanda4552.HorseStats.Main;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.entity.AbstractHorse;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
@@ -59,20 +57,5 @@ public abstract class AbstractListener implements Listener {
             return true;
         }
         return false;
-    }
-    
-    /**
-     * Get the end user friendly name of this Entity
-     * @param entity - The Entity to get the name of
-     * @return The name of the specified Entity that won't scare end users
-     * @throws IllegalArgumentException If entity is null
-     */
-    protected String friendlyName(Entity entity) {
-        if (entity == null) {
-            throw new IllegalArgumentException("Entity argument for friendlyName(Entity) was null!");
-        }
-        
-        // Almost forgot Spigot bundles a bunch of Apache stuff with the API. 
-        return WordUtils.capitalize(entity.getType().toString().toLowerCase().replace("_", " "));
     }
 }

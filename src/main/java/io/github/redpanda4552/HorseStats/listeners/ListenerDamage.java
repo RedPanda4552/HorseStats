@@ -26,12 +26,13 @@ package io.github.redpanda4552.HorseStats.listeners;
 import io.github.redpanda4552.HorseStats.Main;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
-
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.AnimalTamer;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Llama;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.SkeletonHorse;
@@ -91,80 +92,60 @@ public class ListenerDamage extends AbstractListener {
     /**
      * Display the stats of a horse to a player.
      */
-    public void displayStats(Player p, AbstractHorse horse) {
-        fixOwner(p, horse);
+    public void displayStats(Player player, AbstractHorse horse) {
+        fixOwner(player, horse);
         DecimalFormat df = new DecimalFormat("#.##");
-        df.setRoundingMode(RoundingMode.HALF_EVEN);
-        
-        // Max Health/Hearts
-        double dHealthMax = horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
-        String sHealthMax = df.format(dHealthMax);
-        double dHeartMax = dHealthMax / 2;
-        String sHeartMax = df.format(dHeartMax);
-        
-        // Health/Hearts
-        double dHealth = horse.getHealth();
-        String sHealth = df.format(dHealth);
-        double dHeart = dHealth / 2;
-        String sHeart = df.format(dHeart);
-        
-        // Jump Height
+        String healthMax = df.format(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+        String heartMax = df.format(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() / 2);
+        String health = df.format(horse.getHealth());
+        String heart = df.format(horse.getHealth() / 2);
         String jump = df.format(5.162 * Math.pow(horse.getJumpStrength(), 1.7175));
-        
-        // Speed
-        double dSpeed = horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() * 42.18;
-        String sSpeed = df.format(dSpeed);
-        
-        // Adult status
+        String speed = df.format(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() * 42.18);
         boolean adult = horse.isAdult();
-        
-        // Ready to breed
         boolean breed = horse.canBreed();
-        
-        // Age
         float age = horse.getAge();
-        
-        // TODO LLama strength
-        
-        // Owner
         AnimalTamer tamer = horse.getOwner();
-        
-        //Horse name
         String name = friendlyName(horse);
         
         if (horse.getCustomName() != null) {
             name = horse.getCustomName() + lang.get("damageListener.posessive");
         }
         
-        //Teleport status
         boolean tpStatus = main.teleportQueue.containsValue(horse);
-        
-        //Age status
         String ageTime = "";
         
         if (adult == false) {
             ageTime = " (" + lang.get("damageListener.adult-minutes") + df.format(age/-1200) + ")";
         }
         
-        //Owner name
         String owner = lang.get("damageListener.none");
         
         if (tamer != null) {
             owner = tamer.getName();
         }
         
-        //Message output
-        p.sendMessage(lang.g + "========================");
-        p.sendMessage(lang.g + name + " " + lang.get("damageListener.stats"));
-        p.sendMessage(lang.g + "========================");
-        p.sendMessage(lang.g + lang.get("damageListener.max-health") + " " + sHealthMax + " (" + sHeartMax + " " + lang.get("damageListener.hearts") + ")");
-        p.sendMessage(lang.g + lang.get("damageListener.health") + " " + sHealth + " (" + sHeart + " " + lang.get("damageListener.hearts") + ")");
-        p.sendMessage(lang.g + lang.get("damageListener.jump") + " " + jump);
-        p.sendMessage(lang.g + lang.get("damageListener.speed") + " " + sSpeed);
-        p.sendMessage(lang.g + lang.get("damageListener.breed") + " " + breed);
-        p.sendMessage(lang.g + lang.get("damageListener.teleport-status") + " " + tpStatus);
-        p.sendMessage(lang.g + lang.get("damageListener.is-adult") + " " + adult + ageTime);
-        p.sendMessage(lang.g + lang.get("damageListener.owner") + " " + owner);
+        int strength = 0;
+        
+        if (horse instanceof Llama) {
+            strength = ((Llama) horse).getStrength();
+        }
+        
+        player.sendMessage(lang.g + "========================");
+        player.sendMessage(lang.g + name + " " + lang.get("damageListener.stats"));
+        player.sendMessage(lang.g + "========================");
+        player.sendMessage(lang.g + lang.get("damageListener.max-health") + " " + healthMax + " (" + heartMax + " " + lang.get("damageListener.hearts") + ")");
+        player.sendMessage(lang.g + lang.get("damageListener.health") + " " + health + " (" + heart + " " + lang.get("damageListener.hearts") + ")");
+        player.sendMessage(lang.g + lang.get("damageListener.jump") + " " + jump);
+        player.sendMessage(lang.g + lang.get("damageListener.speed") + " " + speed);
+        
+        if (horse instanceof Llama) {
+            player.sendMessage(lang.g + lang.get("damageListener.strength") +  " " + strength);
+        }
+        
+        player.sendMessage(lang.g + lang.get("damageListener.breed") + " " + breed);
+        player.sendMessage(lang.g + lang.get("damageListener.teleport-status") + " " + tpStatus);
+        player.sendMessage(lang.g + lang.get("damageListener.is-adult") + " " + adult + ageTime);
+        player.sendMessage(lang.g + lang.get("damageListener.owner") + " " + owner);
     }
     
     /**
@@ -199,6 +180,14 @@ public class ListenerDamage extends AbstractListener {
                 p.sendMessage(lang.tag + lang.get("damageListener.owner-fix"));
             }
         }
+    }
+    
+    protected String friendlyName(Entity entity) {
+        if (entity == null) {
+            throw new IllegalArgumentException("Entity argument for friendlyName(Entity) was null!");
+        }
+        
+        return WordUtils.capitalize(entity.getType().toString().toLowerCase().replace("_", " "));
     }
 }
 
