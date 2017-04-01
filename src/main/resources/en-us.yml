@@ -22,8 +22,8 @@ damageListener:
   # delete it, and replace it with a space. If you completely empty this, it
   # may cause errors while trying to display.
   posessive: "'s"
-  no-speed: "Speed could not be loaded."
   speed: "Speed (Blocks per Second):"
+  strength: "Strength:"
   breed: "Can Breed:"
   teleport-status: "Is Selected For Teleport:"
   owner: "Owner:"
@@ -110,7 +110,6 @@ setStat:
   blocks: "blocks."
   jump-limit: "Horses cannot jump higher than 16.45 blocks."
   health-limit: "Horse health is limited to 1024 hearts."
-  nospeed: "Speed cannot be set because HorseStats is running in No Speed Mode."
   speed-set-to: "Horse's speed has been set to"
   blocks-per-second: "blocks per second."
   nan: " is not a valid number."
