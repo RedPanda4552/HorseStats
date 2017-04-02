@@ -43,7 +43,6 @@ public class CommandHPerm extends AbstractCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        
         if (main.anarchyMode) {
             sender.sendMessage(lang.tag + lang.r + lang.get("hperm.the") + lang.y + " hperm " + lang.r + lang.get("hperm.anarchy-mode"));
             return true;
