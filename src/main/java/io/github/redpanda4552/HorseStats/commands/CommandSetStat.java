@@ -110,7 +110,7 @@ public class CommandSetStat extends AbstractCommand {
                     return;
                 }
                 
-                // These magic numbers were derived from a bunch of data collection. Maybe I'll throw the spreadsheet in the git repo.
+                // These magic numbers were derived from a bunch of data collection.
                 h.setJumpStrength(0.3846 * Math.pow(jump, 0.5821));
                 p.sendMessage(lang.tag + lang.get("setStat.jump-set-to") + " " + jump + " " + lang.get("setStat.blocks"));
             } else if (args[0].equalsIgnoreCase("speed")) {
