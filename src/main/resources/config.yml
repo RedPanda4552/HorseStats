@@ -3,7 +3,7 @@
 
 # Do not modify the config version. this is used by HorseStats internally, and
 # if altered, may cause false warning messages.
-config-version: 5.0
+config-version: 4.0
 
 options:
   # The name of the language file to be used. If you name an invalid file,
@@ -54,12 +54,6 @@ options:
   # is allowed. However, this result has not been successfully reproduced
   # since MC 1.6.
   multi-world-teleport: false
-  
-  # Limits the number of horses a player can save stats for. Saving horse stats
-  # utilizes the SQL database; if you are tight on disk space or working with a
-  # lot of players, it may help to keep this lower. This does not purge data if
-  # you set it lower than a player's saved stat count.
-  saved-stats-limit: 27
 
 # Settings for SQL database. You can safely leave this alone and HorseStats will
 # work fine. If you know what you are doing, you can modify the below to meet
