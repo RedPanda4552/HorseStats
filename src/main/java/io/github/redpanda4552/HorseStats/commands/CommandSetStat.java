@@ -84,9 +84,15 @@ public class CommandSetStat extends AbstractCommand {
                     return;
                 }
                 
+                health = Math.round(health);
+                
                 // A bit of a roundabout compared to the old way, but I guess I could call this "more descriptive"?
                 h.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(2 * health);
-                h.setHealth(2 * health);
+                
+                if (h.getHealth() < h.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()) {
+                    h.setHealth(h.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+                }
+                
                 p.sendMessage(lang.tag + lang.get("setStat.health-set-to") + " " + health + " " + lang.get("setStat.hearts"));
             } else if (args[0].equalsIgnoreCase("jump")) {
                 double jump = 0;
