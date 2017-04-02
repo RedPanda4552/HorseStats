@@ -27,6 +27,8 @@ import io.github.redpanda4552.HorseStats.Main;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
@@ -38,6 +40,8 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.entity.SkeletonHorse;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class ListenerDamage extends AbstractListener {
     
@@ -62,7 +66,7 @@ public class ListenerDamage extends AbstractListener {
                 //They held the stat display item
                 if (p.getInventory().getItemInMainHand().getType() == main.statDisplayMaterial) {
                     event.setCancelled(true);
-                    displayStats(p, h);
+                    displayStats(p, h, p.getInventory().getItemInMainHand());
                 //They held the teleport item
                 } else if (p.getInventory().getItemInMainHand().getType() == main.teleportSelectorMaterial) {
                     event.setCancelled(true);
@@ -92,7 +96,7 @@ public class ListenerDamage extends AbstractListener {
     /**
      * Display the stats of a horse to a player.
      */
-    public void displayStats(Player player, AbstractHorse horse) {
+    public void displayStats(Player player, AbstractHorse horse, ItemStack itemStack) {
         fixOwner(player, horse);
         DecimalFormat df = new DecimalFormat("#.##");
         String healthMax = df.format(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
@@ -130,21 +134,43 @@ public class ListenerDamage extends AbstractListener {
             chestCapacity = ((Llama) horse).getStrength() * 3;
         }
         
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        ArrayList<String> lore = new ArrayList<String>();
+        String nameStr = lang.g + name + " " + lang.get("damageListener.stats");
+        String healthStr = lang.g + lang.get("damageListener.health") + " " + health + "/" + healthMax + " (" + heart + lang.r + "❤" + lang.g + "/" + heartMax + lang.r + "❤" + lang.g + ")";
+        String jumpStr = lang.g + lang.get("damageListener.jump") + " " + jump;
+        String speedStr = lang.g + lang.get("damageListener.speed") + " " + speed;
+        String chestStr = lang.g + lang.get("damageListener.chest-capacity") +  " " + chestCapacity;
+        String breedStr = lang.g + lang.get("damageListener.breed") + " " + breed;
+        String tpStr = lang.g + lang.get("damageListener.teleport-status") + " " + tpStatus;
+        String adultStr = lang.g + lang.get("damageListener.is-adult") + " " + adult + ageTime;
+        String ownerStr = lang.g + lang.get("damageListener.owner") + " " + owner;
         player.sendMessage(lang.g + "========================");
-        player.sendMessage(lang.g + name + " " + lang.get("damageListener.stats"));
+        player.sendMessage(nameStr);
+        itemMeta.setDisplayName(nameStr);
         player.sendMessage(lang.g + "========================");
-        player.sendMessage(lang.g + lang.get("damageListener.health") + " " + health + "/" + healthMax + " (" + heart + lang.r + "❤" + lang.g + "/" + heartMax + lang.r + "❤" + lang.g + ")");
-        player.sendMessage(lang.g + lang.get("damageListener.jump") + " " + jump);
-        player.sendMessage(lang.g + lang.get("damageListener.speed") + " " + speed);
+        player.sendMessage(healthStr);
+        lore.add(healthStr);
+        player.sendMessage(jumpStr);
+        lore.add(jumpStr);
+        player.sendMessage(speedStr);
+        lore.add(speedStr);
         
         if (horse instanceof Llama) {
-            player.sendMessage(lang.g + lang.get("damageListener.chest-capacity") +  " " + chestCapacity);
+            player.sendMessage(chestStr);
+            lore.add(chestStr);
         }
         
-        player.sendMessage(lang.g + lang.get("damageListener.breed") + " " + breed);
-        player.sendMessage(lang.g + lang.get("damageListener.teleport-status") + " " + tpStatus);
-        player.sendMessage(lang.g + lang.get("damageListener.is-adult") + " " + adult + ageTime);
-        player.sendMessage(lang.g + lang.get("damageListener.owner") + " " + owner);
+        player.sendMessage(breedStr);
+        lore.add(breedStr);
+        player.sendMessage(tpStr);
+        lore.add(tpStr);
+        player.sendMessage(adultStr);
+        lore.add(adultStr);
+        player.sendMessage(ownerStr);
+        lore.add(ownerStr);
+        itemMeta.setLore(lore);
+        itemStack.setItemMeta(itemMeta);
     }
     
     /**
