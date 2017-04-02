@@ -13,9 +13,7 @@ playerJoinLeaveListener:
 damageListener:
   owner-fix: "This horse was flagged as tamed, but the owner returned 'none'. It is now fully untamed."
   stats: "Stats"
-  max-health: "Max Health:"
   health: "Health:"
-  hearts: "hearts"
   jump: "Jump Height (Blocks):"
   # This is what appears after a horse's name in the stat display. If your
   # language has a possessive suffix (English is 's), change it here. If not,
@@ -23,12 +21,12 @@ damageListener:
   # may cause errors while trying to display.
   posessive: "'s"
   speed: "Speed (Blocks per Second):"
-  strength: "Strength:"
+  chest-capacity: "Chest Capacity:"
   breed: "Can Breed:"
-  teleport-status: "Is Selected For Teleport:"
+  teleport-status: "Selected For Teleport:"
   owner: "Owner:"
   none: "None"
-  is-adult: "Is Adult:"
+  is-adult: "Adult:"
   adult-minutes: "Minutes Until Adult:"
   teleport-selected: "Horse selected for teleport."
   teleport-deselected: "Horse deselected for teleport."

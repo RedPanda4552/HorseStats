@@ -124,22 +124,21 @@ public class ListenerDamage extends AbstractListener {
             owner = tamer.getName();
         }
         
-        int strength = 0;
+        int chestCapacity = 0;
         
         if (horse instanceof Llama) {
-            strength = ((Llama) horse).getStrength();
+            chestCapacity = ((Llama) horse).getStrength() * 3;
         }
         
         player.sendMessage(lang.g + "========================");
         player.sendMessage(lang.g + name + " " + lang.get("damageListener.stats"));
         player.sendMessage(lang.g + "========================");
-        player.sendMessage(lang.g + lang.get("damageListener.max-health") + " " + healthMax + " (" + heartMax + " " + lang.get("damageListener.hearts") + ")");
-        player.sendMessage(lang.g + lang.get("damageListener.health") + " " + health + " (" + heart + " " + lang.get("damageListener.hearts") + ")");
+        player.sendMessage(lang.g + lang.get("damageListener.health") + " " + health + "/" + healthMax + " (" + heart + lang.r + "❤" + lang.g + "/" + heartMax + lang.r + "❤" + lang.g + ")");
         player.sendMessage(lang.g + lang.get("damageListener.jump") + " " + jump);
         player.sendMessage(lang.g + lang.get("damageListener.speed") + " " + speed);
         
         if (horse instanceof Llama) {
-            player.sendMessage(lang.g + lang.get("damageListener.strength") +  " " + strength);
+            player.sendMessage(lang.g + lang.get("damageListener.chest-capacity") +  " " + chestCapacity);
         }
         
         player.sendMessage(lang.g + lang.get("damageListener.breed") + " " + breed);
