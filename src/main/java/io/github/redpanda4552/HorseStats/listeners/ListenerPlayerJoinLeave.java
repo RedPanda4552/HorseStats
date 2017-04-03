@@ -59,14 +59,7 @@ public class ListenerPlayerJoinLeave extends AbstractListener {
     
     @EventHandler
     public void playerLeave(PlayerQuitEvent event) {
-        if (!main.anarchyMode) {
-            Player p = event.getPlayer();
-            main.permissionHelper.unloadPlayerPermissions(p.getUniqueId());
-        }
-    }
-    
-    @EventHandler // TODO Do we truly need this, or does PlayerQuitEvent monitor all disconnects...
-    public void playerKicked(PlayerKickEvent event) {
+        main.getLogger().info("Leave event");
         if (!main.anarchyMode) {
             Player p = event.getPlayer();
             main.permissionHelper.unloadPlayerPermissions(p.getUniqueId());
