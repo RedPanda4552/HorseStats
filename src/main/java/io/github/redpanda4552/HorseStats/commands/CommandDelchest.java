@@ -69,9 +69,10 @@ public class CommandDelchest extends AbstractCommand {
             return;
         }
         
-        // TODO Needs testing
         for (ItemStack itemStack : h.getInventory().getStorageContents()) {
-            h.getWorld().dropItemNaturally(h.getLocation(), itemStack);
+            if (itemStack != null) {
+                h.getWorld().dropItemNaturally(h.getLocation(), itemStack);
+            }
         }
         
         h.setCarryingChest(false);
