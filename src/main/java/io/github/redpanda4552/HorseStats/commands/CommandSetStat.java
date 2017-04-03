@@ -34,6 +34,8 @@ import org.bukkit.entity.Player;
 
 public class CommandSetStat extends AbstractCommand {
     
+    private final String usage = "/setstat <jump | health> <value>";
+    
     public CommandSetStat(Main main) {
         super(main);
     }
@@ -125,10 +127,16 @@ public class CommandSetStat extends AbstractCommand {
                 h.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed / 42.18);
                 p.sendMessage(lang.tag + lang.get("setStat.speed-set-to") + " " + speed + " " + lang.get("setStat.blocks-per-second"));
             } else {
-                p.sendMessage(lang.tag + lang.get("setStat.usage"));
+                p.sendMessage(new String[] {
+                        lang.tag + usage,
+                        lang.g + lang.get("setStat.measures")
+                });
             }
         } else {
-            p.sendMessage(lang.tag + lang.get("setStat.usage"));
+            p.sendMessage(new String[] {
+                    lang.tag + usage,
+                    lang.g + lang.get("setStat.measures")
+            });
         }
     }
 }

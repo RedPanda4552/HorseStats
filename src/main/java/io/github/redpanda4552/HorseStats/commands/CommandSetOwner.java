@@ -33,6 +33,8 @@ import org.bukkit.entity.Player;
 
 public class CommandSetOwner extends AbstractCommand {
     
+    private final String usage = "/setowner <player>";
+    
     public CommandSetOwner(Main main) {
         super(main);
     }
@@ -77,7 +79,7 @@ public class CommandSetOwner extends AbstractCommand {
                 p.sendMessage(lang.tag + lang.r + lang.get("generic.player-not-found"));
             }
         } else {
-            p.sendMessage(lang.tag + lang.get("setOwner.usage"));
+            p.sendMessage(lang.tag + usage);
         }
     }
 }

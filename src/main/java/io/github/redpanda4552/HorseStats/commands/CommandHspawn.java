@@ -39,6 +39,8 @@ import org.bukkit.entity.Mule;
 
 public class CommandHspawn extends AbstractCommand {
     
+    private final String usage = "/hspawn <horse | donkey | mule | llama | skeleton | zombie>";
+    
     public CommandHspawn(Main main) {
         super(main);
     }
@@ -89,7 +91,7 @@ public class CommandHspawn extends AbstractCommand {
                 h = (ZombieHorse) p.getWorld().spawnEntity(p.getLocation(), EntityType.ZOMBIE_HORSE);
                 break;
             default:
-                p.sendMessage(lang.tag + lang.get("hspawn.usage"));
+                p.sendMessage(lang.tag + usage);
                 break;
             }
         } else{

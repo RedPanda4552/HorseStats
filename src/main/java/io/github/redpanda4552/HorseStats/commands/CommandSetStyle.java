@@ -34,18 +34,7 @@ import org.bukkit.entity.Horse.Style;
 
 public class CommandSetStyle extends AbstractCommand {
     
-    private final String styleOptions = new StringBuilder(lang.g + "<")
-            .append(lang.y + "none")
-            .append(lang.g + " | ")
-            .append(lang.y + "blackdots")
-            .append(lang.g + " | ")
-            .append(lang.y + "white")
-            .append(lang.g + " | ")
-            .append(lang.y + "whitedots")
-            .append(lang.g + " | ")
-            .append(lang.y + "whitefield")
-            .append(lang.g + ">")
-            .toString();
+    private final String usage = "/setstyle <none | blackdots | white | whitedots | whitefield>";
     
     public CommandSetStyle(Main main) {
         super(main);
@@ -93,13 +82,13 @@ public class CommandSetStyle extends AbstractCommand {
             } else if (args[0].equalsIgnoreCase("whitefield")) {
                 h.setStyle(Style.WHITEFIELD);
             } else {
-                p.sendMessage(lang.tag + "/setstyle " + styleOptions);
+                p.sendMessage(lang.tag + usage);
                 return;
             }
             
             p.sendMessage(lang.tag + lang.get("setStyle.style-change") + " " + lang.y + h.getStyle());
         } else {
-            p.sendMessage(lang.tag + "/setstyle " + styleOptions);
+            p.sendMessage(lang.tag + usage);
         }
     }
 }

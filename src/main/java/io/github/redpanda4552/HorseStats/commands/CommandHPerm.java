@@ -37,6 +37,8 @@ import io.github.redpanda4552.HorseStats.friend.ViewPermissionsTask;
 
 public class CommandHPerm extends AbstractCommand {
 
+    private final String usage = "/hperm <give | take | view> <player> <damage | use>";
+    
     public CommandHPerm(Main main) {
         super(main);
     }
@@ -114,8 +116,7 @@ public class CommandHPerm extends AbstractCommand {
 //            }
 //        }
         player.sendMessage(new String[] {
-                lang.tag + "/hperm <give | take | view> <player> <damage | use>",
-                lang.tag + lang.get("hperm.usage-2")
+                lang.tag + usage,
         });
         return true; 
     }

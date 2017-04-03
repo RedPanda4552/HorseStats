@@ -74,8 +74,7 @@ delname:
 hperm:
   the: "The"
   anarchy-mode: "command is not usable while anarchy mode is enabled."
-  usage-1: "/hperm <give | take | view> <player> <damage | use>"
-  usage-2: "When using a player's name, they must be online. If you know the player's UUID, this can be used regardless of online status."
+  name-uuid: "When using a player's name, they must be online. If you know the player's UUID, this can be used regardless of online status."
   offline: "Could not find player by name"
   uuid: "Could not find player by uuid"
   perm-1: "Bad permission option"
@@ -88,7 +87,6 @@ hperm:
   viewall: "Something went wrong trying to look up your permissions. Consider telling an administrator to check server logs for errors."
   view: "Fetcing permissions you've given out. This may take a moment..."
 hspawn:
-  usage: "/hspawn <horse | donkey | mule | llama | skeleton | zombie>"
   spawn: "Successfully spawned"
   fail: "Failed to spawn horse of type"
 htp:
@@ -98,10 +96,9 @@ htp:
   teleport-fail: "Teleport failed."
   despawned: "The horse you targeted is either dead or not in a loaded chunk. If it is not in a loaded chunk, reselect it and make sure its containing chunk stays loaded."
 setOwner:
-  set-owner: "Owner changed successfully."
-  usage: "/setowner <player>"
+  set-owner: "Owner changed successfully." 
 setStat:
-  usage: "/setstat <jump | health> <value> -- Health is measured in hearts. Jump is measured in blocks."
+  measures: "Health is measured in hearts. Jump is measured in blocks."
   health-set-to: "Horse's health has been set to"
   hearts: "hearts."
   jump-set-to: "Horse's jump height has been set to"
@@ -114,7 +111,6 @@ setStat:
 setStyle:
   bad-type: "can only be used on a normal horse."
   style-change: "Style changed to"
-  usage: "/setstyle <style>"
 setColor:
   bad-type: "can only be used on normal horses and llamas."
   color-change: "Color changed to"
