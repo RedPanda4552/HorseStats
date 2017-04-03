@@ -39,6 +39,8 @@ public class CommandSetStyle extends AbstractCommand {
             .append(lang.g + " | ")
             .append(lang.y + "blackdots")
             .append(lang.g + " | ")
+            .append(lang.y + "white")
+            .append(lang.g + " | ")
             .append(lang.y + "whitedots")
             .append(lang.g + " | ")
             .append(lang.y + "whitefield")
@@ -80,10 +82,10 @@ public class CommandSetStyle extends AbstractCommand {
         }
         
         if (args.length >= 1) {
-            if (args[0].equalsIgnoreCase("blackdots")) {
-                h.setStyle(Style.BLACK_DOTS);
-            } else if (args[0].equalsIgnoreCase("none")) {
+            if (args[0].equalsIgnoreCase("none")) {
                 h.setStyle(Style.NONE);
+            } else if (args[0].equalsIgnoreCase("blackdots")) {
+                h.setStyle(Style.BLACK_DOTS);
             } else if (args[0].equalsIgnoreCase("white")) {
                 h.setStyle(Style.WHITE);
             } else if (args[0].equalsIgnoreCase("whitedots")) {
