@@ -81,7 +81,7 @@ sql:
   # The username that HorseStats will use to connect to your MySQL server. This
   # is only used for MySQL.
   mysql-username: username
-
+  
   # The password that HorseStats will use to connect to your MySQL server. This
   # is only used for MySQL.
   mysql-password: password
