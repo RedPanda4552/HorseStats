@@ -267,6 +267,5 @@ public class Main extends JavaPlugin {
                 }    
             }
         }.runTaskAsynchronously(main);
-            
     }
 }
