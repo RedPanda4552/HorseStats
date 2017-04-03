@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.github.redpanda4552.sql;
+package io.github.redpanda4552.HorseStats.sql;
 
 @SuppressWarnings("serial")
 public class ConfigurationException extends Exception {

@@ -27,9 +27,9 @@ import io.github.redpanda4552.HorseStats.Updater.UpdateResult;
 import io.github.redpanda4552.HorseStats.commands.*;
 import io.github.redpanda4552.HorseStats.friend.PermissionHelper;
 import io.github.redpanda4552.HorseStats.listeners.*;
-import io.github.redpanda4552.sql.ConfigurationException;
-import io.github.redpanda4552.sql.DatabaseMySQL;
-import io.github.redpanda4552.sql.DatabaseSQLite;
+import io.github.redpanda4552.HorseStats.sql.ConfigurationException;
+import io.github.redpanda4552.HorseStats.sql.DatabaseMySQL;
+import io.github.redpanda4552.HorseStats.sql.DatabaseSQLite;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
