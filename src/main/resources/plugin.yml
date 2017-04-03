@@ -44,9 +44,13 @@ commands:
     usage: /htp
     permission: HorseStats.htp
   setstyle:
-    description: Changes a horse's color and style.
-    usage: /setstyle <type> <value>
+    description: Changes a horse's style.
+    usage: /setstyle <style>
     permission: HorseStats.setstyle
+  setcolor:
+    description: Changes a horse's color.
+    usage: /setcolor <color>
+    permission: HorseStats.setcolor
   setstat:
     description: Sets the specified stat for a horse.
     usage: /setstat <health|jump|speed> <value>

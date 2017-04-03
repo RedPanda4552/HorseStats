@@ -213,6 +213,7 @@ public class Main extends JavaPlugin {
         getCommand("hperm").setExecutor(new CommandHPerm(this));
         getCommand("hspawn").setExecutor(new CommandHspawn(this));
         getCommand("setstyle").setExecutor(new CommandSetStyle(this));
+        getCommand("setcolor").setExecutor(new CommandSetColor(this));
         getCommand("setstat").setExecutor(new CommandSetStat(this));
         getCommand("tame").setExecutor(new CommandTame(this));
     }
