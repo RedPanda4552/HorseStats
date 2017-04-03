@@ -117,6 +117,7 @@ public class CommandHPerm extends AbstractCommand {
 //        }
         player.sendMessage(new String[] {
                 lang.tag + usage,
+                lang.g + lang.get("hperm.name-uuid")
         });
         return true; 
     }
