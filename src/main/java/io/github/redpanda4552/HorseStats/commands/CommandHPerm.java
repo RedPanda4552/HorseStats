@@ -114,7 +114,7 @@ public class CommandHPerm extends AbstractCommand {
 //            }
 //        }
         player.sendMessage(new String[] {
-                lang.tag + lang.get("hperm.usage-1"),
+                lang.tag + "/hperm <give | take | view> <player> <damage | use>",
                 lang.tag + lang.get("hperm.usage-2")
         });
         return true; 

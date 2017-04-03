@@ -33,32 +33,8 @@ import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
 public class CommandSetColor extends AbstractCommand {
 
-    private final String horseColorOptions = new StringBuilder(lang.g + "<")
-            .append(lang.y + "black")
-            .append(lang.g + " | ")
-            .append(lang.y + "brown")
-            .append(lang.g + " | ")
-            .append(lang.y + "chestnut")
-            .append(lang.g + " | ")
-            .append(lang.y + "creamy")
-            .append(lang.g + " | ")
-            .append(lang.y + "darkbrown")
-            .append(lang.g + " | ")
-            .append(lang.y + "gray")
-            .append(lang.g + " | ")
-            .append(lang.y + "white")
-            .append(lang.g + ">")
-            .toString();
-    private final String llamaColorOptions = new StringBuilder(lang.g + "<")
-            .append(lang.y + "brown")
-            .append(lang.g + " | ")
-            .append(lang.y + "creamy")
-            .append(lang.g + " | ")
-            .append(lang.y + "gray")
-            .append(lang.g + " | ")
-            .append(lang.y + "white")
-            .append(lang.g + ">")
-            .toString();
+    private final String horseUsage = "/setcolor <black | brown | chestnut | creamy | darkbrown | gray | white>";
+    private final String llamaUsage = "/setcolor <brown | creamy | gray | white>";
     
     public CommandSetColor(Main main) {
         super(main);
@@ -106,11 +82,11 @@ public class CommandSetColor extends AbstractCommand {
                 } else if (args[0].equalsIgnoreCase("white")) {
                     ((Horse) h).setColor(Horse.Color.WHITE);
                 } else {
-                    p.sendMessage(lang.tag + "/setcolor " + horseColorOptions);
+                    p.sendMessage(lang.tag + horseUsage);
                     return;
                 }
             } else {
-                p.sendMessage(lang.tag + "/setcolor " + horseColorOptions);
+                p.sendMessage(lang.tag + horseUsage);
                 return;
             }
             
@@ -126,11 +102,11 @@ public class CommandSetColor extends AbstractCommand {
                 } else if (args[0].equalsIgnoreCase("white")) {
                     ((Llama) h).setColor(Llama.Color.WHITE);
                 } else {
-                    p.sendMessage(lang.tag + "/setcolor" + llamaColorOptions);
+                    p.sendMessage(lang.tag + llamaUsage);
                     return;
                 }
             } else {
-                p.sendMessage(lang.tag + "/setcolor" + llamaColorOptions);
+                p.sendMessage(lang.tag + llamaUsage);
                 return;
             }
             

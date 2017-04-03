@@ -88,4 +88,36 @@ public class Lang {
     public final String get(String path) {
         return langConfig.getString(path);
     }
+    
+    /**
+     * Takes in a command's usage message and applies yellow to the command and
+     * arguments, and green to the special characters that denote and separate
+     * arguments. Unused; maybe if we get it looking better it will see use.
+     * @param str - The usage string to colorize.
+     * @return The colored string.
+     */
+    public static final String colorize(String str) {
+        StringBuilder sb = new StringBuilder();
+        String[] components = str.split(" ");
+        
+        for (String component : components) {
+            if (components[0].equalsIgnoreCase(component)) {
+                sb.append(ChatColor.YELLOW + component);
+            } else if (component.startsWith("<")) {
+                sb.append(ChatColor.GREEN + "<");
+                sb.append(ChatColor.YELLOW + component.replaceFirst("<", ""));
+            } else if (component.equals("|")) {
+                sb.append(ChatColor.GREEN + "|");
+            } else if (component.endsWith(">")) {
+                sb.append(ChatColor.YELLOW + component.replaceFirst(">", ""));
+                sb.append(ChatColor.GREEN + ">");
+            } else {
+                sb.append(ChatColor.YELLOW + component);
+            }
+            
+            sb.append(" ");
+        }
+        
+        return sb.toString().trim();
+    }
 }
