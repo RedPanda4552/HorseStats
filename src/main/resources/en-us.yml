@@ -115,10 +115,12 @@ setStyle:
   bad-type: "can only be used on a normal horse."
   style-change: "Style changed to"
   usage: "/setstyle <style>"
+setColor:
+  bad-type: "can only be used on normal horses and llamas."
+  color-change: "Color changed to"
 slayhorse:
   # "\u266B" is a UTF-8 code for a music eighth note sign. If you delete it
-  # and want to add it back, then you can copy it out of this note. "&o" is
-  # the Bukkit chat formatting code for italics.  
+  # and want to add it back, then you can copy it out of this note.
   launch: "\u266B He's a magical pony, flying through the sky--shoot it down. *boom*"
   slain: "Horse slain."
 tame:
