@@ -60,7 +60,7 @@ public class Main extends JavaPlugin {
     public boolean anarchyMode;
     
     // Version information
-    public final String langVersion = "4.1", configVersion = "4.0";
+    public final String langVersion = "5.0", configVersion = "4.0";
     public boolean outOfDateConfig = false;
     
     // Support Classes

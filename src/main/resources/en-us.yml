@@ -4,7 +4,7 @@
 # important that you make your own copy!
 
 # Don't change this! This is how HorseStats knows if your language pack is old!
-version: 4.1
+version: 5.0
 
 playerJoinLeaveListener:
   config: "The HorseStats config is out of date. Details can be found in the console when the plugin started."
