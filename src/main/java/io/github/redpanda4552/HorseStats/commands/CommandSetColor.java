@@ -33,6 +33,33 @@ import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
 public class CommandSetColor extends AbstractCommand {
 
+    private final String horseColorOptions = new StringBuilder(lang.g + "<")
+            .append(lang.y + "black")
+            .append(lang.g + " | ")
+            .append(lang.y + "brown")
+            .append(lang.g + " | ")
+            .append(lang.y + "chestnut")
+            .append(lang.g + " | ")
+            .append(lang.y + "creamy")
+            .append(lang.g + " | ")
+            .append(lang.y + "darkbrown")
+            .append(lang.g + " | ")
+            .append(lang.y + "gray")
+            .append(lang.g + " | ")
+            .append(lang.y + "white")
+            .append(lang.g + ">")
+            .toString();
+    private final String llamaColorOptions = new StringBuilder(lang.g + "<")
+            .append(lang.y + "brown")
+            .append(lang.g + " | ")
+            .append(lang.y + "creamy")
+            .append(lang.g + " | ")
+            .append(lang.y + "gray")
+            .append(lang.g + " | ")
+            .append(lang.y + "white")
+            .append(lang.g + ">")
+            .toString();
+    
     public CommandSetColor(Main main) {
         super(main);
     }
@@ -63,37 +90,47 @@ public class CommandSetColor extends AbstractCommand {
         }
         
         if (h instanceof Horse) {
-            if (args[0].equalsIgnoreCase("black")) {
-                ((Horse) h).setColor(Horse.Color.BLACK);
-            } else if (args[1].equalsIgnoreCase("brown")) {
-                ((Horse) h).setColor(Horse.Color.BROWN);
-            } else if (args[1].equalsIgnoreCase("chestnut")) {
-                ((Horse) h).setColor(Horse.Color.CHESTNUT);
-            } else if (args[1].equalsIgnoreCase("creamy")) {
-                ((Horse) h).setColor(Horse.Color.CREAMY);
-            } else if (args[1].equalsIgnoreCase("darkbrown")) {
-                ((Horse) h).setColor(Horse.Color.DARK_BROWN);
-            } else if (args[1].equalsIgnoreCase("gray")) {
-                ((Horse) h).setColor(Horse.Color.GRAY);
-            } else if (args[1].equalsIgnoreCase("white")) {
-                ((Horse) h).setColor(Horse.Color.WHITE);
+            if (args.length >= 1) {
+                if (args[0].equalsIgnoreCase("black")) {
+                    ((Horse) h).setColor(Horse.Color.BLACK);
+                } else if (args[0].equalsIgnoreCase("brown")) {
+                    ((Horse) h).setColor(Horse.Color.BROWN);
+                } else if (args[0].equalsIgnoreCase("chestnut")) {
+                    ((Horse) h).setColor(Horse.Color.CHESTNUT);
+                } else if (args[0].equalsIgnoreCase("creamy")) {
+                    ((Horse) h).setColor(Horse.Color.CREAMY);
+                } else if (args[0].equalsIgnoreCase("darkbrown")) {
+                    ((Horse) h).setColor(Horse.Color.DARK_BROWN);
+                } else if (args[0].equalsIgnoreCase("gray")) {
+                    ((Horse) h).setColor(Horse.Color.GRAY);
+                } else if (args[0].equalsIgnoreCase("white")) {
+                    ((Horse) h).setColor(Horse.Color.WHITE);
+                } else {
+                    p.sendMessage(lang.tag + "/setcolor " + horseColorOptions);
+                    return;
+                }
             } else {
-                p.sendMessage(lang.tag + lang.r + lang.get("setColor.horse-colors"));
+                p.sendMessage(lang.tag + "/setcolor " + horseColorOptions);
                 return;
             }
             
-            p.sendMessage(lang.tag + lang.get("setStyle.color-change") + " " + lang.y + ((Horse) h).getColor());
+            p.sendMessage(lang.tag + lang.get("setColor.color-change") + " " + lang.y + ((Horse) h).getColor());
         } else if (h instanceof Llama) {
-            if (args[0].equalsIgnoreCase("brown")) {
-                ((Llama) h).setColor(Llama.Color.BROWN);
-            } else if (args[0].equalsIgnoreCase("creamy")) {
-                ((Llama) h).setColor(Llama.Color.CREAMY);
-            } else if (args[0].equalsIgnoreCase("gray")) {
-                ((Llama) h).setColor(Llama.Color.GRAY);
-            } else if (args[0].equalsIgnoreCase("white")) {
-                ((Llama) h).setColor(Llama.Color.WHITE);
+            if (args.length >= 1) {
+                if (args[0].equalsIgnoreCase("brown")) {
+                    ((Llama) h).setColor(Llama.Color.BROWN);
+                } else if (args[0].equalsIgnoreCase("creamy")) {
+                    ((Llama) h).setColor(Llama.Color.CREAMY);
+                } else if (args[0].equalsIgnoreCase("gray")) {
+                    ((Llama) h).setColor(Llama.Color.GRAY);
+                } else if (args[0].equalsIgnoreCase("white")) {
+                    ((Llama) h).setColor(Llama.Color.WHITE);
+                } else {
+                    p.sendMessage(lang.tag + "/setcolor" + llamaColorOptions);
+                    return;
+                }
             } else {
-                p.sendMessage(lang.tag + lang.r + lang.get("setColor.llama-colors"));
+                p.sendMessage(lang.tag + "/setcolor" + llamaColorOptions);
                 return;
             }
             
