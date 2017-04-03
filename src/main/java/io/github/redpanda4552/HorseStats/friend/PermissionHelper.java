@@ -35,9 +35,9 @@ import org.bukkit.Bukkit;
 import io.github.redpanda4552.HorseStats.Main;
 
 /**
- * Class that handles all internal permissions related functions.
- * Care should be taken when calling methods from this class,
- * as it is not instantiated at all if anarchy mode is enabled.
+ * Class that handles all internal permissions related functions. Care should be
+ * taken when calling methods from this class, as it is not instantiated at all
+ * if anarchy mode is enabled.
  */
 public class PermissionHelper {
     
@@ -111,8 +111,9 @@ public class PermissionHelper {
     }
     
     /**
-     * Remove a player's permissions info from memory.
-     * No SQL here; any SQL modification should be done with {@link #updatePlayerPermission(UUID, UUID, InteractionType, boolean)}.
+     * Remove a player's permissions info from memory. No SQL here; any SQL
+     * modification should be done with
+     * {@link #updatePlayerPermission(UUID, UUID, InteractionType, boolean)}.
      */
     public void unloadPlayerPermissions(UUID toUnload) {
         permissionMap.remove(toUnload);
@@ -122,7 +123,7 @@ public class PermissionHelper {
      * Create or update a player's permissions in memory and SQL.
      */
     public void updatePlayerPermission(UUID toUpdate, UUID horseOwner, InteractionType interactionType, boolean newPermission) {
-        // In case the player is currently offline, we need to get their permissions into memory
+        // If player is offline, we need to get their permissions into memory
         if (Bukkit.getPlayer(toUpdate) == null) {
             loadPlayerPermissions(toUpdate);
         }
@@ -135,9 +136,10 @@ public class PermissionHelper {
         }
         
         if (permissionSetArrayList.isEmpty()) {
-            // If newPermission is false, and there are no existing entries to modify,
-            // then continuing would end up creating an entry when we intend to remove
-            // (even though there is none to remove in the first place)
+            // If newPermission is false, and there are no existing entries to
+            // modify, then continuing would end up creating an entry when we
+            // intend to remove (even though there is none to remove in the
+            // first place)
             if (newPermission == true) {
                 switch (interactionType) {
                 case DAMAGE:
@@ -246,7 +248,7 @@ public class PermissionHelper {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            // If the player is offline, unload their permissions now that we're done
+            // If player is offline, unload their permissions
             if (Bukkit.getPlayer(toUpdate) == null) {
                 unloadPlayerPermissions(toUpdate);
             }
@@ -260,9 +262,9 @@ public class PermissionHelper {
     }
     
     /**
-     * Find all people that a player has given permissions to.<br><b>
-     * This method is going to be resource demanding! It will pull ALL data from SQL!<br>
-     * Do not run this synchronously!</b>
+     * Find all people that a player has given permissions to.<br><b>This
+     * method is going to be resource demanding! It will pull ALL data from SQL!
+     * <br>Do not run this synchronously!</b>
      */
     public HashMap<UUID, PermissionSet> viewAllPermissions(UUID toCheck) {
         HashMap<UUID, PermissionSet> ret = new HashMap<UUID, PermissionSet>();
@@ -305,7 +307,8 @@ public class PermissionHelper {
     }
     
     /**
-     * Check if a {@link PermissionSet PermissionSet} is false for both damage and use.
+     * Check if a {@link PermissionSet PermissionSet} is false for both damage
+     * and use.
      */
     private boolean isDeadPermissionSet(PermissionSet permissionSet) {
         return permissionSet.hasDamagePermission() == false && permissionSet.hasUsePermission() == false;
