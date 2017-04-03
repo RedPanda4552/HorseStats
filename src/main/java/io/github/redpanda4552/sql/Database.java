@@ -30,10 +30,8 @@ import java.sql.Statement;
 
 /**
  * <a href="https://bukkit.org/threads/using-mysql-in-your-plugins.132309/">
- * SQL Driver provided by Husky on the Bukkit Forums
- * </a><br>
- * Abstract Database class, serves as a base for any connection method (MySQL,
- * SQLite, etc.)
+ * SQL Driver provided by Husky on the Bukkit Forums</a><br>. Abstract Database
+ * class, serves as a base for any connection method (MySQL, SQLite, etc.)
  * @author -_Husky_-
  * @author tips48
  */
