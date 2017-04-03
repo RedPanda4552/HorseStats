@@ -37,7 +37,7 @@ import java.sql.SQLException;
  * @author -_Husky_-
  * @author tips48
  */
-public class MySQL extends Database {
+public class DatabaseMySQL extends AbstractDatabase {
 	private final String user;
 	private final String database;
 	private final String password;
@@ -56,7 +56,7 @@ public class MySQL extends Database {
 	 * @param password
 	 *            Password
 	 */
-	public MySQL(String hostname, String port, String username,
+	public DatabaseMySQL(String hostname, String port, String username,
 			String password) {
 		this(hostname, port, null, username, password);
 	}
@@ -75,7 +75,7 @@ public class MySQL extends Database {
 	 * @param password
 	 *            Password
 	 */
-	public MySQL(String hostname, String port, String database,
+	public DatabaseMySQL(String hostname, String port, String database,
 			String username, String password) {
 		this.hostname = hostname;
 		this.port = port;

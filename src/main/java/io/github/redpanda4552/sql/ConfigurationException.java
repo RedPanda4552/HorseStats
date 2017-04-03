@@ -30,7 +30,7 @@ public class ConfigurationException extends Exception {
      * An exxception to be thrown when the SQL settings in the config are
      * incomplete. <b>There is no definition for an error message. The
      * constructor is empty. This should simply be used as a "flag" for detecting
-     * an incomplete configuration with {@link Database#testConfiguration() Database.testConfiguration()} 
+     * an incomplete configuration with {@link AbstractDatabase#testConfiguration() Database.testConfiguration()} 
      */
     public ConfigurationException() {
         

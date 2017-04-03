@@ -35,14 +35,14 @@ import java.sql.Statement;
  * @author -_Husky_-
  * @author tips48
  */
-public abstract class Database {
+public abstract class AbstractDatabase {
 
     protected Connection connection;
 
     /**
      * Creates a new Database
      */
-    protected Database() {
+    protected AbstractDatabase() {
         this.connection = null;
     }
 

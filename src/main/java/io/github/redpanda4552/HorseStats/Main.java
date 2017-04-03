@@ -28,8 +28,8 @@ import io.github.redpanda4552.HorseStats.commands.*;
 import io.github.redpanda4552.HorseStats.friend.PermissionHelper;
 import io.github.redpanda4552.HorseStats.listeners.*;
 import io.github.redpanda4552.sql.ConfigurationException;
-import io.github.redpanda4552.sql.MySQL;
-import io.github.redpanda4552.sql.SQLite;
+import io.github.redpanda4552.sql.DatabaseMySQL;
+import io.github.redpanda4552.sql.DatabaseSQLite;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -70,8 +70,8 @@ public class Main extends JavaPlugin {
     
     // SQL Fields
     private String SQLHostName, SQLPort, SQLDatabase, SQLUsername, SQLPassword, SQLiteDatabase;
-    private MySQL mySQL = null;
-    private SQLite sqlite = null;
+    private DatabaseMySQL mySQL = null;
+    private DatabaseSQLite sqlite = null;
     public Connection connection = null;
     
     // Updater Fields
@@ -151,7 +151,7 @@ public class Main extends JavaPlugin {
         try {
             if (getConfig().getString("sql.driver").equalsIgnoreCase("sqlite")) {
                 SQLiteDatabase = getConfig().getString("sql.sqlite-database-path");
-                sqlite = new SQLite(SQLiteDatabase);
+                sqlite = new DatabaseSQLite(SQLiteDatabase);
                 sqlite.testConfiguration();
                 connection = sqlite.openConnection();
             } else if (getConfig().getString("sql.driver").equalsIgnoreCase("mysql")) {
@@ -160,7 +160,7 @@ public class Main extends JavaPlugin {
                 SQLPort = getConfig().getString("sql.mysql-port");
                 SQLUsername = getConfig().getString("sql.mysql-username");
                 SQLPassword = getConfig().getString("sql.mysql-password");
-                mySQL = new MySQL(SQLHostName, SQLPort, SQLDatabase, SQLUsername, SQLPassword);
+                mySQL = new DatabaseMySQL(SQLHostName, SQLPort, SQLDatabase, SQLUsername, SQLPassword);
                 mySQL.testConfiguration();
                 connection = mySQL.openConnection();
             } else {

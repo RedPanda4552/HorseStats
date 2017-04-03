@@ -40,7 +40,7 @@ import java.sql.SQLException;
  *
  * @author tips48
  */
-public class SQLite extends Database {
+public class DatabaseSQLite extends AbstractDatabase {
     private final String dbLocation;
 
     /**
@@ -48,7 +48,7 @@ public class SQLite extends Database {
      * 
      * @param dbLocation Location of the Database (Must end in .db)
      */
-    public SQLite(String dbLocation) {
+    public DatabaseSQLite(String dbLocation) {
         this.dbLocation = dbLocation;
     }
 
