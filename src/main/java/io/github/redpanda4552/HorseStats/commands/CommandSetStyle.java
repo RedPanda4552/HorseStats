@@ -23,8 +23,6 @@
  */
 package io.github.redpanda4552.HorseStats.commands;
 
-import static org.bukkit.ChatColor.*;
-
 import io.github.redpanda4552.HorseStats.Main;
 import io.github.redpanda4552.HorseStats.friend.InteractionType;
 
@@ -32,10 +30,18 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Horse.Color;
 import org.bukkit.entity.Horse.Style;
 
 public class CommandSetStyle extends AbstractCommand {
+    
+    private final String styleOptions = new StringBuilder(lang.y + "<none")
+            .append(lang.g + " | ")
+            .append(lang.y + "blackdots")
+            .append(lang.g + " | ")
+            .append(lang.y + "whitedots")
+            .append(lang.g + " | ")
+            .append(lang.y + "whitefield>")
+            .toString();
     
     public CommandSetStyle(Main main) {
         super(main);
@@ -62,7 +68,7 @@ public class CommandSetStyle extends AbstractCommand {
 
     public void run(Player p, Horse h, String[] args) {
         if (h == null) {
-            p.sendMessage(lang.tag + lang.r + lang.get("setstyle.bad-type"));
+            p.sendMessage(lang.tag + lang.r + "/setstyle " + lang.get("setstyle.bad-type"));
             return;
         }
         
@@ -71,68 +77,25 @@ public class CommandSetStyle extends AbstractCommand {
             return;
         }
         
-        // TODO Llama color
-        if (args.length >= 2) {
-            if (args[0].equalsIgnoreCase("color")) {
-                if (args[1].equalsIgnoreCase("black")) {
-                    h.setColor(Color.BLACK);
-                } else if (args[1].equalsIgnoreCase("brown")) {
-                    h.setColor(Color.BROWN);
-                } else if (args[1].equalsIgnoreCase("chestnut")) {
-                    h.setColor(Color.CHESTNUT);
-                } else if (args[1].equalsIgnoreCase("creamy")) {
-                    h.setColor(Color.CREAMY);
-                } else if (args[1].equalsIgnoreCase("darkbrown")) {
-                    h.setColor(Color.DARK_BROWN);
-                } else if (args[1].equalsIgnoreCase("gray")) {
-                    h.setColor(Color.GRAY);
-                } else if (args[1].equalsIgnoreCase("white")) {
-                    h.setColor(Color.WHITE);
-                } else {
-                    p.sendMessage(lang.tag + lang.r + lang.get("setStyle.style-params"));
-                    return;
-                }
-                
-                p.sendMessage(lang.tag + lang.get("setStyle.color-change") + " " + YELLOW + h.getColor());
-            } else if (args[0].equalsIgnoreCase("style")) {
-                if (args[1].equalsIgnoreCase("blackdots")) {
-                    h.setStyle(Style.BLACK_DOTS);
-                } else if (args[1].equalsIgnoreCase("none")) {
-                    h.setStyle(Style.NONE);
-                } else if (args[1].equalsIgnoreCase("white")) {
-                    h.setStyle(Style.WHITE);
-                } else if (args[1].equalsIgnoreCase("whitedots")) {
-                    h.setStyle(Style.WHITE_DOTS);
-                } else if (args[1].equalsIgnoreCase("whitefield")) {
-                    h.setStyle(Style.WHITEFIELD);
-                } else {
-                    p.sendMessage(lang.tag + lang.r + lang.get("setStyle.style-params"));
-                    return;
-                }
-                
-                p.sendMessage(lang.tag + lang.get("setStyle.style-change") + " " + YELLOW + h.getStyle());
+        if (args.length >= 1) {
+            if (args[0].equalsIgnoreCase("blackdots")) {
+                h.setStyle(Style.BLACK_DOTS);
+            } else if (args[0].equalsIgnoreCase("none")) {
+                h.setStyle(Style.NONE);
+            } else if (args[0].equalsIgnoreCase("white")) {
+                h.setStyle(Style.WHITE);
+            } else if (args[0].equalsIgnoreCase("whitedots")) {
+                h.setStyle(Style.WHITE_DOTS);
+            } else if (args[0].equalsIgnoreCase("whitefield")) {
+                h.setStyle(Style.WHITEFIELD);
             } else {
-                p.sendMessage(lang.tag + lang.get("setStyle.style-params"));
+                p.sendMessage(lang.tag + "/setstyle " + styleOptions);
+                return;
             }
-        } else if (args.length == 1){
-            if (args[0].equals("?")) {
-                setstatHelp(p);
-            } else {
-                p.sendMessage(lang.tag + lang.get("setStyle.style-params"));
-            }
+            
+            p.sendMessage(lang.tag + lang.get("setStyle.style-change") + " " + lang.y + h.getStyle());
         } else {
-            p.sendMessage(lang.tag + lang.get("setStyle.style-params"));
+            p.sendMessage(lang.tag + "/setstyle " + styleOptions);
         }
-    }
-    
-    public void setstatHelp(Player p) {
-        String[] styleHelp =
-        { YELLOW + "/setstyle <color | style> <value>"
-        , YELLOW + "Styles:"
-        , GREEN  + "none, blackdots, whitedots, white, whitefield"
-        , YELLOW + "Colors:"
-        , GREEN  + "white, brown, chestnut, creamy, darkbrown, gray, black"
-        };
-        p.sendMessage(styleHelp);
     }
 }

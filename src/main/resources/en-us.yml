@@ -112,10 +112,9 @@ setStat:
   blocks-per-second: "blocks per second."
   nan: " is not a valid number."
 setStyle:
-  bad-type: "You must be riding a normal horse to use this setstyle"
-  color-change: "Color changed to"
+  bad-type: "can only be used on a normal horse."
   style-change: "Style changed to"
-  style-params: "Bad arguments; use '/setstyle ?' to see arguments and usage."
+  usage: "/setstyle <style>"
 slayhorse:
   # "\u266B" is a UTF-8 code for a music eighth note sign. If you delete it
   # and want to add it back, then you can copy it out of this note. "&o" is

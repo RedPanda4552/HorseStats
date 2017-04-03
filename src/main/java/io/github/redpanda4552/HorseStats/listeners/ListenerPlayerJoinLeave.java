@@ -28,7 +28,6 @@ import io.github.redpanda4552.HorseStats.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class ListenerPlayerJoinLeave extends AbstractListener {
@@ -59,7 +58,6 @@ public class ListenerPlayerJoinLeave extends AbstractListener {
     
     @EventHandler
     public void playerLeave(PlayerQuitEvent event) {
-        main.getLogger().info("Leave event");
         if (!main.anarchyMode) {
             Player p = event.getPlayer();
             main.permissionHelper.unloadPlayerPermissions(p.getUniqueId());

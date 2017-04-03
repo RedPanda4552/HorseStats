@@ -30,6 +30,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ChestedHorse;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class CommandDelchest extends AbstractCommand {
     
@@ -68,7 +69,11 @@ public class CommandDelchest extends AbstractCommand {
             return;
         }
         
-        // TODO Maybe we should be nice and dump the chest contents
+        // TODO Needs testing
+        for (ItemStack itemStack : h.getInventory().getStorageContents()) {
+            h.getWorld().dropItemNaturally(h.getLocation(), itemStack);
+        }
+        
         h.setCarryingChest(false);
         p.sendMessage(lang.tag + lang.get("delchest.chest-delete"));
     }
