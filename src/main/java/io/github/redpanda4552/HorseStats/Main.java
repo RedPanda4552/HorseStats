@@ -27,6 +27,7 @@ import io.github.redpanda4552.HorseStats.Updater.UpdateResult;
 import io.github.redpanda4552.HorseStats.commands.*;
 import io.github.redpanda4552.HorseStats.friend.PermissionHelper;
 import io.github.redpanda4552.HorseStats.listeners.*;
+import io.github.redpanda4552.sql.ConfigurationException;
 import io.github.redpanda4552.sql.MySQL;
 import io.github.redpanda4552.sql.SQLite;
 
@@ -147,55 +148,43 @@ public class Main extends JavaPlugin {
      * Initializes SQL fields, opens the SQL connection and creates the database if it doesn't exist. 
      */
     private void initSQL() {
-        if (getConfig().getString("sql.driver").equalsIgnoreCase("sqlite")) {
-            SQLiteDatabase = getConfig().getString("sql.sqlite-database-path");
-            sqlite = new SQLite(SQLiteDatabase);
-            
-            if (SQLiteDatabase != null && SQLiteDatabase.length() >= 4 && SQLiteDatabase.endsWith(".db")) {
-                try {
-                    connection = sqlite.openConnection();
-                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS horsestats (player_id char(36), permission_list text);");
-                    ps.executeUpdate();
-                } catch (ClassNotFoundException | SQLException e) {
-                    e.printStackTrace();
-                    log.warning("SQL database connection failed!");
-                    log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
-                    return;
-                }
+        try {
+            if (getConfig().getString("sql.driver").equalsIgnoreCase("sqlite")) {
+                SQLiteDatabase = getConfig().getString("sql.sqlite-database-path");
+                sqlite = new SQLite(SQLiteDatabase);
+                sqlite.testConfiguration();
+                connection = sqlite.openConnection();
+            } else if (getConfig().getString("sql.driver").equalsIgnoreCase("mysql")) {
+                SQLDatabase = getConfig().getString("sql.database");
+                SQLHostName = getConfig().getString("sql.mysql-host-name");
+                SQLPort = getConfig().getString("sql.mysql-port");
+                SQLUsername = getConfig().getString("sql.mysql-username");
+                SQLPassword = getConfig().getString("sql.mysql-password");
+                mySQL = new MySQL(SQLHostName, SQLPort, SQLDatabase, SQLUsername, SQLPassword);
+                mySQL.testConfiguration();
+                connection = mySQL.openConnection();
             } else {
-                log.warning("The SQL section of the HorseStats configuration is not properly filled out!");
-                log.warning("To use SQLite, make sure 'sqlite-database-path' is filled out, and ends with '.db'.");
+                log.warning("The config field 'sql.driver' is invalid! Set it to either 'sqlite' or 'mysql'.");
                 log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
                 return;
             }
-        } else if (getConfig().getString("sql.driver").equalsIgnoreCase("mysql")) {
-            SQLDatabase = getConfig().getString("sql.database");
-            SQLHostName = getConfig().getString("sql.mysql-host-name");
-            SQLPort = getConfig().getString("sql.mysql-port");
-            SQLUsername = getConfig().getString("sql.mysql-username");
-            SQLPassword = getConfig().getString("sql.mysql-password");
-            
-            mySQL = new MySQL(SQLHostName, SQLPort, SQLDatabase, SQLUsername, SQLPassword);
-            
-            if (SQLHostName != null && SQLPort != null && SQLDatabase != null && SQLUsername != null && SQLPassword != null) {
-                try {
-                    connection = mySQL.openConnection();
-                    PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS horsestats (player_id char(36), permission_list text);");
-                    ps.executeUpdate();
-                } catch (ClassNotFoundException | SQLException e) {
-                    e.printStackTrace();
-                    log.warning("SQL database connection failed!");
-                    log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
-                    return;
-                }
-            } else {
-                log.warning("The SQL section of the HorseStats configuration is not properly filled out!");
-                log.warning("To use MySQL, make sure 'database', 'mysql-host-name', 'mysql-port', 'mysql-username', and 'mysql-password' are all filled out.");
-                log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
-                return;
-            }
-        } else {
-            log.warning("The config field 'sql.driver' is invalid! Set it to either 'sqlite' or 'mysql'.");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            log.warning("SQL database connection failed!");
+            log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
+            return;
+        } catch (ConfigurationException e) {
+            log.warning("The SQL section of the HorseStats configuration is not properly filled out!");
+            log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
+            return;
+        }
+        
+        try {
+            PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS horsestats (player_id char(36), permission_list text);");
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            log.warning("SQL database connection failed!");
             log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
             return;
         }

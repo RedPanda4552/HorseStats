@@ -150,4 +150,6 @@ public abstract class Database {
 
 		return result;
 	}
+	
+	public abstract void testConfiguration() throws ConfigurationException;
 }

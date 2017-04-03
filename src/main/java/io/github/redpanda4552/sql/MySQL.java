@@ -102,4 +102,13 @@ public class MySQL extends Database {
 				this.user, this.password);
 		return connection;
 	}
+	
+	@Override
+	public void testConfiguration() throws ConfigurationException {
+	    if (hostname != null && port != null && database != null && user != null && password != null) {
+	        return;
+	    }
+	    
+	    throw new ConfigurationException();
+	}
 }

@@ -71,4 +71,13 @@ public class SQLite extends Database {
         connection = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
         return connection;
     }
+    
+    @Override
+    public void testConfiguration() throws ConfigurationException {
+        if (dbLocation != null) {
+            return;
+        }
+        
+        throw new ConfigurationException();
+    }
 }
