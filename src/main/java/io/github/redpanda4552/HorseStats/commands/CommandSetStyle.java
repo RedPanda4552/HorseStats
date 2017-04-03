@@ -34,13 +34,15 @@ import org.bukkit.entity.Horse.Style;
 
 public class CommandSetStyle extends AbstractCommand {
     
-    private final String styleOptions = new StringBuilder(lang.y + "<none")
+    private final String styleOptions = new StringBuilder(lang.g + "<")
+            .append(lang.y + "none")
             .append(lang.g + " | ")
             .append(lang.y + "blackdots")
             .append(lang.g + " | ")
             .append(lang.y + "whitedots")
             .append(lang.g + " | ")
-            .append(lang.y + "whitefield>")
+            .append(lang.y + "whitefield")
+            .append(lang.g + ">")
             .toString();
     
     public CommandSetStyle(Main main) {
@@ -68,7 +70,7 @@ public class CommandSetStyle extends AbstractCommand {
 
     public void run(Player p, Horse h, String[] args) {
         if (h == null) {
-            p.sendMessage(lang.tag + lang.r + "/setstyle " + lang.get("setstyle.bad-type"));
+            p.sendMessage(lang.tag + lang.r + "/setstyle " + lang.get("setStyle.bad-type"));
             return;
         }
         
