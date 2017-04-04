@@ -28,12 +28,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * <a href="https://bukkit.org/threads/using-mysql-in-your-plugins.132309/">
- * SQL Driver provided by Husky on the Bukkit Forums
- * </a><br>
- * 
- * Connects to and uses a MySQL database
- * 
+ * <a href="https://bukkit.org/threads/using-mysql-in-your-plugins.132309/"> SQL
+ * Driver provided by Husky on the Bukkit Forums</a><br>Connects to and uses a
+ * MySQL database
  * @author -_Husky_-
  * @author tips48
  */
@@ -46,15 +43,10 @@ public class DatabaseMySQL extends AbstractDatabase {
 
 	/**
 	 * Creates a new MySQL instance
-	 *
-	 * @param hostname
-	 *            Name of the host
-	 * @param port
-	 *            Port number
-	 * @param username
-	 *            Username
-	 * @param password
-	 *            Password
+	 * @param hostname - Name of the host
+	 * @param port - Port number
+	 * @param username - Username
+	 * @param password - Password
 	 */
 	public DatabaseMySQL(String hostname, String port, String username,
 			String password) {
@@ -63,17 +55,11 @@ public class DatabaseMySQL extends AbstractDatabase {
 
 	/**
 	 * Creates a new MySQL instance for a specific database
-	 *
-	 * @param hostname
-	 *            Name of the host
-	 * @param port
-	 *            Port number
-	 * @param database
-	 *            Database name
-	 * @param username
-	 *            Username
-	 * @param password
-	 *            Password
+	 * @param hostname - Name of the host
+	 * @param port - Port number
+	 * @param database - Database name
+	 * @param username - Username
+	 * @param password - Password
 	 */
 	public DatabaseMySQL(String hostname, String port, String database,
 			String username, String password) {
@@ -98,8 +84,7 @@ public class DatabaseMySQL extends AbstractDatabase {
 		}
 		
 		Class.forName("com.mysql.jdbc.Driver");
-		connection = DriverManager.getConnection(connectionURL,
-				this.user, this.password);
+		connection = DriverManager.getConnection(connectionURL, this.user, this.password);
 		return connection;
 	}
 	
