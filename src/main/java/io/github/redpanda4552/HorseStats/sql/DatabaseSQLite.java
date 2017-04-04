@@ -73,11 +73,11 @@ public class DatabaseSQLite extends AbstractDatabase {
     }
     
     @Override
-    public void testConfiguration() throws ConfigurationException {
+    public boolean testConfiguration() {
         if (dbLocation != null && dbLocation.length() >= 4 && dbLocation.endsWith(".db")) {
-            return;
+            return true;
         }
         
-        throw new ConfigurationException();
+        return false;
     }
 }

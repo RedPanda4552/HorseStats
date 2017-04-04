@@ -122,5 +122,5 @@ public abstract class AbstractDatabase {
         return result;
     }
     
-    public abstract void testConfiguration() throws ConfigurationException;
+    public abstract boolean testConfiguration();
 }

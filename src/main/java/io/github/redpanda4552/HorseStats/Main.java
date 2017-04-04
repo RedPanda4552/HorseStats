@@ -27,7 +27,6 @@ import io.github.redpanda4552.HorseStats.Updater.UpdateResult;
 import io.github.redpanda4552.HorseStats.commands.*;
 import io.github.redpanda4552.HorseStats.friend.PermissionHelper;
 import io.github.redpanda4552.HorseStats.listeners.*;
-import io.github.redpanda4552.HorseStats.sql.ConfigurationException;
 import io.github.redpanda4552.HorseStats.sql.DatabaseMySQL;
 import io.github.redpanda4552.HorseStats.sql.DatabaseSQLite;
 
@@ -152,7 +151,12 @@ public class Main extends JavaPlugin {
             if (getConfig().getString("sql.driver").equalsIgnoreCase("sqlite")) {
                 SQLiteDatabase = getConfig().getString("sql.sqlite-database-path");
                 sqlite = new DatabaseSQLite(SQLiteDatabase);
-                sqlite.testConfiguration();
+                
+                if (!sqlite.testConfiguration()) {
+                    log.warning("The SQL section of the HorseStats configuration is not properly filled out!");
+                    log.warning("HorseStats will assume all non owners are denied access until this is resolved."); 
+                }
+                
                 connection = sqlite.openConnection();
             } else if (getConfig().getString("sql.driver").equalsIgnoreCase("mysql")) {
                 SQLDatabase = getConfig().getString("sql.database");
@@ -161,7 +165,12 @@ public class Main extends JavaPlugin {
                 SQLUsername = getConfig().getString("sql.mysql-username");
                 SQLPassword = getConfig().getString("sql.mysql-password");
                 mySQL = new DatabaseMySQL(SQLHostName, SQLPort, SQLDatabase, SQLUsername, SQLPassword);
-                mySQL.testConfiguration();
+                
+                if (!mySQL.testConfiguration()) {
+                    log.warning("The SQL section of the HorseStats configuration is not properly filled out!");
+                    log.warning("HorseStats will assume all non owners are denied access until this is resolved."); 
+                }
+                
                 connection = mySQL.openConnection();
             } else {
                 log.warning("The config field 'sql.driver' is invalid! Set it to either 'sqlite' or 'mysql'.");
@@ -171,10 +180,6 @@ public class Main extends JavaPlugin {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             log.warning("SQL database connection failed!");
-            log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
-            return;
-        } catch (ConfigurationException e) {
-            log.warning("The SQL section of the HorseStats configuration is not properly filled out!");
             log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
             return;
         }

@@ -86,11 +86,11 @@ public class DatabaseMySQL extends AbstractDatabase {
 	}
 	
 	@Override
-	public void testConfiguration() throws ConfigurationException {
+	public boolean testConfiguration() {
 	    if (hostname != null && port != null && database != null && user != null && password != null) {
-	        return;
+	        return true;
 	    }
 	    
-	    throw new ConfigurationException();
+	    return false;
 	}
 }
