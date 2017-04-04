@@ -109,7 +109,7 @@ setStat:
   blocks-per-second: "blocks per second."
   nan: " is not a valid number."
 setStyle:
-  bad-type: "can only be used on a normal horse."
+  bad-type: "can only be used while riding a normal horse."
   style-change: "Style changed to"
 setColor:
   bad-type: "can only be used on normal horses and llamas."

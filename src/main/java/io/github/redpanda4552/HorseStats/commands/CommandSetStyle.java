@@ -56,6 +56,7 @@ public class CommandSetStyle extends AbstractCommand {
         } else {
             sender.sendMessage(lang.get("generic.console"));
         }
+        
         return true;
     }
 
