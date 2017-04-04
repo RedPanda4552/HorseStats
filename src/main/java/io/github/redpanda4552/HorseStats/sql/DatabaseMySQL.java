@@ -48,8 +48,7 @@ public class DatabaseMySQL extends AbstractDatabase {
 	 * @param username - Username
 	 * @param password - Password
 	 */
-	public DatabaseMySQL(String hostname, String port, String username,
-			String password) {
+	public DatabaseMySQL(String hostname, String port, String username, String password) {
 		this(hostname, port, null, username, password);
 	}
 
@@ -61,8 +60,7 @@ public class DatabaseMySQL extends AbstractDatabase {
 	 * @param username - Username
 	 * @param password - Password
 	 */
-	public DatabaseMySQL(String hostname, String port, String database,
-			String username, String password) {
+	public DatabaseMySQL(String hostname, String port, String database, String username, String password) {
 		this.hostname = hostname;
 		this.port = port;
 		this.database = database;
@@ -71,14 +69,13 @@ public class DatabaseMySQL extends AbstractDatabase {
 	}
 
 	@Override
-	public Connection openConnection() throws SQLException,
-			ClassNotFoundException {
+	public Connection openConnection() throws SQLException, ClassNotFoundException {
 		if (checkConnection()) {
 			return connection;
 		}
 		
-		String connectionURL = "jdbc:mysql://"
-				+ this.hostname + ":" + this.port;
+		String connectionURL = "jdbc:mysql://" + this.hostname + ":" + this.port;
+		
 		if (database != null) {
 			connectionURL = connectionURL + "/" + this.database;
 		}
