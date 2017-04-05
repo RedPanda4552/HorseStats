@@ -154,7 +154,8 @@ public class Main extends JavaPlugin {
                 
                 if (!sqlite.testConfiguration()) {
                     log.warning("The SQL section of the HorseStats configuration is not properly filled out!");
-                    log.warning("HorseStats will assume all non owners are denied access until this is resolved."); 
+                    log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
+                    return;
                 }
                 
                 connection = sqlite.openConnection();
@@ -168,7 +169,8 @@ public class Main extends JavaPlugin {
                 
                 if (!mySQL.testConfiguration()) {
                     log.warning("The SQL section of the HorseStats configuration is not properly filled out!");
-                    log.warning("HorseStats will assume all non owners are denied access until this is resolved."); 
+                    log.warning("HorseStats will assume all non owners are denied access until this is resolved.");
+                    return;
                 }
                 
                 connection = mySQL.openConnection();
