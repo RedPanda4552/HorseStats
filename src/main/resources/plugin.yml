@@ -77,6 +77,7 @@ permissions:
        HorseStats.friend: true
        HorseStats.htp: true
        HorseStats.setstyle: true
+       HorseStats.setcolor: true
        HorseStats.setstat: true
        HorseStats.setowner: true
        HorseStats.tame: true
@@ -102,6 +103,8 @@ permissions:
     description: Allows use of /htp
   HorseStats.setstyle:
     description: Allows use of /setstyle
+  HorseStats.setcolor:
+    description: Allows use of /setcolor
   HorseStats.setstat:
     description: Allows use of /setstat
   HorseStats.setowner:
