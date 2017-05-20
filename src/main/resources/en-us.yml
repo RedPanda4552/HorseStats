@@ -41,10 +41,9 @@ horseStats:
   stat-title: "Stat Display"
   instruction-1: "This server has the stat display item set to"
   instruction-2: "Equip one, and punch a horse to get a list of stats:"
-  stat-1: "-MaxHealth -Health -Jump Height -Speed (Blocks per Second)"
-  stat-2: "-Can Breed -Is Adult -Owner"
-  note-1: "1) Horses will not take damage from the punch"
-  note-2: "2) Speed and jump values are not infinitely precise"
+  stat-1: "-Health and Max Health -Jump Height -Speed (Blocks per Second)"
+  stat-2: "-Llama Chest Capacity -Can Breed -Selected for Teleport -Adult Status -Owner"
+  note: "The horse will not take damage from the punch."
   
   permission-title: "Permissions"
   permission-1: "The HorseStats internal permissions system is detached from the server's permission system! They are not the same thing!"

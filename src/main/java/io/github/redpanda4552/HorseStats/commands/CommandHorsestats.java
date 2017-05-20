@@ -52,8 +52,7 @@ public class CommandHorsestats extends AbstractCommand {
     , lang.g + lang.get("horseStats.instruction-2")
     , lang.g + lang.get("horseStats.stat-1")
     , lang.g + lang.get("horseStats.stat-2")
-    , lang.g + lang.get("horseStats.note-1")
-    , lang.g + lang.get("horseStats.note-2")
+    , lang.g + lang.get("horseStats.note")
     };
     
     private final String[] permissionHelp = 

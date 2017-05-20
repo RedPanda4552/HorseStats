@@ -33,11 +33,13 @@ public class Lang {
     private File file;
     private YamlConfiguration langConfig;
     
+    private final String langVersion = "5.0";
+    
     // Faster ways to utilize chat colors
     public final String y = ChatColor.YELLOW + "", g = ChatColor.GREEN + "", r = ChatColor.RED + "", tag;
     
-    public Lang(Main main) {
-        file = new File("plugins/HorseStats/" + main.langFileName);
+    public Lang(Main main, String langFileName) {
+        file = new File("plugins/HorseStats/" + langFileName);
         
         if (main.getConfig().getBoolean("options.show-tag")) {
             tag = y + "[HorseStats] " + g;
@@ -47,15 +49,15 @@ public class Lang {
         
         // Fail 1, file didn't exist on disk
         if (!file.exists()) {
-            main.getLogger().info("Couldn't find " + main.langFileName + " in plugins/HorseStats. Attempting to unpack it from the jar...");
-            main.saveResource(main.langFileName, false);
-            file = new File("plugins/HorseStats/" + main.langFileName);
+            main.getLogger().info("Couldn't find " + langFileName + " in plugins/HorseStats. Attempting to unpack it from the jar...");
+            main.saveResource(langFileName, false);
+            file = new File("plugins/HorseStats/" + langFileName);
             
             // Fail 2, couldn't extract file config said, revert to default
             if (!file.exists()) {
                 main.getLogger().warning("Could not extract the language pack specified in config! Attempting to unpack and set en-us.yml as the pack...");
                 main.saveResource("en-us.yml", false);
-                file = new File("plugins/HorseStats/" + main.langFileName);
+                file = new File("plugins/HorseStats/" + langFileName);
                 main.getConfig().set("language-pack", "en-us.yml");
                 
                 // Fail 3, couldn't extract default, jar is probably tampered with
@@ -72,10 +74,10 @@ public class Lang {
         
         langConfig = YamlConfiguration.loadConfiguration(file);
         
-        if (!langConfig.getString("version").equals(main.langVersion)) {
+        if (!langConfig.getString("version").equals(langVersion)) {
             main.getLogger().warning("Your language pack is out of date! Some messages may not display properly!");
             
-            if (main.langFileName.equals("en-us.yml")) {
+            if (langFileName.equals("en-us.yml")) {
                 main.getLogger().info("Updating the default language pack. Changes will apply the next time the plugin is enabled.");
                 main.saveResource("en-us.yml", true);
             }

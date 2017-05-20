@@ -55,11 +55,10 @@ public class Main extends JavaPlugin {
     // Configuration fields
     public Material statDisplayMaterial, teleportSelectorMaterial;
     public String statDisplayMaterialFriendlyName, teleportSelectorMaterialFriendlyName;
-    public String langFileName;
     public boolean anarchyMode;
     
     // Version information
-    public final String langVersion = "5.0", configVersion = "4.0";
+    public final String configVersion = "4.0";
     public boolean outOfDateConfig = false;
     
     // Support Classes
@@ -108,8 +107,7 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         log = getLogger();
         saveDefaultConfig();
-        langFileName = getConfig().getString("options.language-pack");
-        lang = new Lang(this);
+        lang = new Lang(this, getConfig().getString("options.language-pack"));
         anarchyMode = getConfig().getBoolean("options.anarchy-mode");
         statDisplayMaterial = Material.getMaterial(getConfig().getString("options.stat-item"));
         statDisplayMaterialFriendlyName = getConfig().getString("options.stat-item-name");
