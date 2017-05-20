@@ -119,7 +119,7 @@ public class ListenerDamage extends AbstractListener {
         String ageTime = "";
         
         if (adult == false) {
-            ageTime = " (" + lang.get("damageListener.adult-minutes") + df.format(age/-1200) + ")";
+            ageTime = " (" + lang.get("damageListener.adult-minutes") + " " + df.format(age/-1200) + ")";
         }
         
         String owner = lang.get("damageListener.none");
