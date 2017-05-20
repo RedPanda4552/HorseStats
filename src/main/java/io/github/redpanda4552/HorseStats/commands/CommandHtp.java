@@ -23,12 +23,12 @@
  */
 package io.github.redpanda4552.HorseStats.commands;
 
-import io.github.redpanda4552.HorseStats.*;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
+
+import io.github.redpanda4552.HorseStats.Main;
 
 public class CommandHtp extends AbstractCommand {
     
