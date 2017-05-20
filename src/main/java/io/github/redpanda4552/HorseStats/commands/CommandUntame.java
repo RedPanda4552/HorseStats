@@ -78,7 +78,10 @@ public class CommandUntame extends AbstractCommand {
         if (h.getInventory() instanceof HorseInventory) {
             ItemStack stack = ((HorseInventory) h.getInventory()).getSaddle();
             ((HorseInventory) h.getInventory()).setSaddle(null);
-            h.getWorld().dropItemNaturally(h.getLocation(), stack);
+            
+            if (stack != null) {
+                h.getWorld().dropItemNaturally(h.getLocation(), stack);
+            }
         }
         
         p.sendMessage(lang.tag + lang.get("untame.untame"));
