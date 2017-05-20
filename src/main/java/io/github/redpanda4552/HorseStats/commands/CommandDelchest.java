@@ -69,12 +69,6 @@ public class CommandDelchest extends AbstractCommand {
             return;
         }
         
-        for (ItemStack itemStack : h.getInventory().getStorageContents()) {
-            if (itemStack != null) {
-                h.getWorld().dropItemNaturally(h.getLocation(), itemStack);
-            }
-        }
-        
         h.setCarryingChest(false);
         p.sendMessage(lang.tag + lang.get("delchest.chest-delete"));
     }
