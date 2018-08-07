@@ -26,7 +26,7 @@ options:
   # This is the item used to display a horse's stats. Note that this MUST be a
   # valid Bukkit Material type. If it is not, HorseStats will say so in
   # console at startup and fall back to the lead as a default.
-  stat-item: LEASH
+  stat-item: LEAD
   
   # This is the user-friendly name of the above Material type. This is what
   # will be shown in /horsestats as the item to use for stat display. It is a

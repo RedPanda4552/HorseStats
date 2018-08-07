@@ -114,7 +114,7 @@ public class Main extends JavaPlugin {
         
         if (statDisplayMaterial == null) {
             log.warning("Bad stat display Material type in config! Defaulting to Lead.");
-            statDisplayMaterial = Material.LEASH;
+            statDisplayMaterial = Material.LEAD;
             statDisplayMaterialFriendlyName = "Lead";
         }
         
