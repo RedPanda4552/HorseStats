@@ -3,6 +3,7 @@ name: HorseStats
 version: 5.0.1
 author: pandubz
 description: Displays stats of a horse.
+api-version: 1.13
 
 #Start Command List
 commands:
