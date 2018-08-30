@@ -103,7 +103,15 @@ public class ListenerDamage extends AbstractListener {
         String heartMax = df.format(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() / 2);
         String health = df.format(horse.getHealth());
         String heart = df.format(horse.getHealth() / 2);
-        String jump = df.format(5.162 * Math.pow(horse.getJumpStrength(), 1.7175));
+        // This is sadly a bit inaccurate:
+        // String jump = df.format(5.162 * Math.pow(horse.getJumpStrength(), 1.7175));
+        // This is only ever so *close* but not accurate closer to full blocks
+        // The following is a bit more accurate (derived from game logic):
+        double jumpheight = horse.getAttribute(Attribute.HORSE_JUMP_STRENGTH).getValue();
+        double helpval = (-0.1817584952 * (jumpheight * jumpheight * jumpheight))
+				+ (3.689713992 * (jumpheight * jumpheight)) + (2.128599134 * jumpheight) - 0.343930367;
+        String jump = df.format(helpval);
+        //
         String speed = df.format(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() * 42.18);
         boolean adult = horse.isAdult();
         boolean breed = horse.canBreed();
