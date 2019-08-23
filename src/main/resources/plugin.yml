@@ -1,9 +1,9 @@
 main: io.github.redpanda4552.HorseStats.Main
 name: HorseStats
-version: 5.0.2
+version: 5.0.3
 author: pandubz
 description: Displays stats of a horse.
-api-version: 1.13
+api-version: 1.14
 
 #Start Command List
 commands:

@@ -23,7 +23,13 @@
  */
 package io.github.redpanda4552.HorseStats;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -34,9 +40,10 @@ import java.util.zip.ZipFile;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * Check dev.bukkit.org to find updates for a given plugin, and download the updates if needed.
@@ -564,7 +571,7 @@ public class Updater {
                 final BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 final String response = reader.readLine();
 
-                final JSONArray array = (JSONArray) JSONValue.parse(response);
+                final JsonArray array = (JsonArray) new JsonParser().parse(response);
 
                 if (array.size() == 0) {
                      this.plugin.getLogger().warning("The updater could not find any files for the project id " + this.id);
@@ -572,10 +579,10 @@ public class Updater {
                      return false;
                 }
 
-                this.versionName = (String) ((JSONObject) array.get(array.size() - 1)).get(Updater.TITLE_VALUE);
-                this.versionLink = (String) ((JSONObject) array.get(array.size() - 1)).get(Updater.LINK_VALUE);
-                this.versionType = (String) ((JSONObject) array.get(array.size() - 1)).get(Updater.TYPE_VALUE);
-                this.versionGameVersion = (String) ((JSONObject) array.get(array.size() - 1)).get(Updater.VERSION_VALUE);
+                this.versionName = ((JsonObject) array.get(array.size() - 1)).get(Updater.TITLE_VALUE).getAsString();
+                this.versionLink = ((JsonObject) array.get(array.size() - 1)).get(Updater.LINK_VALUE).getAsString();
+                this.versionType = ((JsonObject) array.get(array.size() - 1)).get(Updater.TYPE_VALUE).getAsString();
+                this.versionGameVersion = ((JsonObject) array.get(array.size() - 1)).get(Updater.VERSION_VALUE).getAsString();
 
                 return true;
           } catch (final IOException e) {
